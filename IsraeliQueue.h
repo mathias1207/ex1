@@ -83,12 +83,20 @@ IsraeliQueueError IsraeliQueueImprovePositions(IsraeliQueue);
 IsraeliQueue IsraeliQueueMerge(IsraeliQueue*,ComparisonFunction);
 
 
+typedef struct node{
+    void* data;
+    node* next;
+}*Node;
 
 typedef struct israeliqueue {
     int size;
-    int FriendshipThreshold;
-    int RivalryThreshold;
-    Node* Head;
-}IsraeliQueue;
+    int friendshipThreshold;
+    int rivalryThreshold;
+    Node* item_tail;
+    Node* function_list;
+} IsraeliQueue;
+
+
+
 
 #endif //PROVIDED_ISRAELIQUEUE_H
