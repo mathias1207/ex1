@@ -82,4 +82,13 @@ IsraeliQueueError IsraeliQueueImprovePositions(IsraeliQueue);
  * one enqueue an item, in the order defined by q_arr. In the event of any error during execution, return NULL.*/
 IsraeliQueue IsraeliQueueMerge(IsraeliQueue*,ComparisonFunction);
 
+
+
+typedef struct israeliqueue {
+    int size;
+    int FriendshipThreshold;
+    int RivalryThreshold;
+    Node* Head;
+}IsraeliQueue;
+
 #endif //PROVIDED_ISRAELIQUEUE_H
