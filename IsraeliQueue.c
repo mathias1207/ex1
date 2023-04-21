@@ -71,24 +71,32 @@ IsraeliQueueError IsraeliQueueEnqueue(IsraeliQueue q, void* item){
 
 
 IsraeliQueueError IsraeliQueueAddFriendshipMeasure(IsraeliQueue q, FriendshipFunction friendships_function){
-    if (!q || !friendships_function) return ISRAELIQUEUE_BAD_PARAM;
-
-
+    if (!q || !friendships_function){
+        return ISRAELIQUEUE_BAD_PARAM;
+    }
+    //TODO
 }
 
 IsraeliQueueError IsraeliQueueUpdateFriendshipThreshold(IsraeliQueue q, int n_thresh){
-    // TODO bdika
+    if (!q){
+        return ISRAELIQUEUE_BAD_PARAM;
+    }
     q->friendshipThreshold = n_thresh;
     return ISRAELIQUEUE_SUCCESS;
 }
 
 IsraeliQueueError IsraeliQueueUpdateRivalryThreshold(IsraeliQueue q, int n_thresh){
-    // TODO bdika
+    if (!q){
+        return ISRAELIQUEUE_BAD_PARAM;
+    }
     q->rivalryThreshold = n_thresh;
     return ISRAELIQUEUE_SUCCESS;
 }
 
 int IsraeliQueueSize(IsraeliQueue q){
+    if (!q){
+        return ISRAELIQUEUE_BAD_PARAM;
+    }
     return q->size;
 }
 
