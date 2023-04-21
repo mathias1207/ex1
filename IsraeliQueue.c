@@ -14,11 +14,27 @@ IsraeliQueue IsraeliQueueCreate(FriendshipFunction * friendshipFunction, Compari
 }
 
 IsraeliQueue IsraeliQueueClone(IsraeliQueue q){
+    IsraeliQueue new_q = malloc(sizeof (*q));
+    new_q->size = q->size;
+    new_q->friendshipThreshold = q->friendshipThreshold;
+    new_q->rivalryThreshold = q->rivalryThreshold;
+    new_q->item_tail = q->item_tail;
+    new_q->friendshipFunc_list = q->friendshipFunc_list;
+    new_q->comparaisonFunc_list = q->comparaisonFunc_list;
 
+    return new_q;
 }
 
-void IsraeliQueueDestroy(IsraeliQueue){
-
+void IsraeliQueueDestroy(IsraeliQueue q){
+    Node to_delete = q->item_tail;
+    while(to_delete != NULL){
+        Node temp = to_delete;
+        to_delete = to_delete->next;
+        free(to_delete);
+    }
+    free(q->friendshipFunc_list);
+    free(q->comparaisonFunc_list);
+    free(q);
 }
 
 IsraeliQueueError IsraeliQueueEnqueue(IsraeliQueue q, void* item){
