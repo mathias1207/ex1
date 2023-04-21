@@ -4,6 +4,9 @@
 
 IsraeliQueue IsraeliQueueCreate(FriendshipFunction * friendshipFunction, ComparisonFunction comparisonFunction, int friendship_th, int rivalry_th){
     IsraeliQueue q = malloc(sizeof (*q));
+    if(!q) {
+        return ISRAELIQUEUE_ALLOC_FAILED;
+    }
     q->size = NULL;
     q->friendshipThreshold = friendship_th;
     q->rivalryThreshold = rivalry_th;
@@ -13,7 +16,12 @@ IsraeliQueue IsraeliQueueCreate(FriendshipFunction * friendshipFunction, Compari
 }
 
 IsraeliQueue IsraeliQueueClone(IsraeliQueue q){
+    if (!q) return ISRAELIQUEUE_BAD_PARAM;
+
     IsraeliQueue new_q = malloc(sizeof (*q));
+    if(!new_q) {
+        return ISRAELIQUEUE_ALLOC_FAILED;
+    }
     new_q->size = q->size;
     new_q->friendshipThreshold = q->friendshipThreshold;
     new_q->rivalryThreshold = q->rivalryThreshold;
@@ -25,8 +33,10 @@ IsraeliQueue IsraeliQueueClone(IsraeliQueue q){
 }
 
 void IsraeliQueueDestroy(IsraeliQueue q){
+    if (!q) return;
+
     Node to_delete = q->item_tail;
-    while(to_delete != NULL){
+    while(to_delete){
         Node temp = to_delete;
         to_delete = to_delete->next;
         free(to_delete);
@@ -36,9 +46,22 @@ void IsraeliQueueDestroy(IsraeliQueue q){
     free(q);
 }
 
+bool IsraeliQueueContains(IsraeliQueue q, void *item) {
+    if (!q || !item) return false;
+
+    Node current = q->item_tail;
+    while (current->next) {
+        if (current->data=item) return true;
+        current = current->next;
+    }
+    return false;
+}
+
 IsraeliQueueError IsraeliQueueEnqueue(IsraeliQueue q, void* item){
     Node new_node = malloc(sizeof(*new_node));
-    if (!new_node) return ISRAELIQUEUE_ALLOC_FAILED;
+    if (!new_node) {
+        return ISRAELIQUEUE_ALLOC_FAILED;
+    }
     new_node->data= item;
     new_node->next= q->item_tail;
     q->item_tail= &new_node;
@@ -48,6 +71,7 @@ IsraeliQueueError IsraeliQueueEnqueue(IsraeliQueue q, void* item){
 
 
 IsraeliQueueError IsraeliQueueAddFriendshipMeasure(IsraeliQueue q, FriendshipFunction friendships_function){
+    if (!q || !friendships_function) return ISRAELIQUEUE_BAD_PARAM;
 
 
 }
