@@ -7,4 +7,7 @@ include_directories(.)
 
 add_executable(ex1
         IsraeliQueue.h
+        IsraeliQueue.c
+        HackerEnrollment.c
+        HackerEnrollment.h
         )

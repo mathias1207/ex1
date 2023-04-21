@@ -10,8 +10,9 @@ typedef struct enrollmentSystem{
     FILE* f_students;
     FILE* f_courses;
     FILE* f_hackers;
+    IsraeliQueue queue;
 
-} EnrollmentSystem;
+} *EnrollmentSystem;
 
 
 EnrollmentSystem createEnrollment(FILE* students, FILE* courses, FILE* hackers);
