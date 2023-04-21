@@ -14,7 +14,9 @@ typedef struct node{
 
 typedef struct IsraeliQueue_t {
     int size;
-    int (*function_list)(void*, void*) ;
+    int (*friendshipFunc_list)(void*, void*) ;
+    int (*comparaisonFunc_list)(void*, void*) ;
+
     Node *item_tail;
     int friendshipThreshold;
     int rivalryThreshold;

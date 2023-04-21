@@ -2,13 +2,15 @@
 #include <stdlib.h>
 
 
-IsraeliQueue IsraeliQueueCreate(FriendshipFunction *, ComparisonFunction, int friendship_th, int rivalry_th){
+IsraeliQueue IsraeliQueueCreate(FriendshipFunction * friendshipFunction, ComparisonFunction comparisonFunction, int friendship_th, int rivalry_th){
     IsraeliQueue q = malloc(sizeof (*q));
     q->size = NULL;
     q->friendshipThreshold = friendship_th;
     q->rivalryThreshold = rivalry_th;
     q->item_tail = NULL;
-    q->function_list = {FriendshipFunction *, ComparisonFunction };
+    q->friendshipFunc_list =friendshipFunction;
+    q->comparaisonFunc_list = comparisonFunction;
+
 }
 
 IsraeliQueue IsraeliQueueClone(IsraeliQueue q){
@@ -23,7 +25,7 @@ IsraeliQueueError IsraeliQueueEnqueue(IsraeliQueue q, void* item){
     Node new_node;
     new_node->data= item;
     new_node->next= q->item_tail;
-    q->tail= &new_node;
+    q->item_tail= &new_node;
 }
 
 
