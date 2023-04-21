@@ -16,7 +16,6 @@ typedef struct IsraeliQueue_t {
     int size;
     int (*friendshipFunc_list)(void*, void*) ;
     int (*comparaisonFunc_list)(void*, void*) ;
-
     Node *item_tail;
     int friendshipThreshold;
     int rivalryThreshold;
@@ -27,7 +26,7 @@ typedef struct IsraeliQueue_t {
 typedef int (*FriendshipFunction)(void*,void*);
 typedef int (*ComparisonFunction)(void*,void*);
 
-typedef enum { ISRAELIQUEUE_SUCCESS, ISRAELIQUEUE_ALLOC_FAILED, ISRAELIQUEUE_BAD_PARAM, ISRAELI_QUEUE_ERROR } IsraeliQueueError;
+typedef enum {ISRAELIQUEUE_SUCCESS, ISRAELIQUEUE_ALLOC_FAILED, ISRAELIQUEUE_BAD_PARAM, ISRAELI_QUEUE_ERROR } IsraeliQueueError;
 
 /**Error clarification:
  * ISRAELIQUEUE_SUCCESS: Indicates the function has completed its task successfully with no errors.
