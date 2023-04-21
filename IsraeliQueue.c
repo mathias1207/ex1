@@ -1,8 +1,14 @@
 #include "IsraeliQueue.h"
+#include <stdlib.h>
 
 
-IsraeliQueue IsraeliQueueCreate(FriendshipFunction *, ComparisonFunction, int, int){
-
+IsraeliQueue IsraeliQueueCreate(FriendshipFunction *, ComparisonFunction, int friendship_th, int rivalry_th){
+    IsraeliQueue q = malloc(sizeof (*q));
+    q->size = NULL;
+    q->friendshipThreshold = friendship_th;
+    q->rivalryThreshold = rivalry_th;
+    q->item_tail = NULL;
+    q->function_list = {FriendshipFunction *, ComparisonFunction };
 }
 
 IsraeliQueue IsraeliQueueClone(IsraeliQueue q){

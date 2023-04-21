@@ -12,7 +12,7 @@ typedef struct node{
     struct node* next;
 }*Node;
 
-typedef struct israeliqueue {
+typedef struct IsraeliQueue_t {
     int size;
     Node* item_tail;
     Node* function_list;
@@ -21,8 +21,6 @@ typedef struct israeliqueue {
     int rivalryThreshold;
 } *IsraeliQueue;
 
-
-//typedef struct IsraeliQueue_t * IsraeliQueue;
 
 
 typedef int (*FriendshipFunction)(void*,void*);
