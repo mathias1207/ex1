@@ -22,8 +22,8 @@ void IsraeliQueueDestroy(IsraeliQueue){
 IsraeliQueueError IsraeliQueueEnqueue(IsraeliQueue q, void* item){
     Node new_node;
     new_node->data= item;
-    new_node->next= q.item_tail;
-    q.tail= &new_node;
+    new_node->next= q->item_tail;
+    q->tail= &new_node;
 }
 
 
