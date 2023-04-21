@@ -2,10 +2,14 @@
 #define PROVIDED_ISRAELIQUEUE_H
 
 #include <stdbool.h>
+#include <stdlib.h>
 
 #define FRIEND_QUOTA 5
 #define RIVAL_QUOTA 3
 
+
+typedef int (*FriendshipFunction)(void*,void*);
+typedef int (*ComparisonFunction)(void*,void*);
 
 typedef struct node{
     void* data;
@@ -14,8 +18,8 @@ typedef struct node{
 
 typedef struct IsraeliQueue_t {
     int size;
-    int (*friendshipFunc_list)(void*, void*) ;
-    int (*comparaisonFunc_list)(void*, void*) ;
+    FriendshipFunction* friendshipFunction;
+    ComparisonFunction* comparisonFunction ;
     Node *item_tail;
     int friendshipThreshold;
     int rivalryThreshold;
@@ -23,8 +27,6 @@ typedef struct IsraeliQueue_t {
 
 
 
-typedef int (*FriendshipFunction)(void*,void*);
-typedef int (*ComparisonFunction)(void*,void*);
 
 typedef enum {ISRAELIQUEUE_SUCCESS, ISRAELIQUEUE_ALLOC_FAILED, ISRAELIQUEUE_BAD_PARAM, ISRAELI_QUEUE_ERROR } IsraeliQueueError;
 
@@ -96,9 +98,3 @@ IsraeliQueueError IsraeliQueueImprovePositions(IsraeliQueue);
  * in the exercise. Each queue in q_arr enqueues its head in the merged queue, then lets the next
  * one enqueue an item, in the order defined by q_arr. In the event of any error during execution, return NULL.*/
 IsraeliQueue IsraeliQueueMerge(IsraeliQueue*,ComparisonFunction);
-
-
-
-
-
-#endif //PROVIDED_ISRAELIQUEUE_H

@@ -5,6 +5,8 @@
 #ifndef EX1_HACKERENROLLMENT_H
 #define EX1_HACKERENROLLMENT_H
 #include "IsraeliQueue.h"
+#include <stdio.h>
+
 
 typedef struct enrollmentSystem{
     FILE* f_students;

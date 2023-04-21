@@ -11,8 +11,8 @@ IsraeliQueue IsraeliQueueCreate(FriendshipFunction * friendshipFunction, Compari
     q->friendshipThreshold = friendship_th;
     q->rivalryThreshold = rivalry_th;
     q->item_tail = NULL;
-    q->friendshipFunc_list = friendshipFunction;
-    q->comparaisonFunc_list = comparisonFunction;
+    q->friendshipFunction = friendshipFunction;
+    q->comparisonFunction = comparisonFunction;
 }
 
 IsraeliQueue IsraeliQueueClone(IsraeliQueue q){
@@ -26,8 +26,8 @@ IsraeliQueue IsraeliQueueClone(IsraeliQueue q){
     new_q->friendshipThreshold = q->friendshipThreshold;
     new_q->rivalryThreshold = q->rivalryThreshold;
     new_q->item_tail = q->item_tail;
-    new_q->friendshipFunc_list = q->friendshipFunc_list;
-    new_q->comparaisonFunc_list = q->comparaisonFunc_list;
+    new_q->friendshipFunction = q->friendshipFunction;
+    new_q->comparisonFunction = q->comparisonFunction;
 
     return new_q;
 }
@@ -41,8 +41,8 @@ void IsraeliQueueDestroy(IsraeliQueue q){
         to_delete = to_delete->next;
         free(to_delete);
     }
-    free(q->friendshipFunc_list);
-    free(q->comparaisonFunc_list);
+    free(q->friendshipFunction);
+    free(q->comparisonFunction);
     free(q);
 }
 
@@ -74,7 +74,15 @@ IsraeliQueueError IsraeliQueueAddFriendshipMeasure(IsraeliQueue q, FriendshipFun
     if (!q || !friendships_function){
         return ISRAELIQUEUE_BAD_PARAM;
     }
-    //TODO
+    FriendshipFunction *new_friendship_functions = (FriendshipFunction*)realloc(q->friendshipFunction, (q->size+1) * sizeof(FriendshipFunction));
+    if (new_friendship_functions == NULL) {
+        return ISRAELIQUEUE_ALLOC_FAILED;
+    }
+    q->friendshipFunction = new_friendship_functions;
+    q->friendshipFunction[q->size] = friendships_function;
+    q->size++;
+    return ISRAELIQUEUE_SUCCESS;
+
 }
 
 IsraeliQueueError IsraeliQueueUpdateFriendshipThreshold(IsraeliQueue q, int n_thresh){
@@ -115,4 +123,14 @@ void* IsraeliQueueDequeue(IsraeliQueue queue){
     previous->next = NULL;
     free(node);
     queue->size--;  // decrease the size of the queue
+}
+
+
+IsraeliQueueError IsraeliQueueImprovePositions(IsraeliQueue){
+    //TODO
+}
+
+IsraeliQueue IsraeliQueueMerge(IsraeliQueue*,ComparisonFunction){
+    //TODO
+
 }

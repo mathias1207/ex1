@@ -1,5 +1,4 @@
 #include "friendShipFunc.h"
-#include <stdio.h>
 #include "HackerEnrollment.h"
 
 int (*functionTab[])(void*, void*) ={IDdiff, nameDistance} ;
