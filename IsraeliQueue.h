@@ -6,7 +6,24 @@
 #define FRIEND_QUOTA 5
 #define RIVAL_QUOTA 3
 
-typedef struct IsraeliQueue_t * IsraeliQueue;
+
+typedef struct node{
+    void* data;
+    struct node* next;
+}*Node;
+
+typedef struct israeliqueue {
+    int size;
+    Node* item_tail;
+    Node* function_list;
+    Node *tail;
+    int friendshipThreshold;
+    int rivalryThreshold;
+} *IsraeliQueue;
+
+
+//typedef struct IsraeliQueue_t * IsraeliQueue;
+
 
 typedef int (*FriendshipFunction)(void*,void*);
 typedef int (*ComparisonFunction)(void*,void*);
@@ -82,19 +99,6 @@ IsraeliQueueError IsraeliQueueImprovePositions(IsraeliQueue);
  * one enqueue an item, in the order defined by q_arr. In the event of any error during execution, return NULL.*/
 IsraeliQueue IsraeliQueueMerge(IsraeliQueue*,ComparisonFunction);
 
-
-typedef struct node{
-    void* data;
-    node* next;
-}*Node;
-
-typedef struct israeliqueue {
-    int size;
-    int friendship_threshold;
-    int rivalry_threshold;
-    Node* item_tail;
-    Node* function_list;
-} IsraeliQueue;
 
 
 

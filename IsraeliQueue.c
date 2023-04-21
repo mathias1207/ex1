@@ -1,14 +1,8 @@
 #include "IsraeliQueue.h"
-#include <stdlib.h>
 
 
-IsraeliQueue IsraeliQueueCreate(FriendshipFunction *, ComparisonFunction, int friendship_th, int rivalry_th){
-    IsraeliQueue q = malloc(sizeof (*q));
-    q.size = NULL;
-    q->friendship_threshold = friendship_th;
-    q.rivalry_threnshold = rivalry_th;
-    q.item_tail = NULL;
-    q.function_list = {FriendshipFunction *, ComparisonFunction };
+IsraeliQueue IsraeliQueueCreate(FriendshipFunction *, ComparisonFunction, int, int){
+
 }
 
 IsraeliQueue IsraeliQueueClone(IsraeliQueue q){
@@ -35,26 +29,20 @@ friendships_function){
 
 IsraeliQueueError IsraeliQueueUpdateFriendshipThreshold(IsraeliQueue q, int n_thresh){
     // TODO bdika
-    q.friendshipThreshold = n_thresh;
+    q->friendshipThreshold = n_thresh;
     return ISRAELIQUEUE_SUCCESS;
 }
 
 IsraeliQueueError IsraeliQueueUpdateRivalryThreshold(IsraeliQueue q, int n_thresh){
     // TODO bdika
-    q.rivalryThreshold = n_thresh;
+    q->rivalryThreshold = n_thresh;
     return ISRAELIQUEUE_SUCCESS;
 }
 
 int IsraeliQueueSize(IsraeliQueue q){
-    int size = 0;
-    Node* current = tail;
-    while (current != NULL) {
-        size++;
-        current = current->next;
-    }
-    return q.size * sizeof(Node*);
-
+    return q->size;
 }
+
 
 
 void* IsraeliQueueDequeue(IsraeliQueue){
