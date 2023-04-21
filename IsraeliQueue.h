@@ -14,9 +14,8 @@ typedef struct node{
 
 typedef struct IsraeliQueue_t {
     int size;
-    Node* item_tail;
-    Node* function_list;
-    Node *tail;
+    int (*function_list)(void*, void*) ;
+    Node *item_tail;
     int friendshipThreshold;
     int rivalryThreshold;
 } *IsraeliQueue;
