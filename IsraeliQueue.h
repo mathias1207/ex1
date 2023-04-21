@@ -90,8 +90,8 @@ typedef struct node{
 
 typedef struct israeliqueue {
     int size;
-    int friendshipThreshold;
-    int rivalryThreshold;
+    int friendship_threshold;
+    int rivalry_threshold;
     Node* item_tail;
     Node* function_list;
 } IsraeliQueue;
