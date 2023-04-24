@@ -14,6 +14,8 @@ typedef int (*ComparisonFunction)(void*,void*);
 typedef struct node{
     void* data;
     struct node* next;
+    int friend_count;
+    int rival_count;
 }*Node;
 
 typedef struct IsraeliQueue_t {
