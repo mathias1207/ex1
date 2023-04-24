@@ -121,6 +121,7 @@ void* IsraeliQueueDequeue(IsraeliQueue queue){
     free(node);
     queue->size--;  // decrease the size of the queue
 }
+
 void IsraeliQueueInsertNode(IsraeliQueue q, Node obj_node, Node item) {
     if (q == NULL || item == NULL) {
         return;
@@ -128,19 +129,18 @@ void IsraeliQueueInsertNode(IsraeliQueue q, Node obj_node, Node item) {
     if(q->size == 1){
         item->next = q->item_tail;
         q->item_tail = item;
+        return;
     }
 
-    Node prev = q->item_tail ;
-    Node curr = prev->next;
+    Node previous = q->item_tail ;
+    Node current = previous->next;
 
-    while(curr != obj_node) {
-        prev = curr;
-        curr = curr->next;
+    while(current != obj_node) {
+        previous = current;
+        current = current->next;
     }
-    item->next = prev->next;
-    prev->next = item;
-
-
+    item->next = previous->next;
+    previous->next = item;
 }
 
 void IsraeliQueueRemoveNode(IsraeliQueue q, Node item) {
@@ -150,22 +150,21 @@ void IsraeliQueueRemoveNode(IsraeliQueue q, Node item) {
     // If node is the tail, update accordingly
     if (item == q->item_tail) {
         q->item_tail = item->next;
-    }
-    Node prev = q->item_tail ;
-    Node curr = prev->next;
-    while(curr != item){
-        prev = curr;
-        curr = curr->next;
-    }
-    // Update adjacent nodes
-    if (curr->next != NULL) {
+        free(item);
+        return;
+    } else {
+        Node prev = q->item_tail;
+        Node curr = prev->next;
+        while (curr != item) {
+            prev = curr;
+            curr = curr->next;
+        }
         prev->next = curr->next;
+        free(item);
     }
-
-    free(item);
-    free(curr);
 }
-bool is_friends(void* item1, void* item2, IsraeliQueue q) {
+
+bool is_friends(void* item1, void* item2, IsraeliQueue q){
     FriendshipFunction* friend_func_arr = q->friendshipFunction;
     int friend_threshold = q->friendshipThreshold;
     int i;
@@ -177,25 +176,36 @@ bool is_friends(void* item1, void* item2, IsraeliQueue q) {
     return false;
 }
 
-IsraeliQueue ImproveItem(IsraeliQueue q, Node item, FriendshipFunction*){
-    Node potential_enemy = item->next;
-    //find the enemy
 
+bool is_enemy(void* item1, void* item2, IsraeliQueue q){
+    FriendshipFunction* friend_func_arr = q->friendshipFunction;
+    int enemy_threshold = q->rivalryThreshold;
+    int i;
+    for (i = 0; friend_func_arr[i] != NULL; i++) {
+        if (friend_func_arr[i](item1, item2) >= enemy_threshold) {
+            return false;
+        }
+    }
+    return true;
+}
+
+IsraeliQueue ImproveItem(IsraeliQueue q, Node item){
+    //find the enemy
+    Node potential_enemy = item->next;
     while (potential_enemy->next) {
-            if ( q->friendshipFunction <= q->rivalryThreshold || potential_enemy->rival_count <= RIVAL_QUOTA) {
+            if (is_enemy(item, potential_enemy,q) && potential_enemy->rival_count <= RIVAL_QUOTA) {
                 potential_enemy->rival_count++;
                 break;
-
         }
-        potential_enemy = potential_enemy->next;
     }
     // find the friend
-    Node last_friend;
+    Node last_friend = item;
     Node curr = item->next;
     while (curr->next != potential_enemy || curr->next != NULL) {
-        if (is_friends(item, curr, q) || curr->friend_count <= FRIEND_QUOTA) {
+        if (is_friends(item, curr, q) && curr->friend_count <= FRIEND_QUOTA) {
             last_friend = curr->next;
         }
+        curr=curr->next;
     }
     last_friend->friend_count++;
     IsraeliQueueRemoveNode(q, item);
@@ -205,7 +215,7 @@ IsraeliQueue ImproveItem(IsraeliQueue q, Node item, FriendshipFunction*){
 IsraeliQueueError IsraeliQueueImprovePositions(IsraeliQueue q){
     Node curr = q->item_tail;
     while(curr->next){
-        ImproveItem(q, curr, q->friendshipFunction);
+        ImproveItem(q, curr);
         curr = curr->next;
     }
     return ISRAELIQUEUE_SUCCESS;
