@@ -22,7 +22,7 @@ typedef struct IsraeliQueue_t {
     int size;
     FriendshipFunction* friendshipFunction;
     ComparisonFunction* comparisonFunction ;
-    Node *item_tail;
+    Node *tail;
     int friendshipThreshold;
     int rivalryThreshold;
 } *IsraeliQueue;
