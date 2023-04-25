@@ -30,6 +30,7 @@ IsraeliQueue IsraeliQueueClone(IsraeliQueue q){
 
     return new_q;
 }
+//TODO faire des copies profondes
 
 void IsraeliQueueDestroy(IsraeliQueue q){
     if (!q) return;
@@ -57,14 +58,19 @@ bool IsraeliQueueContains(IsraeliQueue q, void *item) {
 }
 
 IsraeliQueueError IsraeliQueueEnqueue(IsraeliQueue q, void* item){
+    if(q==NULL||item==NULL){
+        return ISRAELIQUEUE_BAD_PARAM;
+    }
     Node new_node = malloc(sizeof(*new_node));
-    if (!new_node) {
+    if (!new_node){
         return ISRAELIQUEUE_ALLOC_FAILED;
     }
     new_node->data = item;
+    new_node->friend_count = 0;
+    new_node->rival_count = 0;
     new_node->next = q->tail;
     q->tail= &new_node;
-    q->size++; // increase the size of the queue
+    q->size++;
     return ISRAELIQUEUE_SUCCESS;
 }
 
@@ -118,8 +124,9 @@ void* IsraeliQueueDequeue(IsraeliQueue queue){
         node= node->next;
     }
     previous->next = NULL;
+    free(node->data);
     free(node);
-    queue->size--;  // decrease the size of the queue
+    queue->size--;
 }
 
 void IsraeliQueueInsertNode(IsraeliQueue q, Node obj_node, void* item) {
