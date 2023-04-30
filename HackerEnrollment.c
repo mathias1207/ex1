@@ -5,15 +5,33 @@ int (*functionTab[])(void*, void*) ={IDdiff, nameDistance} ;
 
 
 EnrollmentSystem createEnrollment(FILE* students, FILE* courses, FILE* hackers){
-    EnrollmentSystem ptr = malloc(sizeof(*ptr));
-    if(!ptr) {
+    EnrollmentSystem system = malloc(sizeof(*system));
+    if(!system) {
         return NULL;
     }
-    ptr->f_students = students;
-    ptr->f_courses = courses;
-    ptr->f_hackers = hackers;
-    IsraeliQueue enrollment = IsraeliQueueCreate(functionTab, );
-    return ptr;
+
+    system->f_courses = courseEnrollment(courses,linesIncourseFile);
+    if(!system->courseArr){
+        free(system);
+        return NULL;
+    }
+
+    system->f_hackers = hackerEnrollment(hackers,linesInHackerFile,linesInStudentFile,linesInHackerFile);
+    if(!system->f_hackers){
+        freeArr((void**)system->courseArr,linesIncourseFile-1);
+        free(system);
+        return NULL;
+    }
+
+    system->f_courses = studentEnrollment(students,linesInStudentFile);
+    if(!system->studentArr){
+        freeHackerStrings(system->hackerArr,linesInHackerFile/4);
+        freeArr((void**)system->courseArr,linesIncourseFile-1);
+        freeArr((void**)system->hackerArr,linesInHackerFile/4-1);
+        free(system);
+        return NULL;
+    }
+    return system;
 }
 
 

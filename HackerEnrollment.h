@@ -8,12 +8,37 @@
 #include <stdio.h>
 
 
-typedef struct enrollmentSystem{
-    FILE* f_students;
-    FILE* f_courses;
-    FILE* f_hackers;
-    IsraeliQueue queue;
 
+typedef struct{
+    int id;             //9 digits
+    int totalCredits;   //>=0
+    float gpa;          //0<=num<=100
+    char* firstName;
+    char* lastName;
+    char* city;
+    char* department;
+} Student;
+
+
+typedef struct {
+    int id;                     //9 digit num
+    char* desiredCourses;       //expectation to be only numbers
+    char** friendsId;            //9 digit number array
+    char* enemiesId;            //9 digit num
+} Hacker;
+
+
+typedef struct {
+    int courseSize;
+    int courseNumber;
+    IsraeliQueue queue;
+} Course;
+
+
+typedef struct enrollmentSystem{
+    Student* f_students;
+    Course* f_courses;
+    Hacker* f_hackers;
 } *EnrollmentSystem;
 
 
