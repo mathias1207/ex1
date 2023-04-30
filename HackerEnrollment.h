@@ -6,11 +6,12 @@
 #define EX1_HACKERENROLLMENT_H
 #include "IsraeliQueue.h"
 #include <stdio.h>
+#define IDLEN 9
 
 
 
 typedef struct{
-    int id;             //9 digits
+    char* id;             //9 digits
     int totalCredits;   //>=0
     float gpa;          //0<=num<=100
     char* firstName;
@@ -36,9 +37,9 @@ typedef struct {
 
 
 typedef struct enrollmentSystem{
-    Student* f_students;
-    Course* f_courses;
-    Hacker* f_hackers;
+    Student** f_students;
+    Course** f_courses;
+    Hacker** f_hackers;
 } *EnrollmentSystem;
 
 
