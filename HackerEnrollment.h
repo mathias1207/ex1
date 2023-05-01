@@ -9,8 +9,6 @@
 #define IDLEN 9
 #define MAX_FRIENDS 20
 
-#define BUFFER_SIZE 1024
-
 
 
 typedef struct{
@@ -44,8 +42,6 @@ typedef struct enrollmentSystem{
     Course** f_courses;
     Hacker** f_hackers;
 } *EnrollmentSystem;
-
-
 
 
 EnrollmentSystem createEnrollment(FILE* students, FILE* courses, FILE* hackers);
