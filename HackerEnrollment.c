@@ -121,9 +121,27 @@ Student** studentEnrollment(FILE* students,int linesInStudentFile){
 }
 
 
+void freeArr(void** arr, int size) {
+    for (int i = 0; i < size; i++) {
+        free(arr[i]);
+    }
+    free(arr);
+}
 
-Hacker ** hackerEnrollment(FILE* hackers,int linesInHackerFile, int numOfStudents){
-    Hacker **  hackerArr = malloc(((linesInHackerFile/4)+1)*sizeof(hackerArr));
+void freeHackerPtrArr(Hacker** arr, int size) {
+    for (int i = 0; i < size; i++) {
+        if (arr[i] != NULL) {
+            free(arr[i]->desiredCourses);
+            freeStringArr(arr[i]->friendsId, MAX_FRIENDS);
+            free(arr[i]->enemiesId);
+            free(arr[i]);
+        }
+    }
+    free(arr);
+}
+
+Hacker** hackerEnrollment(FILE* hackers,int linesInHackerFile, int numOfStudents){
+    Hacker**  hackerArr = malloc(((linesInHackerFile/4)+1)*sizeof(hackerArr));
     int i =0;
     if(!hackerArr){
         return NULL;
@@ -187,13 +205,149 @@ EnrollmentSystem createEnrollment(FILE* students, FILE* courses, FILE* hackers){
     system->f_hackers = hackerEnrollment(hackers, nbOfLinesInFile(hackers));
     if(!system->f_hackers){
         //free students
-        freeArray((void**)system->courseArr,linesIncourseFile-1);
+        freeArray((void**)system->f_courses,linesIncourseFile-1);
         free(system);
         return NULL;
     }
 
-
     return system;
 }
+
+
+int numOfCourses(EnrollmentSystem sys){
+    int count = 0;
+    for (int i = 0; i!=EOF; i++) {
+        if (sys->f_courses[i]->courseNumber != NULL) {
+            count++;
+        }
+    }
+    return count;
+}
+int numOfStudents(EnrollmentSystem sys){
+    int count = 0;
+    for (int i = 0; i!=EOF; i++) {
+        if (sys->f_students[i] != NULL) {
+            count++;
+        }
+    }
+    return count;
+}
+int numOfHackerFriends(Hacker *h) {
+    int count = 0;
+    for (int i = 0; i < MAX_FRIENDS ; i++) { // MAX_FRIENDS 20 ?
+        if (h->friendsId[i] != NULL) {
+            count++;
+        }
+    }
+    return count;
+}
+
+
+int findCourse(EnrollmentSystem sys, int courseNumber) {
+    int numCourses = numOfCourses(sys);
+    for (int i = 0; i < numCourses; i++) {
+        if (sys->f_courses[i]->courseNumber == courseNumber) {
+            return sys->f_courses[i]->courseNumber;
+        }
+    }
+    return -1;
+}
+Student* findStudentById(int studentId, EnrollmentSystem sys) {
+    int numStudents = numOfStudents(sys);
+    for (int i = 0; i < numStudents; i++) {
+        if (sys->f_students[i]->id == studentId) { // il faut peut etre mettre studentId en int ?
+            return sys->f_students[i];
+        }
+    }
+    return NULL;
+}
+int findCourseIndexById(int courseId, EnrollmentSystem sys) {
+    int numCourses = numOfCourses(sys);
+    for (int i = 0; i < numCourses; i++) {
+        if (sys->f_courses[i]->courseNumber == courseId) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+bool isEnrolled(EnrollmentSystem sys, int courseId, int studentId, FILE* queues) { // Je sais que c'est faux
+    // Recherche du cours correspondant
+    int courseIndex = findCourseIndexById(courseId, sys);
+    if (courseIndex < 0) {
+        return false;
+    }
+
+    // Ouverture du fichier contenant les inscriptions des étudiants au cours
+    FILE *fp = fopen(queues, "r");
+    if (fp == NULL) {
+        return 0;
+    }
+
+    // Recherche de l'étudiant correspondant
+    int studentFound = 0;
+    int student;
+    while (fscanf(fp, "%d ", &student) == 1) {
+        if (student == studentId) {
+            studentFound = 1;
+            break;
+        }
+    }
+    // Fermeture du fichier
+    fclose(fp);
+}
+
+void hackerEnrollmentfunctions(IsraeliQueue *queue, const void *hackerId, void *hacker, EnrollmentSystem sys,
+                                   FILE *queues) { // il faut qu'on fasse bien cette fonction
+        Hacker *h = (Hacker *) hacker;
+        int id = *((int *) hackerId);
+        int numFriends = numOfHackerFriends(h);
+
+        // Parcours des amis du hacker
+        for (int i = 0; i < numFriends; i++) {
+            int friendId = h->friendsId[i];
+            Student *s = findStudentById(friendId, sys);
+            if (s == NULL) continue;
+
+            // Vérification si l'étudiant est inscrit au cours désiré
+            if (!isEnrolled(s, h->desiredCourses[0])) continue;
+
+            // Calcul de la distance du nom et de la différence de numéro ID
+            int nameDistance = calculateNameDistance(h->name, s->name);
+            int idDifference = abs(h->id - friendId);
+
+            // Ajout du hacker à la file d'inscription de l'étudiant
+            int priority = nameDistance + idDifference;
+            IsraeliQueuePush(queue, hacker, priority);
+        }
+    }
+
+
+EnrollmentSystem readEnrollment(EnrollmentSystem sys, FILE *queues) {
+        int linesInQueue = nbOfLinesInFile(queues);
+        if (linesInQueue < 0) {
+            return NULL;
+        }
+        if (linesInQueue == 0) {
+            return sys;
+        }
+
+        int courseNumber;
+        while (fscanf(queues, "%d ", &courseNumber) == 1) {
+            int courseIndex = findCourse(sys, courseNumber);
+            if (courseIndex == -1) {
+                continue;
+            }
+            Course *course = sys->f_courses[courseIndex];
+            course->queue = IsraeliQueueCreate(hackerEnrollmentfunctions, NULL, FRIENDSHIP_TH, ENEMY_TH);
+            if (course->queue == NULL) {
+                for (int i = 0; i < courseIndex; i++) {
+                    IsraeliQueueDestroy(sys->f_courses[i]->queue);
+                }
+                return NULL;
+            }
+        }
+        return sys;
+    }
 
 

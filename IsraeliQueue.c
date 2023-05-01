@@ -12,6 +12,7 @@ IsraeliQueue IsraeliQueueCreate(FriendshipFunction * friendshipFunction, Compari
     q->tail = NULL;
     q->friendshipFunction = friendshipFunction;
     q->comparisonFunction = comparisonFunction;
+    // return ?
 }
 
 IsraeliQueue IsraeliQueueClone(IsraeliQueue q){
@@ -208,6 +209,7 @@ IsraeliQueue ImproveNode(IsraeliQueue q, Node toImprove){
                 potential_enemy->rival_count++;
                 break;
         }
+            // avancer le potentiel enemie ?
     }
     // find the friend
     Node last_friend = toImprove;
