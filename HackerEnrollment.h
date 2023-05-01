@@ -7,6 +7,7 @@
 #include "IsraeliQueue.h"
 #include <stdio.h>
 #define IDLEN 9
+#define HACKERSLINE 4
 
 
 
@@ -24,7 +25,7 @@ typedef struct{
 typedef struct {
     int id;                     //9 digit num
     char* desiredCourses;       //expectation to be only numbers
-    char** friendsId;            //9 digit number array
+    char* friendsId;            //9 digit number array
     char* enemiesId;            //9 digit num
 } Hacker;
 

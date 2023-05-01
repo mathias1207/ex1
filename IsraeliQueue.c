@@ -1,51 +1,57 @@
 #include "IsraeliQueue.h"
 #include <stdlib.h>
 
-IsraeliQueue IsraeliQueueCreate(FriendshipFunction * friendshipFunction, ComparisonFunction comparisonFunction, int friendship_th, int rivalry_th){
+//done
+IsraeliQueue IsraeliQueueCreate(FriendshipFunction* friendshipFunction, ComparisonFunction comparisonFunction, int friendship_th, int rivalry_th){
     IsraeliQueue q = malloc(sizeof (*q));
     if(!q) {
         return ISRAELIQUEUE_ALLOC_FAILED;
     }
-    q->size = NULL;
+    q->size = 0;
     q->friendshipThreshold = friendship_th;
     q->rivalryThreshold = rivalry_th;
     q->tail = NULL;
+//    queue->tail = malloc(sizeof(Node));
+//    if (queue->tail == NULL) {
+//        free(queue);
+//        return NULL;
+//    } je sais pas sil faut le mettre ou pas
     q->friendshipFunction = friendshipFunction;
     q->comparisonFunction = comparisonFunction;
+    return q;
 }
 
+//done
 IsraeliQueue IsraeliQueueClone(IsraeliQueue q){
     if (!q) return ISRAELIQUEUE_BAD_PARAM;
-
-    IsraeliQueue new_q = malloc(sizeof (*q));
-    if(!new_q) {
+    IsraeliQueue new_q = IsraeliQueueCreate(q->friendshipFunction, q->comparisonFunction, q->friendshipThreshold, q->rivalryThreshold);
+    if (new_q == NULL) {
         return ISRAELIQUEUE_ALLOC_FAILED;
     }
-    new_q->size = q->size;
-    new_q->friendshipThreshold = q->friendshipThreshold;
-    new_q->rivalryThreshold = q->rivalryThreshold;
-    new_q->tail = q->tail;
-    new_q->friendshipFunction = q->friendshipFunction;
-    new_q->comparisonFunction = q->comparisonFunction;
-
+    for (Node node = q->tail; node != NULL; node = node->next) {
+        IsraeliQueueEnqueue(new_q, node->data);
+    }
     return new_q;
 }
-//TODO faire des copies profondes
 
+//done
 void IsraeliQueueDestroy(IsraeliQueue q){
     if (!q) return;
-
     Node to_delete = q->tail;
-    while(to_delete){
+
+    while(to_delete->next){
         Node temp = to_delete;
         to_delete = to_delete->next;
-        free(to_delete);
+        free(temp);
     }
+
     free(q->friendshipFunction);
     free(q->comparisonFunction);
+    free(to_delete);
     free(q);
 }
 
+//done
 bool IsraeliQueueContains(IsraeliQueue q, void *item) {
     if (!q || !item) return false;
 
@@ -90,6 +96,7 @@ IsraeliQueueError IsraeliQueueAddFriendshipMeasure(IsraeliQueue q, FriendshipFun
 
 }
 
+//done
 IsraeliQueueError IsraeliQueueUpdateFriendshipThreshold(IsraeliQueue q, int n_thresh){
     if (!q){
         return ISRAELIQUEUE_BAD_PARAM;
@@ -98,6 +105,7 @@ IsraeliQueueError IsraeliQueueUpdateFriendshipThreshold(IsraeliQueue q, int n_th
     return ISRAELIQUEUE_SUCCESS;
 }
 
+//done
 IsraeliQueueError IsraeliQueueUpdateRivalryThreshold(IsraeliQueue q, int n_thresh){
     if (!q){
         return ISRAELIQUEUE_BAD_PARAM;
@@ -106,6 +114,7 @@ IsraeliQueueError IsraeliQueueUpdateRivalryThreshold(IsraeliQueue q, int n_thres
     return ISRAELIQUEUE_SUCCESS;
 }
 
+//done
 int IsraeliQueueSize(IsraeliQueue q){
     if (!q){
         return ISRAELIQUEUE_BAD_PARAM;
@@ -232,7 +241,42 @@ IsraeliQueueError IsraeliQueueImprovePositions(IsraeliQueue q){
     return ISRAELIQUEUE_SUCCESS;
 }
 
-IsraeliQueue IsraeliQueueMerge(IsraeliQueue*,ComparisonFunction){
-    //TODO
+// a reflechir et terminer
+IsraeliQueue IsraeliQueueMerge(IsraeliQueue *qarr, ComparisonFunction compare_function) {
+    if (qarr == NULL) return NULL; // Return NULL if qarr is NULL
+    int num_queues = 0;
+    // Calculate the number of queues in qarr
+    int merged_friendship_threshold = 0;
+    int merged_rivalry_threshold_sum = 0;
+    for (int i; qarr[num_queues] != NULL; i++) {
+        merged_friendship_threshold += qarr[i]->friendshipThreshold;
+        merged_rivalry_threshold_sum += abs(qarr[i]->rivalryThreshold);
+        num_queues++;
+    }
+    // Return NULL if there are no queues in qarr
+    if (num_queues == 0) return NULL;
 
+    // Calculate the "membership dimensions" of the merged queues
+    merged_friendship_threshold /= num_queues;
+    int merged_rivalry_threshold = merged_rivalry_threshold_sum / num_queues;
+    if (merged_rivalry_threshold_sum % num_queues != 0) {
+        merged_rivalry_threshold++; // Round up if necessary
+    }
+
+    // Create a new queue with the calculated membership dimensions and comparison function
+    IsraeliQueue merged_queue = IsraeliQueueCreate(qarr[0]->friendshipFunction, compare_function, merged_friendship_threshold, merged_rivalry_threshold);
+    if (merged_queue == NULL) return NULL; // Return NULL if failed to create new queue
+    // Enqueue items from each queue in round-robin order
+    bool all_queues_empty = false;
+    while (!all_queues_empty) {
+        all_queues_empty = true;
+        for (int i = 0; i < num_queues; i++) {
+            if (qarr[i]->size > 0) {
+                all_queues_empty = true;
+//                void* person = IsraeliQueueDequeue(qarr[i]);
+//                IsraeliQueueEnqueue(merged_queue, person);
+            }
+        }
+    }
+    return merged_queue;
 }
