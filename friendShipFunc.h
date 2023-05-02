@@ -27,5 +27,16 @@ int IDdiff (int* id1, int* id2){
     return abs(*id1-*id2);
 }
 
+int hackerFriendshipVal(void* hackerParam,void* studentParam){
+    hackerPtr hacker = (hackerPtr)hackerParam;// modifier le nom des variables
+    studentPtr student = (studentPtr)studentParam;
+    if(strstr(hacker->friendsId,student->id)!=NULL){
+        return 20; 
+    }
+    else if(strstr(hacker->enemiesId,student->id)!=NULL){
+        return -20; 
+    }
+    else return 0; //as defined
+}
 
 #endif //EX1_FRIENDSHIPFUNC_H
