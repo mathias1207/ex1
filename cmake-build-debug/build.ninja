@@ -60,6 +60,13 @@ build CMakeFiles/ex1.dir/HackerEnrollment.c.o: C_COMPILER__ex1_Debug /Users/math
   OBJECT_DIR = CMakeFiles/ex1.dir
   OBJECT_FILE_DIR = CMakeFiles/ex1.dir
 
+build CMakeFiles/ex1.dir/main.c.o: C_COMPILER__ex1_Debug /Users/mathiasgoldmann/CLionProjects/ex1/main.c || cmake_object_order_depends_target_ex1
+  DEP_FILE = CMakeFiles/ex1.dir/main.c.o.d
+  FLAGS = -g -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk -std=gnu11
+  INCLUDES = -I/Users/mathiasgoldmann/CLionProjects/ex1/.
+  OBJECT_DIR = CMakeFiles/ex1.dir
+  OBJECT_FILE_DIR = CMakeFiles/ex1.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target ex1
@@ -68,7 +75,7 @@ build CMakeFiles/ex1.dir/HackerEnrollment.c.o: C_COMPILER__ex1_Debug /Users/math
 #############################################
 # Link the executable ex1
 
-build ex1: C_EXECUTABLE_LINKER__ex1_Debug CMakeFiles/ex1.dir/IsraeliQueue.c.o CMakeFiles/ex1.dir/HackerEnrollment.c.o
+build ex1: C_EXECUTABLE_LINKER__ex1_Debug CMakeFiles/ex1.dir/IsraeliQueue.c.o CMakeFiles/ex1.dir/HackerEnrollment.c.o CMakeFiles/ex1.dir/main.c.o
   FLAGS = -g -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk
   OBJECT_DIR = CMakeFiles/ex1.dir
   POST_BUILD = :

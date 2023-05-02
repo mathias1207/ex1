@@ -1,6 +1,5 @@
-#include 
-#include 
-#include 
+
+#include "HackerEnrollment.h"
 
 
 
@@ -77,9 +76,7 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
-Dans cette implémentation, le main vérifie si le nombre d'arguments est valide (soit 6 ou 7), puis vérifie si le premier argument est présent en vérifiant le nombre d'arguments. Si le premier argument est présent, les arguments sont analysés à partir de l'indice 1. Sinon, les arguments sont analysés à partir de l'indice 0.
 
-La variable case_sensitive est initialisée à true par défaut, et est mise à false si le premier argument est égal à "i". Les noms de fichiers sont ensuite analysés à partir des indices appropriés, puis la fonction HackEnrollment est appelée avec les paramètres correspondants.
 
 
 

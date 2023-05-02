@@ -10,4 +10,5 @@ add_executable(ex1
         IsraeliQueue.c
         HackerEnrollment.h
         HackerEnrollment.c
+        main.c
         )
