@@ -6,13 +6,14 @@
 #define EX1_HACKERENROLLMENT_H
 #include "IsraeliQueue.h"
 #include <stdio.h>
+#include <string.h>
 #define IDLEN 9
-#define HACKERSLINE 4
+#define MAX_FRIENDS 20
 
 
 
 typedef struct{
-    char* id;             //9 digits
+    int id;             //9 digits
     int totalCredits;   //>=0
     float gpa;          //0<=num<=100
     char* firstName;
@@ -25,8 +26,8 @@ typedef struct{
 typedef struct {
     int id;                     //9 digit num
     char* desiredCourses;       //expectation to be only numbers
-    char* friendsId;            //9 digit number array
-    char* enemiesId;            //9 digit num
+    int* friendsId;            //9 digit number array
+    int* enemiesId;            //9 digit num
 } Hacker;
 
 
@@ -50,5 +51,38 @@ EnrollmentSystem readEnrollment(EnrollmentSystem sys, FILE* queues);
 
 void hackEnrollment(EnrollmentSystem sys, FILE* out);
 
+
+
+
+int nameDistance(char* name1, char* name2){
+    int sum = 0;
+    int i;
+    for (i = 0; name1[i] != '\0' && name2[i] != '\0'; i++) {
+        sum += abs(name1[i] - name2[i]);
+    }
+    while (name1[i] != '\0') {
+        sum += name1[i];
+        i++;
+    }
+    while (name2[i] != '\0') {
+        sum += name2[i];
+        i++;
+    }
+    return sum;
+}
+
+int IDdiff (int* id1, int* id2){
+    return abs(*id1-*id2);
+}
+
+int hackerFriendshipVal(Hacker* hacker, Student* student){
+    if(strstr(hacker->friendsId,student->id)!=NULL){
+        return 20;
+    }
+    else if(strstr(hacker->enemiesId,student->id)!=NULL){
+        return -20;
+    }
+    else return 0;
+}
 
 #endif //EX1_HACKERENROLLMENT_H
