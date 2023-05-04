@@ -6,7 +6,7 @@ IsraeliQueue ImproveNode(IsraeliQueue q, Node toImprove);
 IsraeliQueue IsraeliQueueCreate(FriendshipFunction* friendshipFunction, ComparisonFunction comparisonFunction, int friendship_th, int rivalry_th){
     IsraeliQueue q = malloc(sizeof (*q));
     if(!q) {
-        return ISRAELIQUEUE_ALLOC_FAILED;
+        return NULL;
     }
     q->size = 0;
     q->friendshipThreshold = friendship_th;
@@ -19,10 +19,10 @@ IsraeliQueue IsraeliQueueCreate(FriendshipFunction* friendshipFunction, Comparis
 
 //done
 IsraeliQueue IsraeliQueueClone(IsraeliQueue q){
-    if (!q) return ISRAELIQUEUE_BAD_PARAM;
+    if (!q) return NULL;
     IsraeliQueue new_q = IsraeliQueueCreate(q->friendshipFunction, q->comparisonFunction, q->friendshipThreshold, q->rivalryThreshold);
     if (new_q == NULL) {
-        return ISRAELIQUEUE_ALLOC_FAILED;
+        return NULL;
     }
     for (Node node = q->tail; node != NULL; node = node->next) {
         IsraeliQueueEnqueue(new_q, node->data);

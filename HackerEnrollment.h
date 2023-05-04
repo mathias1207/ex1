@@ -26,8 +26,8 @@ typedef struct{
 typedef struct {
     int id;                     //9 digit num
     char* desiredCourses;       //expectation to be only numbers
-    int* friendsId;            //9 digit number array
-    int* enemiesId;            //9 digit num
+    int friendsId;            //9 digit number array
+    int enemiesId;            //9 digit num
 } Hacker;
 
 
@@ -76,10 +76,10 @@ int IDdiff (int* id1, int* id2){
 }
 
 int hackerFriendshipVal(Hacker* hacker, Student* student){
-    if(strstr(hacker->friendsId,student->id)!=NULL){
+    if(hacker->friendsId == student->id){
         return 20;
     }
-    else if(strstr(hacker->enemiesId,student->id)!=NULL){
+    else if(hacker->enemiesId==student->id){
         return -20;
     }
     else return 0;

@@ -11,6 +11,8 @@ void HackEnrollment(bool case_sensitive, char* students_file, char* courses_file
     FILE* courses = fopen(courses_file, "r");
     FILE* hackers = fopen(hackers_file, "r");
     FILE* queues = fopen(queues_file, "r");
+    FILE* out = fopen(out_file, "r");
+
 
     // Vérifier si les fichiers ont été ouverts avec succès
     if (students == NULL || courses == NULL || hackers == NULL || queues == NULL) {
@@ -28,13 +30,13 @@ void HackEnrollment(bool case_sensitive, char* students_file, char* courses_file
     fclose(queues);
 
     // Hacker l'ordre d'inscription
-    hackEnrollment(sys, out_file);
+    hackEnrollment(sys, out);
 
     // Fermer les fichiers d'entrée et de sortie
     fclose(students);
     fclose(courses);
     fclose(hackers);
-    fclose(out_file);
+    fclose(out);
 }
 
 

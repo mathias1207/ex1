@@ -1,3 +1,3 @@
-/Users/mathiasgoldmann/CLionProjects/ex1/cmake-build-debug/CMakeFiles/ex1.dir
-/Users/mathiasgoldmann/CLionProjects/ex1/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/mathiasgoldmann/CLionProjects/ex1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/Ruben/Desktop/matam23/ex1/cmake-build-debug/CMakeFiles/ex1.dir
+C:/Users/Ruben/Desktop/matam23/ex1/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Ruben/Desktop/matam23/ex1/cmake-build-debug/CMakeFiles/rebuild_cache.dir

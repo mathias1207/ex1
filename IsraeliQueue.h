@@ -21,8 +21,8 @@ typedef struct node{
 typedef struct IsraeliQueue_t {
     int size;
     FriendshipFunction* friendshipFunction;
-    ComparisonFunction* comparisonFunction ;
-    Node *tail;
+    ComparisonFunction comparisonFunction ;
+    Node tail;
     int friendshipThreshold;
     int rivalryThreshold;
 } *IsraeliQueue;
@@ -100,3 +100,5 @@ IsraeliQueueError IsraeliQueueImprovePositions(IsraeliQueue);
  * in the exercise. Each queue in q_arr enqueues its head in the merged queue, then lets the next
  * one enqueue an item, in the order defined by q_arr. In the event of any error during execution, return NULL.*/
 IsraeliQueue IsraeliQueueMerge(IsraeliQueue*,ComparisonFunction);
+
+#endif
