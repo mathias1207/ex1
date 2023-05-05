@@ -44,13 +44,12 @@ void IsraeliQueueDestroy(IsraeliQueue q){
     if (!q) return;
     Node to_delete = q->tail;
 
-    while(to_delete->next){
+    while(to_delete && to_delete->next){
         Node temp = to_delete;
         to_delete = to_delete->next;
         free(temp);
     }
     free(q->friendshipFunction);
-    free(q->comparisonFunction);
     free(to_delete);
     free(q);
 }
@@ -282,6 +281,7 @@ IsraeliQueue IsraeliQueueMerge(IsraeliQueue* qarr, ComparisonFunction compare_fu
 
     // Create a new queue with the calculated membership dimensions and comparison function
     IsraeliQueue merged_queue = IsraeliQueueCreate(qarr[0]->friendshipFunction, compare_function, merged_friendship_threshold, merged_rivalry_threshold);
+
     if (merged_queue == NULL) return NULL; // Return NULL if failed to create new queue
     // Enqueue items from each queue in round-robin order
     bool all_queues_empty = false;

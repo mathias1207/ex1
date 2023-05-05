@@ -124,10 +124,14 @@ int main(){
     IsraeliQueueImprovePositions(queue);
 
     IsraeliQueue f[]={queue, p, j, m, s , NULL};
-    IsraeliQueue g=IsraeliQueueMerge(f, comparison_function_mock);
+    IsraeliQueue g = IsraeliQueueMerge(f, comparison_function_mock);
     IsraeliQueueDestroy(queue);
 
-
+    Node toPrint= g->tail;
+    for (int i=0; i< g->size;i++){
+        printf("%d", *(int*)(toPrint->data));
+        toPrint= toPrint->next;
+    }
     return 0;
 }
 
