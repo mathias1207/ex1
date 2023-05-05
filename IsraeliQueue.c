@@ -1,7 +1,7 @@
 #include "IsraeliQueue.h"
 #include <stdlib.h>
 
-IsraeliQueue ImproveNode(IsraeliQueue q, Node toImprove);
+void ImproveNode(IsraeliQueue q, Node toImprove);
 //done
 IsraeliQueue IsraeliQueueCreate(FriendshipFunction* friendshipFunction, ComparisonFunction comparisonFunction, int friendship_th, int rivalry_th){
     IsraeliQueue q = malloc(sizeof (*q));
@@ -154,7 +154,7 @@ void IsraeliQueueInsertNode(IsraeliQueue q, Node obj_node, void* item) {
     Node previous = q->tail ;
     Node current = previous->next;
 
-    while(current != obj_node) {
+    while(current != obj_node && current) {
         previous = current;
         current = current->next;
     }
@@ -200,7 +200,7 @@ bool is_friends(void* item1, void* item2, IsraeliQueue q){
 bool is_enemy(void* item1, void* item2, IsraeliQueue q){
     FriendshipFunction* friend_func_arr = q->friendshipFunction;
     int enemy_threshold = q->rivalryThreshold;
-    int i, friendshipThresholdAverage;
+    int i, friendshipThresholdAverage=0;
     for (i = 0; friend_func_arr[i] != NULL; i++) {
         friendshipThresholdAverage += friend_func_arr[i](item1, item2);
         if (is_friends(item1, item2, q)) {
@@ -213,27 +213,29 @@ bool is_enemy(void* item1, void* item2, IsraeliQueue q){
     return false;
 }
 
-IsraeliQueue ImproveNode(IsraeliQueue q, Node toImprove){
-    //find the enemy
+ void ImproveNode(IsraeliQueue q, Node toImprove){
+    //find the nearest enemy
     Node potential_enemy = toImprove->next;
+    if (!potential_enemy) return;
     while (potential_enemy->next) {
             if (is_enemy(toImprove->data, potential_enemy->data,q) && potential_enemy->rival_count <= RIVAL_QUOTA) {
                 potential_enemy->rival_count++;
                 break;
         }
     }
-    // find the friend
+    // find the farest friend before enemy
     Node last_friend = toImprove;
     Node curr = toImprove->next;
-    while (curr->next != potential_enemy || curr->next != NULL) {
+    while (curr->next  && curr->next != potential_enemy ) {
         if (is_friends(toImprove->data, curr->data, q) && curr->friend_count <= FRIEND_QUOTA) {
             last_friend = curr->next;
         }
-        curr=curr->next;
+        curr = curr->next;
     }
     last_friend->friend_count++;
     IsraeliQueueRemoveNode(q, toImprove);
     IsraeliQueueInsertNode(q, last_friend, toImprove);
+    ;
 }
 
 IsraeliQueueError IsraeliQueueImprovePositions(IsraeliQueue q){
