@@ -139,28 +139,24 @@ void* IsraeliQueueDequeue(IsraeliQueue queue){
     return toReturn;
 }
 
-void IsraeliQueueInsertNode(IsraeliQueue q, Node obj_node, void* item) {
+void IsraeliQueueInsertNode(IsraeliQueue q, Node farest_friend, Node item) {
     if (q == NULL || item == NULL) {
         return;
     }
     if(q->size == 1){
-        Node newNode = malloc(sizeof (*newNode));
-        newNode->data = item;
-        newNode->next = q->tail;
+        item->next = q->tail;
         q->tail = item;
         return;
     }
 
     Node previous = q->tail ;
-    Node current = previous->next;
+    Node current = q->tail->next;
 
-    while(current != obj_node && current) {
+    while(current && current != farest_friend) {
         previous = current;
         current = current->next;
     }
-    Node newNode = malloc(sizeof (*newNode));
-    newNode->data = item;
-    newNode->next = previous->next;
+    item->next = previous->next;
     previous->next = item;
 }
 
@@ -171,7 +167,6 @@ void IsraeliQueueRemoveNode(IsraeliQueue q, Node item) {
     // If node is the tail, update accordingly
     if (item == q->tail) {
         q->tail = item->next;
-        free(item);
         return;
     } else {
         Node prev = q->tail;
@@ -181,7 +176,6 @@ void IsraeliQueueRemoveNode(IsraeliQueue q, Node item) {
             curr = curr->next;
         }
         prev->next = curr->next;
-        free(item);
     }
 }
 
@@ -222,6 +216,7 @@ bool is_enemy(void* item1, void* item2, IsraeliQueue q){
                 potential_enemy->rival_count++;
                 break;
         }
+        potential_enemy=potential_enemy->next;
     }
     // find the farest friend before enemy
     Node last_friend = toImprove;
