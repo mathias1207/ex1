@@ -102,7 +102,7 @@
       <workItem from="1682865240111" duration="10635000" />
       <workItem from="1682949974215" duration="3829000" />
       <workItem from="1683271490626" duration="115000" />
-      <workItem from="1683271617526" duration="20734000" />
+      <workItem from="1683271617526" duration="22444000" />
     </task>
     <task id="LOCAL-00001" summary="hey">
       <created>1681998687645</created>
@@ -286,7 +286,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683289395587</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="vendredi  05/05 14:30&#10;compile, phase de test">
+      <created>1683293979739</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1683293979739</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -323,6 +330,20 @@
     <option name="LAST_COMMIT_MESSAGE" value="vendredi  05/05 14:30&#10;compile, phase de test" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/main.c</url>
+          <line>114</line>
+          <option name="timeStamp" value="56" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/main.c</url>
+          <line>176</line>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <inline-watch fileUrl="file://$PROJECT_DIR$/main.c" line="104">
         <watch expression="arr[0]" language="ObjectiveC" />

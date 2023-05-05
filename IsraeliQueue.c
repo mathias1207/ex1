@@ -210,9 +210,10 @@ bool is_friends(void* item1, void* item2, IsraeliQueue q){
 
 bool is_enemy(void* item1, void* item2, IsraeliQueue q){
     FriendshipFunction* friend_func_arr = q->friendshipFunction;
+    if (!*friend_func_arr) return false;
     int enemy_threshold = q->rivalryThreshold;
-    int i, friendshipThresholdAverage=0;
-    for (i = 0; friend_func_arr[i] != NULL; i++) {
+    int i=0, friendshipThresholdAverage=0;
+    for (i; friend_func_arr[i] != NULL; i++) {
         friendshipThresholdAverage += friend_func_arr[i](item1, item2);
         if (is_friends(item1, item2, q)) {
             return false;
@@ -251,7 +252,7 @@ bool is_enemy(void* item1, void* item2, IsraeliQueue q){
 
 IsraeliQueueError IsraeliQueueImprovePositions(IsraeliQueue q){
     Node curr = q->tail;
-    while(curr&&curr->next){
+    while(curr && curr->next){
         ImproveNode(q, curr);
         curr = curr->next;
     }
