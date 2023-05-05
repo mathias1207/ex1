@@ -156,6 +156,7 @@ void* IsraeliQueueDequeue(IsraeliQueue queue){
     return toReturn;
 }
 
+
 void IsraeliQueueInsertNode(IsraeliQueue q, Node farest_friend, Node item) {
     if (q == NULL || item == NULL) {
         return;
@@ -169,13 +170,14 @@ void IsraeliQueueInsertNode(IsraeliQueue q, Node farest_friend, Node item) {
     Node previous = q->tail ;
     Node current = q->tail->next;
 
-    while(current && current != farest_friend) {
+    while(current&&!q->comparisonFunction(current->data, farest_friend->data)) {
         previous = current;
         current = current->next;
     }
     item->next = previous->next;
     previous->next = item;
 }
+
 
 void IsraeliQueueRemoveNode(IsraeliQueue q, Node item) {
     if (q == NULL || q->tail == NULL || item == NULL) {
@@ -188,7 +190,11 @@ void IsraeliQueueRemoveNode(IsraeliQueue q, Node item) {
     } else {
         Node prev = q->tail;
         Node curr = q->tail->next;
-        while (curr != item) {
+        if (!curr){
+            prev->next =NULL;
+            return;
+        }
+        while (!q->comparisonFunction(curr->data, item->data) ) {
             prev = curr;
             curr = curr->next;
         }
@@ -245,6 +251,7 @@ bool is_enemy(void* item1, void* item2, IsraeliQueue q){
         curr = curr->next;
     }
     curr = potential_enemy;
+    // check if there is a friend after the enemy
     while(curr->next){
         if (is_friends(curr->data, toImprove->data, q)&& curr->friend_count <= FRIEND_QUOTA){
             potential_enemy->rival_count++;
@@ -259,12 +266,22 @@ bool is_enemy(void* item1, void* item2, IsraeliQueue q){
 
 
 IsraeliQueueError IsraeliQueueImprovePositions(IsraeliQueue q){
+    // if there is no queue, bad param
+    if(q == NULL) return ISRAELIQUEUE_BAD_PARAM;
+
     Node curr = q->tail;
+    //if the tail is null, success
     if (!curr) return ISRAELIQUEUE_SUCCESS;
-    while(curr){
-        ImproveNode(q, curr);
-        curr = curr->next;
+    //create a new queue
+    IsraeliQueue clonedQueue= IsraeliQueueClone(q);
+    Node to_improve= clonedQueue->tail;
+
+    while(to_improve){
+        ImproveNode(q, to_improve);
+        to_improve = to_improve->next;
     }
+
+    IsraeliQueueDestroy(clonedQueue);
     return ISRAELIQUEUE_SUCCESS;
 }
 

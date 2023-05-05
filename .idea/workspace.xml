@@ -23,7 +23,6 @@
     <list default="true" id="d72a54fe-0d3a-48cb-9b1c-ca43ba5b2224" name="Changes" comment="vendredi  05/05 14:30&#10;compile, phase de test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IsraeliQueue.c" beforeDir="false" afterPath="$PROJECT_DIR$/IsraeliQueue.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +101,7 @@
       <workItem from="1682865240111" duration="10635000" />
       <workItem from="1682949974215" duration="3829000" />
       <workItem from="1683271490626" duration="115000" />
-      <workItem from="1683271617526" duration="23823000" />
+      <workItem from="1683271617526" duration="27677000" />
     </task>
     <task id="LOCAL-00001" summary="hey">
       <created>1681998687645</created>
@@ -300,7 +299,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683295923146</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="vendredi  05/05 14:30&#10;compile, phase de test">
+      <created>1683297316971</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1683297316971</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -340,9 +346,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/main.c</url>
-          <line>111</line>
-          <option name="timeStamp" value="58" />
+          <url>file://$PROJECT_DIR$/IsraeliQueue.c</url>
+          <line>200</line>
+          <option name="timeStamp" value="66" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
