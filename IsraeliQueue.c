@@ -12,7 +12,16 @@ IsraeliQueue IsraeliQueueCreate(FriendshipFunction* friendshipFunction, Comparis
     q->friendshipThreshold = friendship_th;
     q->rivalryThreshold = rivalry_th;
     q->tail = NULL;
-    q->friendshipFunction = friendshipFunction;
+    int size =0;
+    while(friendshipFunction[size]){
+        size++;
+    }
+    FriendshipFunction* new_tab_friendshipFunction = malloc ((size+1) * sizeof(FriendshipFunction));
+    for (int i=0 ; i<size;i++){
+        new_tab_friendshipFunction[i]=friendshipFunction[i];
+    }
+    new_tab_friendshipFunction[size]=NULL;
+    q->friendshipFunction = new_tab_friendshipFunction;
     q->comparisonFunction = comparisonFunction;
     return q;
 }
@@ -85,12 +94,13 @@ IsraeliQueueError IsraeliQueueAddFriendshipMeasure(IsraeliQueue q, FriendshipFun
     while(q->friendshipFunction[count]){
         count++;
     }
-    FriendshipFunction *new_friendship_functions = (FriendshipFunction*)realloc(q->friendshipFunction, (count+1) * sizeof(FriendshipFunction));
+    FriendshipFunction* new_friendship_functions = (FriendshipFunction*)realloc(q->friendshipFunction, (count+1) * sizeof(FriendshipFunction));
     if (new_friendship_functions == NULL) {
         return ISRAELIQUEUE_ALLOC_FAILED;
     }
     q->friendshipFunction = new_friendship_functions;
     q->friendshipFunction[q->size] = friendships_function;
+    q->friendshipFunction[q->size+1]=NULL;
     q->size++;
     return ISRAELIQUEUE_SUCCESS;
 }

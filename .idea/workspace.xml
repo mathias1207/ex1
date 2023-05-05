@@ -101,7 +101,7 @@
       <workItem from="1682865240111" duration="10635000" />
       <workItem from="1682949974215" duration="3829000" />
       <workItem from="1683271490626" duration="115000" />
-      <workItem from="1683271617526" duration="11524000" />
+      <workItem from="1683271617526" duration="14258000" />
     </task>
     <task id="LOCAL-00001" summary="hey">
       <created>1681998687645</created>
@@ -264,7 +264,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683282363576</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="vendredi  05/05 13:00&#10;compile, phase de test">
+      <created>1683283290614</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1683283290614</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -298,22 +305,6 @@
     <MESSAGE value="jeudi 04/05 16:55" />
     <MESSAGE value="vendredi  05/05 13:00&#10;compile, phase de test" />
     <option name="LAST_COMMIT_MESSAGE" value="vendredi  05/05 13:00&#10;compile, phase de test" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/IsraeliQueue.c</url>
-          <line>87</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/IsraeliQueue.c</url>
-          <line>83</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
