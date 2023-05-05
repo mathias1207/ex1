@@ -1,5 +1,4 @@
 #include "HackerEnrollment.h"
-#define HACKERSLINE 4
 #define RIVALRY_TRESHOLD 0
 #define FRIENDSHIP_TRESHOLD 20
 #define BUFFER 1000
