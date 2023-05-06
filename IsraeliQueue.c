@@ -199,7 +199,7 @@ void IsraeliQueueRemoveNode(IsraeliQueue q, Node item) {
         return;
     }
     // If node is the tail, update accordingly
-    if (item == q->tail) {//q->comparisonFunction(item, q->tail)
+    if (!q->comparisonFunction(item, q->tail)) {// si ce sont les memes
         q->tail = item->next;
         return;
     } else {
