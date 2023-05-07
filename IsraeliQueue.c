@@ -189,7 +189,7 @@ void IsraeliQueueInsertNode(IsraeliQueue q, Node farest_friend, Node item) {
         previous = current;
         current = current->next;
     }
-    item->next = previous->next;
+    item->next = current;
     previous->next = item;
 }
 
@@ -261,7 +261,7 @@ bool is_enemy(void* item1, void* item2, IsraeliQueue q){
     Node curr = toImprove->next;
     while (curr->next  && q->comparisonFunction(curr->next , potential_enemy )) {
         if (is_friends(toImprove->data, curr->data, q) && curr->friend_count <= FRIEND_QUOTA) {
-            last_friend = curr->next;
+            last_friend = curr;
         }
         curr = curr->next;
     }
@@ -272,6 +272,7 @@ bool is_enemy(void* item1, void* item2, IsraeliQueue q){
             potential_enemy->rival_count++;
             break;
         }
+        curr=curr->next;
     }
     if (q->comparisonFunction(last_friend,toImprove)) {
         last_friend->friend_count++;
