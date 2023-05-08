@@ -70,7 +70,7 @@ int nbOfLinesInFile(FILE* f){
     }
     int counter = 0;
     char c ;
-    while((c=fgetc(f)) != EOF){
+    while((c = fgetc(f)) != EOF){
         if(c == '\n'){
             counter++;
         }
@@ -91,47 +91,47 @@ void deleteStudentArray(Student** studentArr, int index){
     free(studentArr);
 }
 
-bool getCharacter(char** param, FILE* inputFile) {
-    char temp;
-    int charCounter = 0;
-    *param = malloc(1 * sizeof(char));
-    if (*param == NULL) {
-        return false;
-    }
-    while ((temp = fgetc(inputFile)) != EOF && temp != '\n' && temp != ' ') {
-        charCounter++;
-        *param = realloc(*param, (charCounter + 1) * sizeof(char));
-        if (*param == NULL) {
-            return false;
-        }
-        (*param)[charCounter - 1] = temp;
-    }
-    (*param)[charCounter] = '\0';
-    return true;
-}
-
-bool readLine(char** buffer, FILE* inputFile) {
-    int bufferSize = 100;
-    int charCounter = 0;
-    *buffer = (char*) malloc(bufferSize * sizeof(char));
-    if (*buffer == NULL) {
-        return false;
-    }
-    char c = fgetc(inputFile);
-    while (c != EOF && c != '\n') {
-        (*buffer)[charCounter++] = c;
-        if (charCounter == bufferSize) {
-            bufferSize *= 2;
-            *buffer = (char*) realloc(*buffer, bufferSize * sizeof(char));
-            if (*buffer == NULL) {
-                return false;
-            }
-        }
-        c = fgetc(inputFile);
-    }
-    (*buffer)[charCounter] = '\0';
-    return true;
-}
+//bool getCharacter(char** param, FILE* inputFile) {
+//    char temp;
+//    int charCounter = 0;
+//    *param = malloc(1 * sizeof(char));
+//    if (*param == NULL) {
+//        return false;
+//    }
+//    while ((temp = fgetc(inputFile)) != EOF && temp != '\n' && temp != ' ') {
+//        charCounter++;
+//        *param = realloc(*param, (charCounter + 1) * sizeof(char));
+//        if (*param == NULL) {
+//            return false;
+//        }
+//        (*param)[charCounter - 1] = temp;
+//    }
+//    (*param)[charCounter] = '\0';
+//    return true;
+//}
+//
+//bool readLine(char** buffer, FILE* inputFile) {
+//    int bufferSize = 100;
+//    int charCounter = 0;
+//    *buffer = (char*) malloc(bufferSize * sizeof(char));
+//    if (*buffer == NULL) {
+//        return false;
+//    }
+//    char c = fgetc(inputFile);
+//    while (c != EOF && c != '\n') {
+//        (*buffer)[charCounter++] = c;
+//        if (charCounter == bufferSize) {
+//            bufferSize *= 2;
+//            *buffer = (char*) realloc(*buffer, bufferSize * sizeof(char));
+//            if (*buffer == NULL) {
+//                return false;
+//            }
+//        }
+//        c = fgetc(inputFile);
+//    }
+//    (*buffer)[charCounter] = '\0';
+//    return true;
+//}
 
 bool isDigit(char c) {
     return c >= '0' && c <= '9';
@@ -216,6 +216,13 @@ Student* createStudentFromLine(char* line,Student* student) {
     return student;
 }
 
+
+
+
+
+
+////////////////////////////studentEnrollement///////////////////////////////////////////////////
+
 Student** studentEnrollment(FILE* students,int linesInStudentFile) {
     Student **arrayOfPtrStudent = malloc((linesInStudentFile) * sizeof(Student *));
     if (!arrayOfPtrStudent) {
@@ -233,7 +240,7 @@ Student** studentEnrollment(FILE* students,int linesInStudentFile) {
         }
         createStudentFromLine(line, arrayOfPtrStudent[i]);
         i++;
-        }
+    }
     return arrayOfPtrStudent;
 }
 ////////////////////////////hackerEnrollement///////////////////////////////////////////////////
@@ -375,6 +382,8 @@ EnrollmentSystem createEnrollment(FILE* students, FILE* courses, FILE* hackers){
     }
     return system;
 }
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 int numOfCourses(EnrollmentSystem sys) {
     int count = 0;
@@ -417,7 +426,7 @@ int findCourse(EnrollmentSystem sys, int courseNumber) {
 Student* findStudentById(int studentId, EnrollmentSystem sys) {
     int numStudents = numOfStudents(sys);
     for (int i = 0; i < numStudents; i++) {
-        if (sys->f_students[i]->id == studentId) { // il faut peut etre mettre studentId en int ?
+        if (sys->f_students[i]->id == studentId) {
             return sys->f_students[i];
         }
     }
@@ -457,6 +466,14 @@ EnrollmentSystem readEnrollment(EnrollmentSystem sys, FILE *queues) {
         return sys;
     }
 
+
+
+
+ /////////////////////////////////////////hackEnrollement////////////////////////////////////////////////////////
+
+
+
+
     int numOfDesiredCoursesByHacker(EnrollmentSystem sys, int hackerId) {
         int numHackers = numOfHackers(sys); // nombre de hackers
         for (int i = 0; i < numHackers; i++) {
@@ -484,7 +501,7 @@ void hackEnrollment(EnrollmentSystem sys, FILE *out) {
             }
             Course *course = sys->f_courses[courseIndex];
             if (IsraeliQueueEnqueue(course->queue, sys->f_hackers[i]) != ISRAELIQUEUE_SUCCESS) {
-                fprintf(out, "Cannot satisfy constraints for %s\n", sys->f_hackers[i]->id);
+                fprintf(out, "Cannot satisfy constraints for %d\n", sys->f_hackers[i]->id);
             } else {
                 IsraeliQueueEnqueue(course->queue, sys->f_hackers[i]);
             }
