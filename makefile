@@ -1,28 +1,23 @@
 # Variables pour les noms des fichiers sources et objets
-SOURCES = HackEnrollment.c IsraeliQueue.c main.c
-HEADERS = HackEnrollment.h IsraeliQueue.h
+SOURCES = tool/HackerEnrollment.c IsraeliQueue.c tool/main.c
+HEADERS = tool/HackerEnrollment.h IsraeliQueue.h Node.h
 OBJECTS = $(SOURCES:.c=.o)
 # Variables pour les options du compilateur
 CC = gcc
 CFLAGS = -Wall -Wextra -pedantic -std=c99
-# Nom du programme généré
 PROGRAM = HackEnrollment
 
-# Règle pour construire le programme
 program: $(OBJECTS)
-	$(CC) $(CFLAGS) -o $(PROGRAM) $(OBJECTS)
-  
-  # Règles pour les fichiers objets
-HackEnrollment.o: HackEnrollment.c HackEnrollment.h IsraeliQueue.h
-	$(CC) $(CFLAGS) -c HackEnrollment.c
+	$(CC) $(CFLAGS) $(OBJECTS)-o $@ 
 
-IsraeliQueue.o: IsraeliQueue.c IsraeliQueue.h
+tool/HackerEnrollment.o: tool/HackerEnrollment.c tool/HackerEnrollment.h IsraeliQueue.h
+	$(CC) $(CFLAGS) -c tool/HackEnrollment.c
+
+IsraeliQueue.o: IsraeliQueue.c IsraeliQueue.h Node.h
 	$(CC) $(CFLAGS) -c IsraeliQueue.c
 
-main.o: main.c HackEnrollment.h IsraeliQueue.h
-	$(CC) $(CFLAGS) -c main.c
+tool/main.o: tool/main.c tool/HackerEnrollment.h IsraeliQueue.h Node.h
+	$(CC) $(CFLAGS) -c tool/main.c
 
-# Règle pour nettoyer les fichiers générés
 clean:
 	rm -f $(OBJECTS) $(PROGRAM)
-

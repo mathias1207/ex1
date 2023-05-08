@@ -4,7 +4,7 @@
 
 #ifndef EX1_HACKERENROLLMENT_H
 #define EX1_HACKERENROLLMENT_H
-#include "IsraeliQueue.h"
+#include "../IsraeliQueue.h"
 #include <stdio.h>
 #include <string.h>
 #define IDLEN 9
