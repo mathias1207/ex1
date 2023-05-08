@@ -1,5 +1,22 @@
 #include "IsraeliQueue.h"
+#include "Node.h"
 #include <stdlib.h>
+#include <stdbool.h>
+
+#define FRIEND_QUOTA 5
+#define RIVAL_QUOTA 3
+
+
+
+ struct IsraeliQueue_t {
+    int size;
+    FriendshipFunction* friendshipFunction;
+    ComparisonFunction comparisonFunction ;
+    Node tail;
+    int friendshipThreshold;
+    int rivalryThreshold;
+} ;
+
 
 void ImproveNode(IsraeliQueue q, Node toImprove);
 //done
@@ -373,7 +390,7 @@ IsraeliQueue IsraeliQueueMerge(IsraeliQueue* qarr, ComparisonFunction compare_fu
                 if (person != NULL) {
                     IsraeliQueueEnqueue(merged_queue,person);
                 }
-                IsraeliQueueImprovePositions(merged_queue);
+                //IsraeliQueueImprovePositions(merged_queue);
             }
         }
     }

@@ -20,10 +20,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d72a54fe-0d3a-48cb-9b1c-ca43ba5b2224" name="Changes" comment="dimanche 07/05 23:30&#10;IsraeliQueue ne sort pas le bon input">
+    <list default="true" id="d72a54fe-0d3a-48cb-9b1c-ca43ba5b2224" name="Changes" comment="dimanche 07/05 17:00&#10;IsraeliQueue ne sort pas le bon input">
+      <change afterPath="$PROJECT_DIR$/Node.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HackerEnrollment.c" beforeDir="false" afterPath="$PROJECT_DIR$/HackerEnrollment.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IsraeliQueue.c" beforeDir="false" afterPath="$PROJECT_DIR$/IsraeliQueue.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IsraeliQueue.h" beforeDir="false" afterPath="$PROJECT_DIR$/IsraeliQueue.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -103,7 +105,7 @@
       <workItem from="1682865240111" duration="10635000" />
       <workItem from="1682949974215" duration="3829000" />
       <workItem from="1683271490626" duration="115000" />
-      <workItem from="1683271617526" duration="51735000" />
+      <workItem from="1683271617526" duration="56403000" />
     </task>
     <task id="LOCAL-00001" summary="hey">
       <created>1681998687645</created>
@@ -343,7 +345,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683491159540</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="dimanche 07/05 17:00&#10;IsraeliQueue ne sort pas le bon input">
+      <created>1683553993557</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1683553993557</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -380,7 +389,8 @@
     <MESSAGE value="dimanche 07/05&#10;IsraeliQueue ne sort pas le bon input" />
     <MESSAGE value="dimanche 07/05 12:50&#10;IsraeliQueue ne sort pas le bon input" />
     <MESSAGE value="dimanche 07/05 23:30&#10;IsraeliQueue ne sort pas le bon input" />
-    <option name="LAST_COMMIT_MESSAGE" value="dimanche 07/05 23:30&#10;IsraeliQueue ne sort pas le bon input" />
+    <MESSAGE value="dimanche 07/05 17:00&#10;IsraeliQueue ne sort pas le bon input" />
+    <option name="LAST_COMMIT_MESSAGE" value="dimanche 07/05 17:00&#10;IsraeliQueue ne sort pas le bon input" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -397,8 +407,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/IsraeliQueue.c</url>
-          <line>379</line>
+          <line>396</line>
           <option name="timeStamp" value="96" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/main.c</url>
+          <line>136</line>
+          <option name="timeStamp" value="103" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

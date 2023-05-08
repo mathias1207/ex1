@@ -1,7 +1,6 @@
 
 #include "HackerEnrollment.h"
-
-
+#include "IsraeliQueue.h"
 
 
 
@@ -86,7 +85,7 @@ int main(int argc, char* argv[]) {
 
 
 
-//
+
 //
 //int comparison_function_mock(void *obj1, void *obj2) {
 //    int id1 = *(int *)obj1;
@@ -144,9 +143,9 @@ int main(int argc, char* argv[]) {
 //    }
 //    return 0;
 //}
-//
-///* Check your IsraeliQueue g. It's supposed to be: start->4->3->4->2->1->3->4->3->2->2->4->3->1->4->end
-//*/
+
+/* Check your IsraeliQueue g. It's supposed to be: start->4->3->4->2->1->3->4->3->2->2->4->3->1->4->end
+*/
 
 
 //
