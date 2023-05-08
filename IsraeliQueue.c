@@ -13,9 +13,11 @@ IsraeliQueue IsraeliQueueCreate(FriendshipFunction* friendshipFunction, Comparis
     q->rivalryThreshold = rivalry_th;
     q->tail = NULL;
     int nbOfFriendshipFunc =0;
+    // count number of friendship functions
     while(friendshipFunction[nbOfFriendshipFunc]){
         nbOfFriendshipFunc++;
     }
+    // copy friendship functions to new array
     FriendshipFunction* new_tab_friendshipFunction = malloc ((nbOfFriendshipFunc+1) * sizeof(FriendshipFunction));
     for (int i=0 ; i<nbOfFriendshipFunc;i++){
         new_tab_friendshipFunction[i]=friendshipFunction[i];
@@ -34,10 +36,11 @@ IsraeliQueue IsraeliQueueClone(IsraeliQueue q){
         return NULL;
     }
     Node before= new_q->tail;
+    // copy nodes to new queue
     for (Node node = q->tail; node != NULL; node = node->next) {
         Node new_node= malloc(sizeof (*new_node));
         new_node->data= node->data;
-        new_node->next=NULL;
+        new_node->next= NULL;
         new_node->rival_count= node->rival_count;
         new_node->friend_count= node->friend_count;
         if (!new_q->tail){
@@ -104,9 +107,11 @@ IsraeliQueueError IsraeliQueueAddFriendshipMeasure(IsraeliQueue q, FriendshipFun
         return ISRAELIQUEUE_BAD_PARAM;
     }
     int count = 0;
+    // count number of friendship functions
     while(q->friendshipFunction[count]){
         count++;
     }
+    // add friendship function to array
     FriendshipFunction* new_friendship_functions = (FriendshipFunction*)realloc(q->friendshipFunction, (count+2) * sizeof(FriendshipFunction));
     if (new_friendship_functions == NULL) {
         return ISRAELIQUEUE_ALLOC_FAILED;
@@ -253,7 +258,7 @@ bool is_enemy(void* item1, void* item2, IsraeliQueue q){
 
     //find the first enemy
     while (potential_enemy->next) {
-            if (is_enemy(toImprove->data, potential_enemy->data, q) && potential_enemy->rival_count < RIVAL_QUOTA) {
+            if (is_enemy(toImprove->data, potential_enemy->data, q) && potential_enemy->rival_count <= RIVAL_QUOTA) {
                 break;
         }
         potential_enemy = potential_enemy->next;
@@ -264,7 +269,7 @@ bool is_enemy(void* item1, void* item2, IsraeliQueue q){
     Node lastFriendBeforeEnemy = toImprove;
     Node curr = toImprove->next;
     while (curr->next  && q->comparisonFunction(curr->data , enemy->data )) {// while current->next!= Null and current is not the enemy
-        if (is_friends(toImprove->data, curr->data, q) && curr->friend_count < FRIEND_QUOTA) {
+        if (is_friends(toImprove->data, curr->data, q) && curr->friend_count <= FRIEND_QUOTA) {
             lastFriendBeforeEnemy = curr;
         }
         curr = curr->next;
@@ -273,7 +278,7 @@ bool is_enemy(void* item1, void* item2, IsraeliQueue q){
     // check if there is a friend after the enemy
     bool flag_friend_after_enemy= false;
     while(curr->next){
-        if (is_friends(curr->data, toImprove->data, q) && curr->friend_count < FRIEND_QUOTA){
+        if (is_friends(curr->data, toImprove->data, q) && curr->friend_count <= FRIEND_QUOTA){
             flag_friend_after_enemy=true;
             break;
         }
@@ -305,8 +310,8 @@ IsraeliQueueError IsraeliQueueImprovePositions(IsraeliQueue q){
 
     while(to_improve){
         Node nodeInRealQ= q->tail;
-        //search the node in the real queue
-        while (q->comparisonFunction(to_improve->data,nodeInRealQ->data )){
+        //search the node in the real queueז
+         while (q->comparisonFunction(to_improve->data,nodeInRealQ->data )){
             nodeInRealQ=nodeInRealQ->next;
         }
         ImproveNode(q, nodeInRealQ);
@@ -385,3 +390,4 @@ IsraeliQueue IsraeliQueueMerge(IsraeliQueue* qarr, ComparisonFunction compare_fu
     }
     return merged_queue;
 }
+
