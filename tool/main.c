@@ -1,7 +1,7 @@
 
-#include "HackerEnrollment.h"
-#include "IsraeliQueue.h"
-#include "Node.h"
+#include "./HackerEnrollment.h"
+#include "../IsraeliQueue.h"
+#include "../Node.h"
 
 
 
@@ -99,27 +99,6 @@ void HackEnrollment(bool case_sensitive, char* students_file, char* courses_file
 //return temp;
 //}
 
-int my_fonction(void* firstObject, void* secondObject) {
-    if ((*(int *) firstObject) != 1 && (*(int *) secondObject) != 1) {
-        return 0;
-    }
-    if ((*(int *) firstObject) == 2 && (*(int *) secondObject) == 1 ||
-        (*(int *) firstObject) == 1 && (*(int *) secondObject) == 2) {
-        return 0;
-    }
-    return 1000;
-}
-
-
-struct IsraeliQueue_t {
-    int size;
-    FriendshipFunction *friendshipFunction;
-    ComparisonFunction comparisonFunction;
-    Node tail;
-    int friendshipThreshold;
-    int rivalryThreshold;
-};
-
 int comparison_function_mock(void *obj1, void *obj2) {
     int id1 = *(int *)obj1;
     int id2 = *(int *)obj2;
@@ -134,7 +113,7 @@ int oddEvenFriendshipFunction(void* firstObject, void* secondObject){
     depends only on the object already in the queue. We define the friendship threshold to be 3
     and rivalry threshold to be -1 */
 
-    if ((((int)firstObject)+((int)secondObject))%2==0){
+    if (((*(int*)firstObject)+(*(int*)secondObject))%2==0){
         return 4; /* 4 is over the friendship threshold(=3), which means if the first object is even
 					the enqueued object is always his friend */
     }
@@ -171,8 +150,8 @@ int main(){
 
     printf("Test3:\nYour output: ");
     for (int k=0; k<20; k++){
-        int s=*(int*)IsraeliQueueDequeue(testQueue);
-        printf("%d ", s);
+        int* s=(int*)IsraeliQueueDequeue(testQueue);
+        printf("%d ", *s);
     }
     printf("\nExpected:    1 2 26 30 28 24 22 20 18 3 4 5 6 7 8 9 10 16 14 12\n");
 

@@ -244,8 +244,6 @@ void IsraeliQueueRemoveNode(IsraeliQueue q, Node item) {
 
 bool is_friends(void* item1, void* item2, IsraeliQueue q){
     if (!q) return false;
-
-
     int i;
     for (i = 0; q->friendshipFunction[i] != NULL; i++) {
         if (q->friendshipFunction[i](item1, item2) > q->friendshipThreshold) {
@@ -296,7 +294,7 @@ Node FindFarthestFriendBeforeEnemy(IsraeliQueue q, Node toImprove, Node enemy){
     Node lastFriendBeforeEnemy = toImprove;
     Node curr = toImprove->next;
     while (curr  && curr != enemy) {// while current->next!= Null and current is not the enemy
-        if (is_friends(toImprove->data, curr->data, q) && curr->friend_count < FRIEND_QUOTA) {
+        if ((is_friends(toImprove->data, curr->data, q)) && (curr->friend_count < FRIEND_QUOTA)) {
             lastFriendBeforeEnemy = curr;
         }
         curr = curr->next;
