@@ -8,10 +8,10 @@ CFLAGS = -Wall -Wextra -pedantic -std=c99
 PROGRAM = HackEnrollment
 
 program: $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS)-o $@ 
+	$(CC) $(CFLAGS) $(OBJECTS) -o $@
 
 tool/HackerEnrollment.o: tool/HackerEnrollment.c tool/HackerEnrollment.h IsraeliQueue.h
-	$(CC) $(CFLAGS) -c tool/HackEnrollment.c
+	$(CC) $(CFLAGS) -c tool/HackerEnrollment.c
 
 IsraeliQueue.o: IsraeliQueue.c IsraeliQueue.h Node.h
 	$(CC) $(CFLAGS) -c IsraeliQueue.c

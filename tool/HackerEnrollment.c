@@ -268,7 +268,7 @@ int* readIntArray(char* str, int* length) {
         }
         (*length)++;
     }
-    *length++; // passer le '\n'
+    (*length)++; // passer le '\n'
     return result;
 }
 
@@ -388,10 +388,8 @@ EnrollmentSystem createEnrollment(FILE* students, FILE* courses, FILE* hackers){
 
 int numOfCourses(EnrollmentSystem sys) {
     int count = 0;
-    for(int i = 0; i!=EOF; i++) {
-        if (sys->f_courses[i] != NULL) {
+    for(int i = 0; sys->f_courses[i] != NULL; i++) {
             count++;
-        }
     }
     return count;
 }
@@ -485,9 +483,10 @@ EnrollmentSystem readEnrollment(EnrollmentSystem sys, FILE *queues) {
 
 int numOfDesiredCoursesByHacker(EnrollmentSystem sys, int hackerId) {
     int numHackers = numOfHackers(sys); // nombre de hackers
+    int numDesiredCourses = 0;
+
     for (int i = 0; i < numHackers; i++) {
         if (sys->f_hackers[i]->id == hackerId) {
-            int numDesiredCourses = 0;
             for (int j = 0; j < numOfCourses(sys); j++) {
                 if (sys->f_hackers[i]->desiredCourses[j] != 0) {
                     numDesiredCourses++;
@@ -496,16 +495,16 @@ int numOfDesiredCoursesByHacker(EnrollmentSystem sys, int hackerId) {
             return numDesiredCourses;
         }
     }
-    return -1;
+    return 0;
 }
 
 
 void writeEnrollmentQueue(FILE *out, Course *course) {
     fprintf(out, "%d", course->courseNumber);
-    Student *head = IsraeliQueueDequeue(course->queue);
+    Student* head = IsraeliQueueDequeue(course->queue);
     while (head) {
         fprintf(out, " %d", head->id);
-        head = IsraeliQueueDequeue(course->queue);
+        head =(Student*) IsraeliQueueDequeue(course->queue);
     }
     fprintf(out, "\n");
 }
