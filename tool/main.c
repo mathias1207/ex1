@@ -1,5 +1,5 @@
 
-#include "./HackerEnrollment.h"
+#include "./HackEnrollment.h"
 #include "../IsraeliQueue.h"
 #include "../Node.h"
 
@@ -7,18 +7,24 @@
 
 void WrapperHackEnrollment(/*bool case_sensitive,*/ char* students_file, char* courses_file, char* hackers_file, char* queues_file, char* out_file) {
     // Ouvrir les fichiers d'entrée
-    FILE* students = fopen(students_file, "r");
-    FILE* courses = fopen(courses_file, "r");
-    FILE* hackers = fopen(hackers_file, "r");
-    FILE* queues = fopen(queues_file, "r");
-    FILE* out = fopen(out_file, "r");
+//    FILE* students = fopen(students_file, "r");
+//    FILE* courses = fopen(courses_file, "r");
+//    FILE* hackers = fopen(hackers_file, "r");
+//    FILE* queues = fopen(queues_file, "r");
+//    FILE* out = fopen(out_file, "r");
 
+
+    FILE* students = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\courses.txt", "r");
+    FILE* courses = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\hackers.txt", "r");
+    FILE* hackers = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\queues.txt", "r");
+    FILE* queues = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\students.txt", "r");
+    FILE* out = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\out.txt", "r");
 
     // Vérifier si les fichiers ont été ouverts avec succès
-    if (students == NULL || courses == NULL || hackers == NULL || queues == NULL) {
-        printf("Erreur : impossible d'ouvrir un fichier d'entrée\n");
-        exit(EXIT_FAILURE);
-    }
+//    if (students == NULL || courses == NULL || hackers == NULL || queues == NULL) {
+//        printf("Erreur : impossible d'ouvrir un fichier d'entrée\n");
+//        exit(EXIT_FAILURE);
+//    }
 
     // Créer le système d'inscription
     EnrollmentSystem sys = createEnrollment(students, courses, hackers);
@@ -49,10 +55,10 @@ int main(int argc, char* argv[]) {
     char* out_file;
 
     // Vérifier le nombre d'arguments
-    if (argc < 6 || argc > 7) {
-        printf("Erreur : nombre d'arguments invalide\n");
-        exit(EXIT_FAILURE);
-    }
+//    if (argc < 6 || argc > 7) {
+//        printf("Erreur : nombre d'arguments invalide\n");
+//        exit(EXIT_FAILURE);
+//    }
 
     // Vérifier si le premier argument est présent
     if (argc == 7) {
@@ -78,106 +84,4 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-
-
-
-//
-//
-//int comparison_function_mock(void *obj1, void *obj2) {
-//    int id1 = *(int *)obj1;
-//    int id2 = *(int *)obj2;
-//
-//    return (id1 - id2);
-//}
-//int mockfriendshipfunction(void* firstObject, void* secondObject){
-//    int temp = (*(int*)firstObject)+(*(int*)firstObject)+50;
-//    return temp;
-//}
-//
-//
-//int main(){
-//    // test 1
-//
-//    /* iterations:
-//    1 2 3 4 5 6 7 8 9 10 11 12 <-original
-//    1 12 2 3 4 5 6 7 8 9 10 11
-//    1 11 12 2 3 4 5 6 7 8 9 10
-//    1 10 11 12 2 3 4 5 6 7 8 9
-//    1 9 10 11 12 2 3 4 5 6 7 8
-//    1 8 9 10 11 12 2 3 4 5 6 7
-//    1 8 7 9 10 11 12 2 3 4 5 6
-//    1 8 6 7 9 10 11 12 2 3 4 5
-//    1 8 5 6 7 9 10 11 12 2 3 4
-//    1 8 4 5 6 7 9 10 11 12 2 3
-//    1 8 3 4 5 6 7 9 10 11 12 2
-//    1 8 3 2 4 5 6 7 9 10 11 12
-//    8 3 1 2 4 5 6 7 9 10 11 12
-//
-//     */
-//    int arr[]={1,2,3,4,5,6,7,8,9,10,11,12};
-//    FriendshipFunction functions[]={NULL};
-//    IsraeliQueue queue=IsraeliQueueCreate(functions, comparison_function_mock, 0, 0);
-//
-//    for (int i=0; i<12; i++){
-//        IsraeliQueueEnqueue(queue, &arr[i]);
-//
-//    }
-//    IsraeliQueueAddFriendshipMeasure(queue, mockfriendshipfunction);
-//    IsraeliQueueImprovePositions(queue);
-//    printf("Test1:\nYour output: ");
-//    for (int i=0; i<12; i++){
-//        int s=*(int*)IsraeliQueueDequeue(queue);
-//        printf("%d ", s);
-//    }
-//    printf("\nExpected:    8 3 1 2 4 5 6 7 9 10 11 12\n");
-//    IsraeliQueueDestroy(queue);
-//
-//    // test 2
-//    /*iterations:
-//    1:  *4
-//    2:  4 *3
-//    3:  4 *4 3
-//    4:  4 *1 4 3
-//    5:  4 *3 1 4 3
-//    6:  4 *4 3 1 4 3
-//    7:  4 4 *2 3 1 4 3
-//    8:  4 4 *2 2 3 1 4 3
-//    9:  4 4 *3 2 2 3 1 4 3
-//    10: 4 4 *1 3 2 2 3 1 4 3
-//    11: 4 4 *4 1 3 2 2 3 1 4 3
-//    12: 4 4 4 *5 1 3 2 2 3 1 4 3
-//
-//
-//    */
-//    queue=IsraeliQueueCreate(functions, comparison_function_mock, 0, 0);
-//    for (int i=0; i<4; i++){
-//        IsraeliQueueEnqueue(queue, &arr[i]);
-//    }
-//    IsraeliQueue p=IsraeliQueueClone(queue);
-//    IsraeliQueueImprovePositions(queue);
-//    int *five=malloc(sizeof(int));
-//    *five=5;
-//    IsraeliQueueEnqueue(queue, five);
-//    IsraeliQueue s=IsraeliQueueClone(p);
-//    IsraeliQueue f=IsraeliQueueClone(p);
-//    for (int j=0; j<2; j++){
-//        IsraeliQueueDequeue(p);
-//    }
-//    for (int k=0; k<3; k++){
-//        IsraeliQueueDequeue(s);
-//    }
-//    IsraeliQueueAddFriendshipMeasure(f, mockfriendshipfunction);
-//    IsraeliQueue q_arr[]={queue, p, s, f, NULL};
-//    IsraeliQueue result=IsraeliQueueMerge(q_arr, comparison_function_mock);
-//    printf("Test2:\nYour output: ");
-//    for (int i=0; i<12; i++){
-//        int s=*(int*)IsraeliQueueDequeue(result);
-//        printf("%d ", s);
-//    }
-//    printf("\nExpected:    4 4 4 5 1 3 2 2 3 1 4 3\n");
-//
-//
-//
-//    return 0;
-//}
 

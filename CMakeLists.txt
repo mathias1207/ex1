@@ -8,6 +8,6 @@ include_directories(.)
 add_executable(
         IsraeliQueue.h
         IsraeliQueue.c
-        tool/HackerEnrollment.c
-        tool/HackerEnrollment.h
+        tool/HackEnrollment.c
+        tool/HackEnrollment.h
         tool/main.c)
