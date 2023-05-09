@@ -9,9 +9,9 @@ typedef int (*FriendshipFunction)(void*,void*);
 typedef int (*ComparisonFunction)(void*,void*);
 
 
-typedef struct IsraeliQueue_t* IsraeliQueue;
+typedef struct IsraeliQueue_t*  IsraeliQueue;
 
-typedef enum {ISRAELIQUEUE_SUCCESS, ISRAELIQUEUE_ALLOC_FAILED, ISRAELIQUEUE_BAD_PARAM, ISRAELI_QUEUE_ERROR } IsraeliQueueError;
+    typedef enum {ISRAELIQUEUE_SUCCESS, ISRAELIQUEUE_ALLOC_FAILED, ISRAELIQUEUE_BAD_PARAM, ISRAELI_QUEUE_ERROR } IsraeliQueueError;
 
 /**Error clarification:
  * ISRAELIQUEUE_SUCCESS: Indicates the function has completed its task successfully with no errors.

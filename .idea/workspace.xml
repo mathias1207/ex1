@@ -20,10 +20,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d72a54fe-0d3a-48cb-9b1c-ca43ba5b2224" name="Changes" comment="dimanche 07/05 17:00&#10;IsraeliQueue ne sort pas le bon input">
-      <change afterPath="$PROJECT_DIR$/Node.h" afterDir="false" />
+    <list default="true" id="d72a54fe-0d3a-48cb-9b1c-ca43ba5b2224" name="Changes" comment="lundi 8 mai 18:46">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HackerEnrollment.c" beforeDir="false" afterPath="$PROJECT_DIR$/HackerEnrollment.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IsraeliQueue.c" beforeDir="false" afterPath="$PROJECT_DIR$/IsraeliQueue.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IsraeliQueue.h" beforeDir="false" afterPath="$PROJECT_DIR$/IsraeliQueue.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
@@ -81,6 +79,11 @@
 }</component>
   <component name="RunManager">
     <configuration name="IsraeliQueue.h" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ex1" TARGET_NAME="IsraeliQueue.h" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ex1" RUN_TARGET_NAME="IsraeliQueue.h">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -347,7 +350,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683553993557</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="lundi 8 mai 18:46">
+      <created>1683560775183</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1683560775196</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -385,37 +395,38 @@
     <MESSAGE value="dimanche 07/05 12:50&#10;IsraeliQueue ne sort pas le bon input" />
     <MESSAGE value="dimanche 07/05 23:30&#10;IsraeliQueue ne sort pas le bon input" />
     <MESSAGE value="dimanche 07/05 17:00&#10;IsraeliQueue ne sort pas le bon input" />
-    <option name="LAST_COMMIT_MESSAGE" value="dimanche 07/05 17:00&#10;IsraeliQueue ne sort pas le bon input" />
+    <MESSAGE value="lundi 8 mai 18:46" />
+    <option name="LAST_COMMIT_MESSAGE" value="lundi 8 mai 18:46" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/main.c</url>
-          <line>201</line>
+          <line>233</line>
           <option name="timeStamp" value="86" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/main.c</url>
-          <line>239</line>
+          <line>271</line>
           <option name="timeStamp" value="94" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/IsraeliQueue.c</url>
-          <line>396</line>
+          <line>403</line>
           <option name="timeStamp" value="96" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/main.c</url>
-          <line>136</line>
-          <option name="timeStamp" value="103" />
+          <line>171</line>
+          <option name="timeStamp" value="109" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/main.c" line="105">
-        <watch expression="arr[0]" language="ObjectiveC" />
-      </inline-watch>
+      <configuration name="CMakeRunConfiguration">
+        <watch expression="(int*)queue-&gt;tail-&gt;data" language="ObjectiveC" />
+      </configuration>
     </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">

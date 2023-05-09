@@ -1,6 +1,7 @@
 
 #include "HackerEnrollment.h"
 #include "IsraeliQueue.h"
+#include "Node.h"
 
 
 
@@ -41,7 +42,7 @@ void HackEnrollment(bool case_sensitive, char* students_file, char* courses_file
 
 
 
-int main(int argc, char* argv[]) {
+/*int main(int argc, char* argv[]) {
     bool case_sensitive = true;
     char* students_file;
     char* courses_file;
@@ -79,70 +80,101 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
+*/
 
 
 
 
 
 
+//
+int comparison_function_mock(void *obj1, void *obj2) {
+    int id1 = *(int *)obj1;
+    int id2 = *(int *)obj2;
+   return id1 - id2;
+}
 
-//
-//int comparison_function_mock(void *obj1, void *obj2) {
-//    int id1 = *(int *)obj1;
-//    int id2 = *(int *)obj2;
-//
-//    return id1 - id2;
-//}
-//
-//int mockfriendshipfunction(void* firstObject, void* secondObject){
-//    int temp = (*(int*)firstObject)+(*(int*)firstObject)+5;
-//    return temp;
-//}
-//
-//
-//
-//int main(){
-//    int arr[]={1,2,3,4};
-//    FriendshipFunction functions[]={mockfriendshipfunction, NULL};
-//    IsraeliQueue queue=IsraeliQueueCreate(functions, comparison_function_mock, 100, 0);
-//    for (int i=0; i<4; i++){
-//        IsraeliQueueEnqueue(queue, &arr[i]);
-//    }
-//    IsraeliQueueAddFriendshipMeasure(queue, mockfriendshipfunction);
-//    IsraeliQueue p=IsraeliQueueClone(queue);
-//    IsraeliQueue j=IsraeliQueueClone(queue);
-//    IsraeliQueue m=IsraeliQueueClone(queue);
-//    IsraeliQueue s=IsraeliQueueClone(queue);
-//    IsraeliQueueDequeue(p);
-//    IsraeliQueueDequeue(p);
-//
-//
-//    IsraeliQueueDequeue(j);
-//    IsraeliQueueDequeue(j);
-//    IsraeliQueueDequeue(j);
-//    IsraeliQueueDequeue(m);
-//
-//
-//    IsraeliQueueImprovePositions(queue);
-//    Node toPrint= queue->tail;
-//    for (int i=0; i< queue->size;i++){
-//        printf("%d->", *(int*)(toPrint->data));
-//        toPrint= toPrint->next;
-//    }
-//    printf(("\n"));
-//
-//
-//    IsraeliQueue f[]={queue, p, j, m, s , NULL};
-//    IsraeliQueue g = IsraeliQueueMerge(f, comparison_function_mock);
-//    IsraeliQueueDestroy(queue);
-//
-//    toPrint= g->tail;
-//    for (int i=0; i< g->size;i++){
-//        printf("%d->", *(int*)(toPrint->data));
-//        toPrint= toPrint->next;
-//    }
-//    return 0;
-//}
+int mockfriendshipfunction(void* firstObject, void* secondObject){
+    int temp = (*(int*)firstObject)+(*(int*)firstObject)+5;
+    return temp;
+}
+
+int my_fonction(void* firstObject, void* secondObject) {
+    if ((*(int *) firstObject) != 1 && (*(int *) secondObject) != 1) {
+        return 0;
+    }
+    if ((*(int *) firstObject) == 2 && (*(int *) secondObject) == 1 ||
+        (*(int *) firstObject) == 1 && (*(int *) secondObject) == 2) {
+        return 0;
+    }
+    return 1000;
+}
+
+
+struct IsraeliQueue_t {
+    int size;
+    FriendshipFunction *friendshipFunction;
+    ComparisonFunction comparisonFunction;
+    Node tail;
+    int friendshipThreshold;
+    int rivalryThreshold;
+};
+
+int main() {
+/*    int arr[] = {2, 3, 4};
+    FriendshipFunction functions[] = {my_fonction, NULL};
+    IsraeliQueue queue = IsraeliQueueCreate(functions, comparison_function_mock, 100, 0);
+    for(int i = 0; i < 3; i++){
+        IsraeliQueueEnqueue(queue, &arr[i]);
+    }
+    int b=1;
+    IsraeliQueueEnqueue(queue, &b);
+
+    int* toPrint;
+    for(int i =0; i<4; i++){
+        toPrint =(int*) IsraeliQueueDequeue(queue);
+        printf("%d->", *(toPrint));
+    }
+    return 0;
+}*/
+    int arr[] = {1, 2, 3, 4};
+    FriendshipFunction functions[] = {mockfriendshipfunction, NULL};
+    IsraeliQueue queue = IsraeliQueueCreate(functions, comparison_function_mock, 100, 0);
+    for (int i = 0; i < 4; i++) {
+        IsraeliQueueEnqueue(queue, &arr[i]);
+    }
+    IsraeliQueueAddFriendshipMeasure(queue, mockfriendshipfunction);
+    IsraeliQueue p = IsraeliQueueClone(queue);
+    IsraeliQueue j = IsraeliQueueClone(queue);
+    IsraeliQueue m = IsraeliQueueClone(queue);
+    IsraeliQueue s = IsraeliQueueClone(queue);
+    IsraeliQueueDequeue(p);
+    IsraeliQueueDequeue(p);
+//p = 2 , j=1, m=3, queue ,s = 4
+    IsraeliQueueDequeue(j);
+    IsraeliQueueDequeue(j);
+    IsraeliQueueDequeue(j);
+    IsraeliQueueDequeue(m);
+
+    IsraeliQueueImprovePositions(queue);
+    Node toPrint = queue->tail;
+    for (int i = 0; i < queue->size; i++) {
+        printf("%d->", *(int *) (toPrint->data));
+        toPrint = toPrint->next;
+    }
+    printf(("\n"));
+
+    IsraeliQueue f[] = {queue, p, j, m, s, NULL};
+    IsraeliQueue g = IsraeliQueueMerge(f, comparison_function_mock);
+    IsraeliQueueDestroy(queue);
+
+    toPrint = g->tail;
+    for (int i = 0; i < g->size; i++) {
+        printf("%d->", *(int *) (toPrint->data));
+        toPrint = toPrint->next;
+    }
+    return 0;
+}
 
 /* Check your IsraeliQueue g. It's supposed to be: start->4->3->4->2->1->3->4->3->2->2->4->3->1->4->end
 */
