@@ -91,7 +91,7 @@ bool IsraeliQueueContains(IsraeliQueue q, void *item) {
 
     Node current = q->tail;
     while (current) {
-        if (!q->comparisonFunction(current->data , item)) return true;
+        if (q->comparisonFunction(current->data , item)) return true;
         current = current->next;
     }
     return false;
@@ -191,16 +191,17 @@ void* IsraeliQueueDequeue(IsraeliQueue q){
 //done
 
 void IsraeliQueueInsertNode(IsraeliQueue q, Node friend, Node item) {
-    if (q == NULL || item == NULL/*||!friend*/) {
+    // on part du principe que friend nest pas nul et existe dans la queue
+    if (q == NULL || item == NULL) {
         return;
     }
-    if(q->size == 1){
+// verifier que le friend est bien dans la queue
+    if(q->tail == friend){ // si le friend est la tail
         item->next = q->tail;
         q->tail = item;
         return;
     }
 
-    Node temp = item->next;
     Node previous = q->tail ;
     Node current = q->tail->next;
     while(current && current != friend){
@@ -210,33 +211,25 @@ void IsraeliQueueInsertNode(IsraeliQueue q, Node friend, Node item) {
     item->next = current;
     previous->next = item;
 
-    if(item==q->tail){
-        q->tail=temp;
-    }
 }
 
 
 void IsraeliQueueRemoveNode(IsraeliQueue q, Node item) {
-    if (q == NULL || q->tail == NULL || item == NULL) {
+    if (q == NULL || q->tail == NULL) {
         return;
     }
     // If node is the tail, update accordingly
-    if (item == q->tail) {// si ce sont les memes
+    if (item == q->tail) {// si on eneleve le dernier
         q->tail = item->next;
         return;
     } else {
         Node prev = q->tail;
         Node curr = q->tail->next;
-        if (!curr){
-            prev->next =NULL;
-            return;
-        }
         while (item != curr) {
             prev = curr;
             curr = curr->next;
         }
         prev->next = curr->next;
-        curr->next=NULL;
     }
 }
 
@@ -244,8 +237,6 @@ void IsraeliQueueRemoveNode(IsraeliQueue q, Node item) {
 
 bool is_friends(void* item1, void* item2, IsraeliQueue q){
     if (!q) return false;
-
-
     int i;
     for (i = 0; q->friendshipFunction[i] != NULL; i++) {
         if (q->friendshipFunction[i](item1, item2) > q->friendshipThreshold) {
@@ -293,10 +284,10 @@ Node FindFarthestEnemyBeforeFriend(IsraeliQueue q, Node toImprove,Node friend){
 
 // trouve l'ami le plus loin avant un ennemi
 Node FindFarthestFriendBeforeEnemy(IsraeliQueue q, Node toImprove, Node enemy){
-    Node lastFriendBeforeEnemy = toImprove;
-    Node curr = toImprove->next;
+    Node lastFriendBeforeEnemy = q->tail;
+    Node curr = lastFriendBeforeEnemy->next;
     while (curr  && curr != enemy) {// while current->next!= Null and current is not the enemy
-        if (is_friends(toImprove->data, curr->data, q) && curr->friend_count < FRIEND_QUOTA) {
+        if ((is_friends(toImprove->data, curr->data, q)) && (curr->friend_count < FRIEND_QUOTA)) {
             lastFriendBeforeEnemy = curr;
         }
         curr = curr->next;
@@ -354,6 +345,9 @@ IsraeliQueueError IsraeliQueueImprovePositions(IsraeliQueue q){
     while(to_improve){
         Node nodeInRealQ = q->tail;
         //search the node in the real queue
+        while (q->comparisonFunction(to_improve->data,nodeInRealQ->data)){
+            nodeInRealQ = nodeInRealQ->next;
+        }
         ImproveNode(q, nodeInRealQ);
         to_improve = to_improve->next;
     }
