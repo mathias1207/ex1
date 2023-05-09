@@ -22,10 +22,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d72a54fe-0d3a-48cb-9b1c-ca43ba5b2224" name="Changes" comment="mardi 09/05 14:30&#10;enrollement marche">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/makefile" beforeDir="false" afterPath="$PROJECT_DIR$/makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tool/HackerEnrollment.c" beforeDir="false" afterPath="$PROJECT_DIR$/tool/HackerEnrollment.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tool/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/tool/main.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +108,7 @@
       <workItem from="1682949974215" duration="3829000" />
       <workItem from="1683271490626" duration="115000" />
       <workItem from="1683271617526" duration="60666000" />
-      <workItem from="1683632445998" duration="3538000" />
+      <workItem from="1683632445998" duration="4772000" />
     </task>
     <task id="LOCAL-00001" summary="hey">
       <created>1681998687645</created>
@@ -407,7 +404,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683632385967</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="mardi 09/05 14:30&#10;enrollement marche">
+      <created>1683636110164</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1683636110164</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
