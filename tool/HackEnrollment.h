@@ -12,23 +12,24 @@
 
 
 
+
+typedef struct {
+    int id;
+    int* desiredCourses;
+    int* friendsId;
+    int* enemiesId;
+} Hacker;
+
 typedef struct{
-    int id ;             //9 digits
-    int totalCredits;   //>=0
-    float gpa;          //0<=num<=100
+    int id ;
+    int totalCredits;
+    float gpa;
     char* firstName;
     char* lastName;
     char* city;
     char* department;
+    Hacker* hacker;
 } Student;
-
-
-typedef struct {
-    int id;                     //9 digit num
-    int* desiredCourses;       //expectation to be only numbers
-    int* friendsId;            //9 digit number array
-    int* enemiesId;            //9 digit num
-} Hacker;
 
 
 typedef struct {

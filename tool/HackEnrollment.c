@@ -79,6 +79,22 @@ int nbOfLinesInFile(FILE* f){
     return counter;
 }
 
+void destroyHacker(void* hacker){
+    if(hacker == NULL) {
+        return;
+    }
+    //destroy lists of friend et enemy
+    free(hacker);
+}
+
+void destroyStudent(Student * student){
+    if(student == NULL) {
+        return;
+    }
+    destroyHacker(student->hacker);
+    free(student);
+}
+
 void deleteStudentArray(Student** studentArr, int index){
     int i=0;
     while(i<index){
@@ -91,6 +107,21 @@ void deleteStudentArray(Student** studentArr, int index){
     }
     free(studentArr);
 }
+
+//reads a string and returns the first word before a space or the end of the string
+char* getWord(char* line) {
+    char* word = (char*)malloc(sizeof(char) * MAX_LINE_LENGTH);
+    if(!word){
+        return NULL;
+    }
+    int i = 0;
+    while (word[i] != ' ' && word[i] != '\0') {
+        i++;
+    }
+    word[i] = '\0';
+    return word;
+}
+
 
 bool isEmpty(FILE* file){
     if(file == NULL) return true;
@@ -258,7 +289,9 @@ char* readString(char* str, int* i) {
 
 ////////////////////////////studentEnrollement///////////////////////////////////////////////////
 
-Student* createStudentFromLine(char* line, Student* student) {
+Student* createStudentFromLine(char* line) {
+    Student* student = ( Student*)malloc(sizeof( Student));
+
     char* token = strtok(line, " ");
     if (token != NULL) {
         student->id = strtol(token, NULL, 10);
@@ -312,7 +345,7 @@ Student** studentEnrollment(FILE* students,int linesInStudentFile) {
             freeArray((void **) arrayOfPtrStudent, i);
             return NULL;
         }
-        createStudentFromLine(line, arrayOfPtrStudent[i]);
+        arrayOfPtrStudent[i]= createStudentFromLine(line);
         i++;
     }
     return arrayOfPtrStudent;
