@@ -8,14 +8,14 @@
 
 
 
- struct IsraeliQueue_t {
-     int size;
-     FriendshipFunction *friendshipFunction;
-     ComparisonFunction comparisonFunction;
-     Node tail;
-     int friendshipThreshold;
-     int rivalryThreshold;
- };
+struct IsraeliQueue_t {
+    int size;
+    FriendshipFunction *friendshipFunction;
+    ComparisonFunction comparisonFunction;
+    Node tail;
+    int friendshipThreshold;
+    int rivalryThreshold;
+};
 
 
 //why do you update the Friendship function with a for loop and not just do assignement?
@@ -191,7 +191,7 @@ void* IsraeliQueueDequeue(IsraeliQueue q){
 //done
 
 void IsraeliQueueInsertNode(IsraeliQueue q, Node friend, Node item) {
-    if (q == NULL || item == NULL) {
+    if (q == NULL || item == NULL/*||!friend*/) {
         return;
     }
     if(q->size == 1){
@@ -201,7 +201,6 @@ void IsraeliQueueInsertNode(IsraeliQueue q, Node friend, Node item) {
     }
 
     Node temp = item->next;
-
     Node previous = q->tail ;
     Node current = q->tail->next;
     while(current && current != friend){
@@ -241,50 +240,59 @@ void IsraeliQueueRemoveNode(IsraeliQueue q, Node item) {
     }
 }
 
+
+
 bool is_friends(void* item1, void* item2, IsraeliQueue q){
-    if (!q) return NULL;
-    FriendshipFunction* friend_func_arr = q->friendshipFunction;
-    int friend_threshold = q->friendshipThreshold;
+    if (!q) return false;
+
+
     int i;
-    for (i = 0; friend_func_arr[i] != NULL; i++) {
-        if (friend_func_arr[i](item1, item2) > friend_threshold) {
+    for (i = 0; q->friendshipFunction[i] != NULL; i++) {
+        if (q->friendshipFunction[i](item1, item2) > q->friendshipThreshold) {
             return true;
         }
     }
     return false;
 }
 
+
+
 bool is_enemy(void* item1, void* item2, IsraeliQueue q){
-    if (!q) return NULL;
-    FriendshipFunction* friend_func_arr = q->friendshipFunction;
-    if (!*friend_func_arr) return false;
-    int enemy_threshold = q->rivalryThreshold;
-    int i=0, friendshipThresholdAverage=0;
-    for (i; friend_func_arr[i] != NULL; i++) {
-        friendshipThresholdAverage += friend_func_arr[i](item1, item2);
+    if (!q || !*(q->friendshipFunction)) return false;
+    int i, friendshipThresholdAverage=0;
+    for (i=0; q->friendshipFunction[i] != NULL; i++) {
+        friendshipThresholdAverage += q->friendshipFunction[i](item1, item2);
         if (is_friends(item1, item2, q)) {
             return false;
         }
     }
-    if  (friendshipThresholdAverage/i<enemy_threshold){
+    if  ( friendshipThresholdAverage / i < q->rivalryThreshold){
         return true;
     }
     return false;
 }
 
-Node FindNearestEnemy(IsraeliQueue q, Node toImprove){
-    Node potential_enemy = toImprove->next;
-    if (!potential_enemy) return NULL;
-    while (potential_enemy->next) {
-            if (is_enemy(toImprove->data, potential_enemy->data, q) && potential_enemy->rival_count < RIVAL_QUOTA) {
-                break;
+
+
+// trouve l,ennemi le plus loin juste avant un ami
+Node FindFarthestEnemyBeforeFriend(IsraeliQueue q, Node toImprove,Node friend){
+    Node curr = toImprove->next;
+    if (!curr) return NULL;
+    Node farthestEnemyBeforeFriend= NULL;
+
+    while (curr->next && curr!=friend) {
+        if (is_enemy(toImprove->data, curr->data, q) && curr->rival_count < RIVAL_QUOTA) {
+            farthestEnemyBeforeFriend = curr;
         }
-        potential_enemy = potential_enemy->next;
+        curr = curr->next;
     }
-    Node enemy = potential_enemy;
-    return enemy;
+    return farthestEnemyBeforeFriend;
 }
-Node FindNearestFriendBeforeEnemy(IsraeliQueue q, Node toImprove, Node enemy){
+
+
+
+// trouve l'ami le plus loin avant un ennemi
+Node FindFarthestFriendBeforeEnemy(IsraeliQueue q, Node toImprove, Node enemy){
     Node lastFriendBeforeEnemy = toImprove;
     Node curr = toImprove->next;
     while (curr  && curr != enemy) {// while current->next!= Null and current is not the enemy
@@ -296,35 +304,40 @@ Node FindNearestFriendBeforeEnemy(IsraeliQueue q, Node toImprove, Node enemy){
     return lastFriendBeforeEnemy;
 }
 
-bool CheckFriendsAfterEnemy(IsraeliQueue q, Node enemy, Node toImprove){
 
-    if(!enemy) return false;
-    Node curr = enemy->next;
-    while(curr != NULL){
-        if (is_friends(toImprove->data,curr->data, q) && curr->friend_count < FRIEND_QUOTA){
-            return true;
-        }
+//check si l,ennemi qu,omn a trouve est derriere un ami
+bool enemyIsBeforeFriend(Node enemy,Node friend){
+    Node curr = enemy;
+    while (curr){
+        if (curr==friend) return true;
         curr = curr->next;
     }
     return false;
 }
 
-// split into smallers fonctions
- void ImproveNode(IsraeliQueue q, Node toImprove){
 
-    Node enemy = FindNearestEnemy(q, toImprove);
-    Node lastFriendBeforeEnemy = FindNearestFriendBeforeEnemy(q, toImprove, enemy);
-    if (CheckFriendsAfterEnemy(q, enemy, toImprove)) {
-        enemy->rival_count++;
+
+void ImproveNode(IsraeliQueue q, Node toImprove){
+    Node enemy = NULL;
+    Node friend;
+    //recherche de la place
+    while(1) {
+        friend = FindFarthestFriendBeforeEnemy(q, toImprove, enemy);
+        enemy = FindFarthestEnemyBeforeFriend(q, toImprove, friend);// le pb est la, il sort tjr que l'ennemi est null!!
+        if(enemyIsBeforeFriend(enemy, friend)){
+            enemy->rival_count++;
+            continue;
+        }
+        else{
+            if (friend == toImprove|| !friend) return;
+            friend->friend_count++;
+            IsraeliQueueRemoveNode(q, toImprove);
+            IsraeliQueueInsertNode(q, friend, toImprove);
+            break;
+        }
     }
 
-    if (lastFriendBeforeEnemy != toImprove) { //if last friend before enemy is different of himself
-        lastFriendBeforeEnemy->friend_count++;
-        IsraeliQueueRemoveNode(q, toImprove);
-        IsraeliQueueInsertNode(q, lastFriendBeforeEnemy, toImprove);
-    }
 }
-
 
 
 
@@ -406,7 +419,7 @@ IsraeliQueue IsraeliQueueMerge(IsraeliQueue* qarr, ComparisonFunction compare_fu
                 all_queues_empty = false;
                 void* person = IsraeliQueueDequeue(qarr[i]);
                 if (person != NULL) {
-                    IsraeliQueueEnqueue(merged_queue,person);
+                    IsraeliQueueEnqueue(merged_queue,person);// ne pas remettre les comteurs a 0!!
                 }
                 //IsraeliQueueImprovePositions(merged_queue);
             }
