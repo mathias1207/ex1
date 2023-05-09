@@ -191,41 +191,79 @@ char* readString(char* str, int* i) {
     return result;
 }
 
-Student* createStudentFromLine(char* line,Student* student) {
-    char* id = readString(line, &(int){0});
-    if (!isGoodId(id)) {
-        return NULL;
+
+//is that function good?
+//Student* createStudentFromLine(char* line,Student* student) {
+//    char* id = readString(line, &(int){0});
+//    if (!isGoodId(id)) {
+//        return NULL;
+//    }
+//    student->id = parseInt(id);
+//    int i = IDLEN+1;
+//    student->totalCredits = parseInt(line + i);
+//    i ++;
+//    while (line[i] != ' ') {
+//        i++;
+//    }
+//    i++;
+//    student->gpa = parseFloat(line + i);
+//    i++;
+//    while (line[i] != ' ') {
+//        i++;
+//    }
+//    i++;
+//    student->firstName = readString(line, &i);
+//    student->lastName = readString(line, &i);
+//    student->city = readString(line, &i);
+//    student->department = readString(line, &i);
+//    return student;
+//}
+
+Student* createStudentFromLine(char* line, Student* student) {
+    char* token = strtok(line, " ");
+    if (token != NULL) {
+        student->id = strtol(token, NULL, 10);
     }
-    student->id = parseInt(id);
-    int i = IDLEN+1;
-    student->totalCredits = parseInt(line + i);
-    i ++;
-    while (line[i] != ' ') {
-        i++;
+
+    token = strtok(NULL, " ");
+    if (token != NULL) {
+        student->totalCredits = strtol(token, NULL, 10);
     }
-    i++;
-    student->gpa = parseFloat(line + i);
-    i++;
-    while (line[i] != ' ') {
-        i++;
+
+    token = strtok(NULL, " ");
+    if (token != NULL) {
+        student->gpa = strtof(token, NULL);
     }
-    i++;
-    student->firstName = readString(line, &i);
-    student->lastName = readString(line, &i);
-    student->city = readString(line, &i);
-    student->department = readString(line, &i);
+
+    token = strtok(NULL, " ");
+    if (token != NULL) {
+        student->firstName = strdup(token);
+    }
+
+    token = strtok(NULL, " ");
+    if (token != NULL) {
+        student->lastName = strdup(token);
+    }
+
+    token = strtok(NULL, " ");
+    if (token != NULL) {
+        student->city = strdup(token);
+    }
+
+    token = strtok(NULL, "\n");
+    if (token != NULL) {
+        student->department = strdup(token);
+    }
+
     return student;
 }
-
-
-
 
 
 
 ////////////////////////////studentEnrollement///////////////////////////////////////////////////
 
 Student** studentEnrollment(FILE* students,int linesInStudentFile) {
-    Student **arrayOfPtrStudent = malloc((linesInStudentFile) * sizeof(Student *));
+    Student **arrayOfPtrStudent = malloc((linesInStudentFile) * sizeof(Student*));
     if (!arrayOfPtrStudent) {
         return NULL;
     }
@@ -427,6 +465,7 @@ int findCourse(EnrollmentSystem sys, long courseNumber) {
     }
     return -1;
 }
+
 Student* findStudentById(int studentId, EnrollmentSystem sys) {
     int numStudents = numOfStudents(sys);
     for (int i = 0; i < numStudents; i++) {
