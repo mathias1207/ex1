@@ -98,8 +98,6 @@ bool IsraeliQueueContains(IsraeliQueue q, void *item) {
 }
 
 
-//mathias
-//IsraeliQueuEnéaueu(DOron)
 IsraeliQueueError IsraeliQueueEnqueue(IsraeliQueue q, void* item){
     if(q==NULL||item==NULL){
         return ISRAELIQUEUE_BAD_PARAM;
@@ -202,6 +200,8 @@ void IsraeliQueueInsertNode(IsraeliQueue q, Node friend, Node item) {
         return;
     }
 
+    Node temp = item->next;
+
     Node previous = q->tail ;
     Node current = q->tail->next;
     while(current && current != friend){
@@ -210,8 +210,9 @@ void IsraeliQueueInsertNode(IsraeliQueue q, Node friend, Node item) {
     }
     item->next = current;
     previous->next = item;
+
     if(item==q->tail){
-        q->tail=item->next;
+        q->tail=temp;
     }
 }
 
@@ -270,11 +271,10 @@ bool is_enemy(void* item1, void* item2, IsraeliQueue q){
     }
     return false;
 }
-// split into smallers fonctions
- void ImproveNode(IsraeliQueue q, Node toImprove){
-    //find the nearest enemy
+
+Node FindNearestEnemy(IsraeliQueue q, Node toImprove){
     Node potential_enemy = toImprove->next;
-    if (!potential_enemy) return;
+    if (!potential_enemy) return NULL;
     while (potential_enemy->next) {
             if (is_enemy(toImprove->data, potential_enemy->data, q) && potential_enemy->rival_count < RIVAL_QUOTA) {
                 break;
@@ -282,8 +282,9 @@ bool is_enemy(void* item1, void* item2, IsraeliQueue q){
         potential_enemy = potential_enemy->next;
     }
     Node enemy = potential_enemy;
-
-    // find the farthest friend before enemy
+    return enemy;
+}
+Node FindNearestFriendBeforeEnemy(IsraeliQueue q, Node toImprove, Node enemy){
     Node lastFriendBeforeEnemy = toImprove;
     Node curr = toImprove->next;
     while (curr  && curr != enemy) {// while current->next!= Null and current is not the enemy
@@ -292,15 +293,29 @@ bool is_enemy(void* item1, void* item2, IsraeliQueue q){
         }
         curr = curr->next;
     }
+    return lastFriendBeforeEnemy;
+}
 
-    // check if there is a friend after the enemy
-     curr = enemy;
-    while(curr->next){
+bool CheckFriendsAfterEnemy(IsraeliQueue q, Node enemy, Node toImprove){
+
+    if(!enemy) return false;
+    Node curr = enemy->next;
+    while(curr != NULL){
         if (is_friends(toImprove->data,curr->data, q) && curr->friend_count < FRIEND_QUOTA){
-            enemy->rival_count++;
-            break;
+            return true;
         }
         curr = curr->next;
+    }
+    return false;
+}
+
+// split into smallers fonctions
+ void ImproveNode(IsraeliQueue q, Node toImprove){
+
+    Node enemy = FindNearestEnemy(q, toImprove);
+    Node lastFriendBeforeEnemy = FindNearestFriendBeforeEnemy(q, toImprove, enemy);
+    if (CheckFriendsAfterEnemy(q, enemy, toImprove)) {
+        enemy->rival_count++;
     }
 
     if (lastFriendBeforeEnemy != toImprove) { //if last friend before enemy is different of himself
