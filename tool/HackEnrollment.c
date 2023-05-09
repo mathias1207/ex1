@@ -92,6 +92,40 @@ void deleteStudentArray(Student** studentArr, int index){
     free(studentArr);
 }
 
+bool isEmpty(FILE* file){
+    if(file == NULL) return true;
+    long pos = ftell(file);
+    bool isEmpty = fgetc(file) == EOF;
+    fseek(file, pos, SEEK_SET);
+    return isEmpty;
+}
+
+char* readLine (FILE* file){
+    if(!file){
+        return NULL;
+    }
+    long pos = ftell(file);
+    int counter = 0;
+    char c;
+    do{
+        c = fgetc(file);
+        counter++;
+    } while(c != '\n' && c != EOF);
+
+    fseek(file, pos, SEEK_SET);
+    char* line = (char*)malloc(sizeof(char) * (counter + 1));
+    if(!line){
+        return NULL;
+    }
+    char* temp = fgets(line, counter + 1, file);
+    if(temp == NULL){
+        free(line);
+        return NULL;
+    }
+    line[counter - 1] = 0;
+    line[counter] = 0;
+    return line;
+}
 //bool getCharacter(char** param, FILE* inputFile) {
 //    char temp;
 //    int charCounter = 0;
@@ -270,8 +304,8 @@ Student** studentEnrollment(FILE* students,int linesInStudentFile) {
     }
     initArray((void **) arrayOfPtrStudent, linesInStudentFile);
     int i=0;
-    char line[BUFFER];
-    while (fgets(line, BUFFER, students) != NULL) {
+    while (!isEmpty(students)) {
+        char* line = readLine(students);
         arrayOfPtrStudent[i] = malloc(sizeof(Student));
         initStudent(arrayOfPtrStudent[i]);
         if (!arrayOfPtrStudent[i]) {
