@@ -6,7 +6,7 @@
 #define MINID 100000000
 #define MAX_LINE_LENGTH 1000
 
-
+/////////////////////////////////////friendshipFunctions//////////////////////////////////////////////////////////
 int nameDistance(char* name1, char* name2){
     int sum = 0;
     int i;
@@ -40,7 +40,7 @@ int hackerFriendshipVal(Hacker* hacker, Student* student) {
     }
     return 0;
 }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 void initArray(void** arr,int length){
     int i = 0;
@@ -150,7 +150,6 @@ bool isGoodId(const char* str) {
 }
 
 
-
 int parseInt(char* str) {
     int result = 0;
     int i = 0;
@@ -219,6 +218,12 @@ char* readString(char* str, int* i) {
 //    return student;
 //}
 
+
+
+
+
+////////////////////////////studentEnrollement///////////////////////////////////////////////////
+
 Student* createStudentFromLine(char* line, Student* student) {
     char* token = strtok(line, " ");
     if (token != NULL) {
@@ -257,10 +262,6 @@ Student* createStudentFromLine(char* line, Student* student) {
 
     return student;
 }
-
-
-
-////////////////////////////studentEnrollement///////////////////////////////////////////////////
 
 Student** studentEnrollment(FILE* students,int linesInStudentFile) {
     Student **arrayOfPtrStudent = malloc((linesInStudentFile) * sizeof(Student*));
@@ -523,8 +524,6 @@ EnrollmentSystem readEnrollment(EnrollmentSystem sys, FILE *queues) {
 /////////////////////////////////////////hackEnrollement////////////////////////////////////////////////////////
 
 
-
-
 int numOfDesiredCoursesByHacker(EnrollmentSystem sys, int hackerId) {
     int numHackers = numOfHackers(sys); // nombre de hackers
     for (int i = 0; i < numHackers; i++) {
@@ -551,7 +550,6 @@ void writeEnrollmentQueue(FILE *out, Course *course) {
     }
     fprintf(out, "\n");
 }
-
 
 
 void hackEnrollment(EnrollmentSystem sys, FILE *out) {
