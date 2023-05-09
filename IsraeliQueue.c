@@ -191,16 +191,17 @@ void* IsraeliQueueDequeue(IsraeliQueue q){
 //done
 
 void IsraeliQueueInsertNode(IsraeliQueue q, Node friend, Node item) {
-    if (q == NULL || item == NULL/*||!friend*/) {
+    // on part du principe que friend nest pas nul et existe dans la queue
+    if (q == NULL || item == NULL) {
         return;
     }
-    if(q->size == 1){
+// verifier que le friend est bien dans la queue
+    if(q->tail == friend){ // si le friend est la tail
         item->next = q->tail;
         q->tail = item;
         return;
     }
 
-    Node temp = item->next;
     Node previous = q->tail ;
     Node current = q->tail->next;
     while(current && current != friend){
@@ -210,33 +211,30 @@ void IsraeliQueueInsertNode(IsraeliQueue q, Node friend, Node item) {
     item->next = current;
     previous->next = item;
 
-    if(item==q->tail){
-        q->tail=temp;
-    }
 }
 
 
 void IsraeliQueueRemoveNode(IsraeliQueue q, Node item) {
-    if (q == NULL || q->tail == NULL || item == NULL) {
+    if (q == NULL || q->tail == NULL) {
         return;
     }
     // If node is the tail, update accordingly
-    if (item == q->tail) {// si ce sont les memes
+    if (item == q->tail) {// si on eneleve le dernier
         q->tail = item->next;
         return;
     } else {
         Node prev = q->tail;
         Node curr = q->tail->next;
-        if (!curr){
-            prev->next =NULL;
-            return;
-        }
+//        if (!curr){ // en enleve l'avant dernier
+//            prev->next =NULL;
+//            return;
+//        }
         while (item != curr) {
             prev = curr;
             curr = curr->next;
         }
         prev->next = curr->next;
-        curr->next=NULL;
+        //curr->next=NULL;
     }
 }
 
