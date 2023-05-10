@@ -78,7 +78,7 @@ EnrollmentSystem readEnrollment(EnrollmentSystem sys, FILE* queues);
 
 void hackEnrollment(EnrollmentSystem sys, FILE* out);
 
-
+void DestroyEnrollment(EnrollmentSystem sys);
 
 
 #endif //EX1_HACKENROLLMENT_H

@@ -478,22 +478,18 @@ Hacker** hackerEnrollment(FILE* hackers, int numOfStudents) {
         lineCount++;
         i++;
         if (i == HACKERLINE){
-            // Nous avons lu une ligne complète, donc nous pouvons créer un objet Hacker
             Hacker* hacker = createHackerFromLine(line);
             hackerArray[numHacker] = hacker;
             numHacker++;
-            // Réinitialiser le compteur de ligne et le compteur d'éléments dans la ligne
             i = 0;
             lineCount = 0;
         }
     }
-    // Si nous avons lu une dernière ligne incomplète, nous devons quand même créer un objet Hacker
     if (lineCount > 0) {
         Hacker* hacker = createHackerFromLine(line);
         hackerArray[numHacker] = hacker;
         numHacker++;
     }
-    // Ajouter un élément NULL à la fin du tableau pour indiquer la fin du tableau
     hackerArray[numHacker] = NULL;
     return hackerArray;
 }
@@ -645,7 +641,7 @@ EnrollmentSystem readEnrollment(EnrollmentSystem sys, FILE* queues){
                 free(line);
                 return NULL;
             }
-            if(!IsraeliQueueContains(course->queue, student)){
+            if(!IsraeliQueueContains(course->queue, student)&& i < course->courseSize){
                 IsraeliQueueEnqueue(course->queue, student);
             }
             studentID = stringToInt(getWord(line));
@@ -715,13 +711,15 @@ void hackEnrollment(EnrollmentSystem sys, FILE *out) {
             IsraeliQueueAddFriendshipMeasure(course->queue, &hackerFriendshipVal);
 
             if (IsraeliQueueContains(course->queue, sys->f_hackers[i])) {
-                continue;
+                countCoursesRejected++;
             } else if (sizeOfQueue == course->courseSize) {
                 countCoursesRejected++;
             } else if (IsraeliQueueEnqueue(course->queue, sys->f_hackers[i]) != ISRAELIQUEUE_SUCCESS) {
                 countCoursesRejected++;
             }
-            if (countCoursesRejected == 2) {
+
+
+            if (countCoursesRejected >= 2|| (countCoursesRejected >= 1 && numDesiredCourses==1)) {
                 fprintf(out, "Cannot satisfy constraints for %d\n", sys->f_hackers[i]->id);
                 exit(0);
             }
@@ -731,4 +729,16 @@ void hackEnrollment(EnrollmentSystem sys, FILE *out) {
         for (int k = 0; k < numOfCourses(sys); k++) {
             writeEnrollmentQueue(out, sys->f_courses[k]);
         }
+}
+
+/////////////////////////////////////////freeEnrollmentSystem////////////////////////////////////////////////////////
+
+void DestroyEnrollmentSystem(EnrollmentSystem sys){
+    if(sys == NULL){
+        return;
+    }
+    freeArray((void**)sys->f_courses, numOfCourses(sys));
+    freeArray((void**)sys->f_students, numOfStudents(sys));
+    freeArray((void**)sys->f_hackers, numOfHackers(sys));
+    free(sys);
 }
