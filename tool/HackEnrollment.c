@@ -493,6 +493,8 @@ Hacker** hackerEnrollment(FILE* hackers, int numOfStudents) {
         hackerArray[numHacker] = hacker;
         numHacker++;
     }
+    // Ajouter un élément NULL à la fin du tableau pour indiquer la fin du tableau
+    hackerArray[numHacker] = NULL;
     return hackerArray;
 }
 
