@@ -404,7 +404,6 @@ int countWords(char* str) {
 
 
 Hacker* createHackerFromLine(char line[4][BUFFER]) {
-    Hacker* createHackerFromLine(char line[4][BUFFER]);
 
         // Créer l'objet Hacker
         Hacker* hacker = malloc(sizeof(Hacker));
