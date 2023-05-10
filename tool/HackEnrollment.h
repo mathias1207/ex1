@@ -43,7 +43,7 @@ typedef struct Course_t{
 
 typedef struct enrollmentSystem{
     Student** f_students;
-    Course* f_courses;
+    Course** f_courses;
     Hacker** f_hackers;
 } *EnrollmentSystem;
 

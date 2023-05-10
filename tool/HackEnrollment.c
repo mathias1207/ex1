@@ -429,7 +429,7 @@ EnrollmentSystem createEnrollment(FILE* students, FILE* courses, FILE* hackers){
 
 int numOfCourses(EnrollmentSystem sys) {
     int count = 0;
-    Course** course = &sys->f_courses;
+    Course** course = sys->f_courses;
     for (int i = 0; course[i] != NULL; i++) {
             count++;
     }
@@ -458,9 +458,9 @@ int numOfHackers(EnrollmentSystem sys){
 
 int findCourse(EnrollmentSystem sys, long courseNumber) {
 
-    Course* course= sys->f_courses;
+    Course* course= sys->f_courses[0];
     for (int i = 0; i < numOfCourses(sys); i++) {
-        if (course->courseNumber == courseNumber) {
+        if ((course[i]).courseNumber == courseNumber) {
             return i;
         }
     }
@@ -528,7 +528,7 @@ EnrollmentSystem readEnrollment(EnrollmentSystem sys, FILE* queues){
         }
         int courseNum = stringToInt(getWord(line));
         int courseId = findCourse(sys, courseNum);
-        Course course = sys->f_courses[courseId];
+        Course* course = sys->f_courses[courseId];
 
 
         int studentID = stringToInt(getWord(line));
@@ -538,8 +538,8 @@ EnrollmentSystem readEnrollment(EnrollmentSystem sys, FILE* queues){
                 free(line);
                 return NULL;
             }
-            if(!IsraeliQueueContains(course.queue, student)){
-                IsraeliQueueEnqueue(course.queue, student);
+            if(!IsraeliQueueContains(course->queue, student)){
+                IsraeliQueueEnqueue(course->queue, student);
             }
             studentID = stringToInt(getWord(line));
         }
@@ -553,22 +553,22 @@ EnrollmentSystem readEnrollment(EnrollmentSystem sys, FILE* queues){
 
 /////////////////////////////////////////hackEnrollement////////////////////////////////////////////////////////
 
-//
-//int numOfDesiredCoursesByHacker(EnrollmentSystem sys, int hackerId) {
-//    int numHackers = numOfHackers(sys); // nombre de hackers
-//    for (int i = 0; i < numHackers; i++) {
-//        if (sys->f_hackers[i]->id == hackerId) {
-//            int numDesiredCourses = 0;
-//            for (int j = 0; j < numOfCourses(sys); j++) {
-//                if (sys->f_hackers[i]->desiredCourses[j] != 0) {
-//                    numDesiredCourses++;
-//                }
-//            }
-//            return numDesiredCourses;
-//        }
-//    }
-//    return 0;
-//}
+
+int numOfDesiredCoursesByHacker(EnrollmentSystem sys, int hackerId) {
+    int numHackers = numOfHackers(sys); // nombre de hackers
+    for (int i = 0; i < numHackers; i++) {
+        if (sys->f_hackers[i]->id == hackerId) {
+            int numDesiredCourses = 0;
+            for (int j = 0; j < numOfCourses(sys); j++) {
+                if (sys->f_hackers[i]->desiredCourses[j] != 0) {
+                    numDesiredCourses++;
+                }
+            }
+            return numDesiredCourses;
+        }
+    }
+    return 0;
+}
 
 
 void writeEnrollmentQueue(FILE *out, Course *course) {
@@ -581,27 +581,27 @@ void writeEnrollmentQueue(FILE *out, Course *course) {
     fprintf(out, "\n");
 }
 
-//
-//void hackEnrollment(EnrollmentSystem sys, FILE *out) {
-//    for (int i = 0; i < numOfHackers(sys); i++) {
-//        int numDesiredCourses = numOfDesiredCoursesByHacker(sys, sys->f_hackers[i]->id);
-//
-//        for (int j = 0; j < numDesiredCourses; j++) {
-//            int courseNumber = (int) sys->f_hackers[i]->desiredCourses[j];
-//            int courseIndex = findCourse(sys, courseNumber);
-//            if (courseIndex == -1) {
-//                continue;
-//            }
-//            Course *course = sys->f_courses[courseIndex];
-//            int sizeOfQueue = IsraeliQueueSize(course->queue);
-//            if (IsraeliQueueEnqueue(course->queue, sys->f_hackers[i]) != ISRAELIQUEUE_SUCCESS && sizeOfQueue == course->courseSize ) {
-//                fprintf(out, "Cannot satisfy constraints for %d\n", sys->f_hackers[i]->id);
-//            } else {
-//                IsraeliQueueEnqueue(course->queue, sys->f_hackers[i]);
-//            }
-//        }
-//    }
-//    for (int k = 0; k < numOfCourses(sys); k++) {
-//        writeEnrollmentQueue(out, sys->f_courses[k]);
-//    }
-//}
+
+void hackEnrollment(EnrollmentSystem sys, FILE *out) {
+    for (int i = 0; i < numOfHackers(sys); i++) {
+        int numDesiredCourses = numOfDesiredCoursesByHacker(sys, sys->f_hackers[i]->id);
+
+        for (int j = 0; j < numDesiredCourses; j++) {
+            int courseNumber = (int) sys->f_hackers[i]->desiredCourses[j];
+            int courseIndex = findCourse(sys, courseNumber);
+            if (courseIndex == -1) {
+                continue;
+            }
+            Course *course = sys->f_courses[courseIndex];
+            int sizeOfQueue = IsraeliQueueSize(course->queue);
+            if (IsraeliQueueEnqueue(course->queue, sys->f_hackers[i]) != ISRAELIQUEUE_SUCCESS && sizeOfQueue == course->courseSize ) {
+                fprintf(out, "Cannot satisfy constraints for %d\n", sys->f_hackers[i]->id);
+            } else {
+                IsraeliQueueEnqueue(course->queue, sys->f_hackers[i]);
+            }
+        }
+    }
+    for (int k = 0; k < numOfCourses(sys); k++) {
+        writeEnrollmentQueue(out, sys->f_courses[k]);
+    }
+}
