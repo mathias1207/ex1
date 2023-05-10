@@ -473,16 +473,25 @@ Hacker** hackerEnrollment(FILE* hackers, int numOfStudents) {
     char line[HACKERLINE][BUFFER];
     int i = 0;
     int numHacker = 0;
+    int lineCount = 0;
     while (fgets(line[i], BUFFER, hackers)) {
-        if (i==3){
-            Hacker* hacker = createHackerFromLine( line);
-            i = 0;
+        lineCount++;
+        i++;
+        if (i == HACKERLINE) {
+            // Nous avons lu une ligne complète, donc nous pouvons créer un objet Hacker
+            Hacker* hacker = createHackerFromLine(line);
             hackerArray[numHacker] = hacker;
             numHacker++;
+            // Réinitialiser le compteur de ligne et le compteur d'éléments dans la ligne
+            i = 0;
+            lineCount = 0;
         }
-        else{
-            i++;
-        }
+    }
+    // Si nous avons lu une dernière ligne incomplète, nous devons quand même créer un objet Hacker
+    if (lineCount > 0) {
+        Hacker* hacker = createHackerFromLine(line);
+        hackerArray[numHacker] = hacker;
+        numHacker++;
     }
     return hackerArray;
 }
