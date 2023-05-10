@@ -404,47 +404,66 @@ int countWords(char* str) {
 
 
 Hacker* createHackerFromLine(char line[4][BUFFER]) {
+    Hacker* createHackerFromLine(char line[4][BUFFER]);
 
-    // Créer l'objet Hacker
-    Hacker* hacker = malloc(sizeof(Hacker));
-    sscanf(line[0], "%d", &(hacker->id));
+        // Créer l'objet Hacker
+        Hacker* hacker = malloc(sizeof(Hacker));
+        sscanf(line[0], "%d", &(hacker->id));
 
-    int number_courses = countWords(line[1]);
-    int number_friends = countWords(line[2]);
-    int number_enemies = countWords(line[3]);
-    int* courses = malloc((number_courses+1) * sizeof(int));
-    int* friends = malloc((number_friends+1) * sizeof(int));
-    int* enemies = malloc((number_enemies+1) * sizeof(int));
+        int number_courses = countWords(line[1]);
+        int number_friends = countWords(line[2]);
+        int number_enemies = countWords(line[3]);
 
-    int offset = 0;
-    int off = 0;
-    for (int i = 0; i < number_courses; i++){
-        sscanf(line[1] + offset, "%d %n", &courses[i], &off);
-        offset+= off;
-    }
-    courses[number_courses] = 0;
+        // Traiter la liste des cours
+        if (number_courses > 0) {
+            int* courses = malloc((number_courses+1) * sizeof(int));
+            int offset = 0;
+            int off = 0;
+            for (int i = 0; i < number_courses; i++){
+                sscanf(line[1] + offset, "%d %n", &courses[i], &off);
+                offset+= off;
+            }
+            courses[number_courses] = 0;
+            hacker->desiredCourses = courses;
+        } else {
+            hacker->desiredCourses = malloc(sizeof(int));
+            hacker->desiredCourses[0] = 0;
+        }
 
-    offset = 0;
-    off = 0;
-    for (int i = 0; i < number_friends; i++){
-        sscanf(line[2] + offset, "%d %n", &friends[i], &off);
-        offset+= off;
-    }
-    friends[number_friends] = 0;
+        // Traiter la liste des amis
+        if (number_friends > 0) {
+            int* friends = malloc((number_friends+1) * sizeof(int));
+            int offset = 0;
+            int off = 0;
+            for (int i = 0; i < number_friends; i++){
+                sscanf(line[2] + offset, "%d %n", &friends[i], &off);
+                offset+= off;
+            }
+            friends[number_friends] = 0;
+            hacker->friendsId = friends;
+        } else {
+            hacker->friendsId = malloc(sizeof(int));
+            hacker->friendsId[0] = 0;
+        }
 
-    offset = 0;
-    off= 0;
-    for (int i = 0; i < number_enemies; i++){
-        sscanf(line[3] + offset, "%d %n", &enemies[i], &off);
-        offset+= off;
-    }
-    enemies[number_enemies] = 0;
+        // Traiter la liste des ennemis
+        if (number_enemies > 0) {
+            int* enemies = malloc((number_enemies+1) * sizeof(int));
+            int offset = 0;
+            int off= 0;
+            for (int i = 0; i < number_enemies; i++){
+                sscanf(line[3] + offset, "%d %n", &enemies[i], &off);
+                offset+= off;
+            }
+            enemies[number_enemies] = 0;
+            hacker->enemiesId = enemies;
+        } else {
+            hacker->enemiesId = malloc(sizeof(int));
+            hacker->enemiesId[0] = 0;
+        }
 
-    hacker->desiredCourses = courses;
-    hacker->friendsId = friends;
-    hacker->enemiesId = enemies;
+        return hacker;
 
-    return hacker;
 }
 
 Hacker** hackerEnrollment(FILE* hackers, int numOfStudents) {
