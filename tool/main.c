@@ -30,7 +30,7 @@ void WrapperHackEnrollment(/*bool case_sensitive,*/ char* students_file, char* c
     EnrollmentSystem sys = createEnrollment(students, courses, hackers);
 
     // Lire la file d'attente d'inscription
-    sys = readEnrollment(sys, queues);
+    readEnrollment(sys, queues);
 
 
     // Hacker l'ordre d'inscription

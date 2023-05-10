@@ -45,6 +45,9 @@ int hackerFriendshipVal(Hacker* hacker, Student* student) {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 int stringToInt(char *str) {
+    if (str == NULL) {
+        return 0;
+    }
     int sign = 1;
     int result = 0;
     char *ptr = str;
@@ -66,14 +69,14 @@ int stringToInt(char *str) {
 
 
 
-Student* findStudent(Student* studentList, int ID){
+Student* findStudent(Student** studentList, int ID){
     if(ID == 0 || studentList == NULL){
         return NULL;
     }
     int i =0;
-    while (studentList->id != ID){
-        if(ID == (studentList->id)) {
-            return studentList;
+    while (studentList[i]){
+        if(ID == (studentList[i]->id)) {
+            return studentList[i];
         }
         i++;
     }
@@ -152,16 +155,35 @@ void deleteStudentArray(Student** studentArr, int index){
 
 //reads a string and returns the first word before a space or the end of the string
 char* getWord(char* line) {
-    char* word = (char*)malloc(sizeof(char) * MAX_LINE_LENGTH);
-    if(!word){
+    if(line == NULL || line[0] == '\0'){
         return NULL;
     }
     int i = 0;
-    while (word[i] != ' ' && word[i] != '\0') {
+    while(line[i] != '\0' && line[i] != ' ' && line[i] != '\n') {
         i++;
     }
-    word[i] = '\0';
-    return word;
+    if(i == 0) {
+        return NULL;
+    }
+    line[i] = '\0';
+    char* newWord = (char*)malloc((i + 1) * sizeof(char));
+    if(newWord == NULL)
+    {
+        return NULL;
+    }
+    for(int j = 0 ; j <= i ; j++) {
+        newWord[j] = line[j];
+    }
+    int j = 0;
+    while(line[j + i + 1] != '\0'){
+        line[j] = line[j + i + 1];
+        j++;
+    }
+    while(i >= 0){
+        line[j + i] = '\0';
+        i--;
+    }
+    return newWord;
 }
 
 
@@ -448,7 +470,7 @@ int numOfStudents(EnrollmentSystem sys){
 
 int numOfHackers(EnrollmentSystem sys){
     int count = 0;
-    for (int i = 0; i!=EOF; i++) {
+    for (int i = 0; sys->f_hackers[i] != NULL; i++) {
         if (sys->f_hackers[i] != NULL) {
             count++;
         }
@@ -529,11 +551,10 @@ EnrollmentSystem readEnrollment(EnrollmentSystem sys, FILE* queues){
         int courseNum = stringToInt(getWord(line));
         int courseId = findCourse(sys, courseNum);
         Course* course = sys->f_courses[courseId];
-
-
         int studentID = stringToInt(getWord(line));
+        int i= 0;
         while (studentID != 0){
-            Student* student = findStudent(*sys->f_students, studentID);
+            Student* student = findStudent(sys->f_students, studentID);
             if(student == NULL){
                 free(line);
                 return NULL;
@@ -542,6 +563,7 @@ EnrollmentSystem readEnrollment(EnrollmentSystem sys, FILE* queues){
                 IsraeliQueueEnqueue(course->queue, student);
             }
             studentID = stringToInt(getWord(line));
+            i++;
         }
         free(line);
     }
