@@ -42,6 +42,10 @@ int hackerFriendshipVal(Hacker* hacker, Student* student) {
     }
     return 0;
 }
+
+int (*functionTab[])(void*, void*) ={(int (*)(void *, void *)) IdDiff, (int (*)(void *, void *)) nameDistance,
+                                     (int (*)(void *, void *)) hackerFriendshipVal} ;
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 int stringToInt(char *str) {
@@ -367,9 +371,8 @@ Course* createCourseFromLine(char* line) {
 
     Course* course = malloc(sizeof(Course));
     sscanf(line, "%d %d", &(course->courseNumber), &(course->courseSize));
-    int (*functionTab[])(void*, void*) ={(int (*)(void *, void *)) IdDiff, (int (*)(void *, void *)) nameDistance,
-                                         (int (*)(void *, void *)) hackerFriendshipVal} ;
-    course->queue= IsraeliQueueCreate(functionTab, cmprStudent, FRIENDSHIP_TRESHOLD,RIVALRY_TRESHOLD);
+
+    course->queue= IsraeliQueueCreate(NULL, cmprStudent, FRIENDSHIP_TRESHOLD,RIVALRY_TRESHOLD);
 
 //    int offset = 0;
 //    sscanf(line + offset, "%d %n", &(course->courseNumber),&offset);
@@ -616,6 +619,8 @@ void hackEnrollment(EnrollmentSystem sys, FILE *out) {
             }
             Course *course = sys->f_courses[courseIndex];
             int sizeOfQueue = IsraeliQueueSize(course->queue);
+
+            //add friendshipmeasure
             if (IsraeliQueueEnqueue(course->queue, sys->f_hackers[i]) != ISRAELIQUEUE_SUCCESS && sizeOfQueue == course->courseSize ) {
                 fprintf(out, "Cannot satisfy constraints for %d\n", sys->f_hackers[i]->id);
             } else {
