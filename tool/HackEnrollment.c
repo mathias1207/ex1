@@ -477,7 +477,7 @@ Hacker** hackerEnrollment(FILE* hackers, int numOfStudents) {
     while (fgets(line[i], BUFFER, hackers)) {
         lineCount++;
         i++;
-        if (i == HACKERLINE) {
+        if (i == HACKERLINE){
             // Nous avons lu une ligne complète, donc nous pouvons créer un objet Hacker
             Hacker* hacker = createHackerFromLine(line);
             hackerArray[numHacker] = hacker;
@@ -552,7 +552,7 @@ EnrollmentSystem createEnrollment(FILE* students, FILE* courses, FILE* hackers){
         return NULL;
     }
 
-    system->f_hackers = hackerEnrollment(hackers, nbOfLinesInFile(hackers));
+    system->f_hackers = hackerEnrollment(hackers, nbOfLinesInFile(hackers) / HACKERLINE);
     if(!system->f_hackers){
         //free students
         freeArray((void**)system->f_courses, nbOfLinesInFile(courses)-1);
@@ -709,7 +709,6 @@ void hackEnrollment(EnrollmentSystem sys, FILE *out) {
             } else {
                 IsraeliQueueAddFriendshipMeasure(course->queue, &nameDistanceCapital);
             }
-            IsraeliQueueAddFriendshipMeasure(course->queue, &nameDistanceCapital);
             IsraeliQueueAddFriendshipMeasure(course->queue, &IdDiff);
             IsraeliQueueAddFriendshipMeasure(course->queue, &hackerFriendshipVal);
 

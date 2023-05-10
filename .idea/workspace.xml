@@ -20,18 +20,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d72a54fe-0d3a-48cb-9b1c-ca43ba5b2224" name="Changes" comment="mercredi 10 12:45 &#10;finir read et hack">
-      <change afterPath="$PROJECT_DIR$/ExampleTest/expOut.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ExampleTest/explanation.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ExampleTest/target.txt" afterDir="false" />
+    <list default="true" id="d72a54fe-0d3a-48cb-9b1c-ca43ba5b2224" name="Changes" comment="mercredi 10 21:15">
+      <change afterPath="$PROJECT_DIR$/CheckedTests.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ExampleTest/courses.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ExampleTest/courses.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ExampleTest/hackers.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ExampleTest/hackers.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ExampleTest/out.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ExampleTest/out.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ExampleTest/queues.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ExampleTest/queues.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ExampleTest/students.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ExampleTest/students.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tool/HackEnrollment.c" beforeDir="false" afterPath="$PROJECT_DIR$/tool/HackEnrollment.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tool/HackEnrollment.h" beforeDir="false" afterPath="$PROJECT_DIR$/tool/HackEnrollment.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tool/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/tool/main.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,13 +83,13 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="IsraeliQueue.h" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ex1" TARGET_NAME="IsraeliQueue.h" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ex1" RUN_TARGET_NAME="IsraeliQueue.h">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -119,27 +111,6 @@
       <workItem from="1683271490626" duration="115000" />
       <workItem from="1683271617526" duration="60666000" />
       <workItem from="1683632445998" duration="28196000" />
-    </task>
-    <task id="LOCAL-00003" summary="hey">
-      <created>1682063891676</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1682063891676</updated>
-    </task>
-    <task id="LOCAL-00004" summary="hey">
-      <created>1682067430160</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1682067430160</updated>
-    </task>
-    <task id="LOCAL-00005" summary="hey">
-      <created>1682067826697</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1682067826697</updated>
     </task>
     <task id="LOCAL-00006" summary="hey">
       <created>1682068268441</created>
@@ -463,7 +434,28 @@
       <option name="project" value="LOCAL" />
       <updated>1683711947676</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="mercredi 10 21:15">
+      <created>1683742540457</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1683742540459</updated>
+    </task>
+    <task id="LOCAL-00053" summary="mercredi 10 21:15">
+      <created>1683742877597</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1683742877601</updated>
+    </task>
+    <task id="LOCAL-00054" summary="mercredi 10 21:15">
+      <created>1683743939296</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1683743939298</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -509,7 +501,8 @@
     <MESSAGE value="mardi 09/05 18:30&#10;enrollement marche" />
     <MESSAGE value="mardi 09/05 18:30&#10;finir read et hack" />
     <MESSAGE value="mercredi 10 12:45 &#10;finir read et hack" />
-    <option name="LAST_COMMIT_MESSAGE" value="mercredi 10 12:45 &#10;finir read et hack" />
+    <MESSAGE value="mercredi 10 21:15" />
+    <option name="LAST_COMMIT_MESSAGE" value="mercredi 10 21:15" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -527,28 +520,23 @@
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/tool/HackEnrollment.c</url>
           <line>618</line>
-          <option name="timeStamp" value="195" />
+          <option name="timeStamp" value="217" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/tool/HackEnrollment.c</url>
-          <line>608</line>
-          <option name="timeStamp" value="196" />
+          <line>531</line>
+          <option name="timeStamp" value="218" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/tool/HackEnrollment.c</url>
-          <line>570</line>
-          <option name="timeStamp" value="197" />
+          <line>622</line>
+          <option name="timeStamp" value="220" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
-        <watch expression="*sys-&gt;f_students @ 30" />
-        <watch expression="*studentList @ 5" />
-        <watch expression="*(studentList-&gt;*studentList) @ 5" />
-        <watch expression="*(sys-&gt;f_courses-&gt;*f_courses) @ 5" />
-        <watch expression="*sys-&gt;f_courses @ 5" />
-        <watch expression="*sys-&gt;f_courses @ 5" />
+        <watch expression="*system-&gt;f_students @ 20" />
       </configuration>
     </watches-manager>
   </component>
