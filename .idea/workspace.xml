@@ -20,10 +20,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d72a54fe-0d3a-48cb-9b1c-ca43ba5b2224" name="Changes" comment="mardi 09/05 14:30&#10;enrollement marche">
+    <list default="true" id="d72a54fe-0d3a-48cb-9b1c-ca43ba5b2224" name="Changes" comment="mardi 09/05 18:30&#10;enrollement marche">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ExampleTest/out.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ExampleTest/out.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tool/HackEnrollment.c" beforeDir="false" afterPath="$PROJECT_DIR$/tool/HackEnrollment.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tool/HackEnrollment.h" beforeDir="false" afterPath="$PROJECT_DIR$/tool/HackEnrollment.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tool/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/tool/main.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +111,7 @@
       <workItem from="1682949974215" duration="3829000" />
       <workItem from="1683271490626" duration="115000" />
       <workItem from="1683271617526" duration="60666000" />
-      <workItem from="1683632445998" duration="13021000" />
+      <workItem from="1683632445998" duration="24285000" />
     </task>
     <task id="LOCAL-00001" summary="hey">
       <created>1681998687645</created>
@@ -447,7 +449,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683643918652</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="mardi 09/05 18:30&#10;enrollement marche">
+      <created>1683645650400</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1683645650400</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -490,7 +499,8 @@
     <MESSAGE value="mardi 09/05 13:40" />
     <MESSAGE value="mardi 09/05 13:40&#10;enrollement marche" />
     <MESSAGE value="mardi 09/05 14:30&#10;enrollement marche" />
-    <option name="LAST_COMMIT_MESSAGE" value="mardi 09/05 14:30&#10;enrollement marche" />
+    <MESSAGE value="mardi 09/05 18:30&#10;enrollement marche" />
+    <option name="LAST_COMMIT_MESSAGE" value="mardi 09/05 18:30&#10;enrollement marche" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -506,43 +516,28 @@
           <option name="timeStamp" value="140" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/tool/main.c</url>
-          <line>29</line>
-          <option name="timeStamp" value="142" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/tool/HackEnrollment.c</url>
           <line>410</line>
           <option name="timeStamp" value="144" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/tool/HackEnrollment.c</url>
-          <line>471</line>
-          <option name="timeStamp" value="146" />
+          <line>415</line>
+          <option name="timeStamp" value="161" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/tool/HackEnrollment.c</url>
-          <line>350</line>
-          <option name="timeStamp" value="147" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/tool/HackEnrollment.c</url>
-          <line>347</line>
-          <option name="timeStamp" value="148" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/tool/HackEnrollment.c</url>
-          <line>339</line>
-          <option name="timeStamp" value="149" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/tool/HackEnrollment.c</url>
-          <line>333</line>
-          <option name="timeStamp" value="150" />
+          <url>file://$PROJECT_DIR$/tool/main.c</url>
+          <line>32</line>
+          <option name="timeStamp" value="168" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
+      <configuration name="CMakeRunConfiguration">
+        <watch expression="*arrayOfPtrStudent @ 30" />
+        <watch expression="*courseArray @ 30" />
+        <watch expression="*hackerArray @ 30" />
+      </configuration>
       <inline-watch fileUrl="file://$PROJECT_DIR$/main.c" line="105">
         <watch expression="arr[0]" language="ObjectiveC" />
       </inline-watch>

@@ -7,6 +7,7 @@
 #include "../IsraeliQueue.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #define IDLEN 9
 #define MAX_FRIENDS 20
 
@@ -20,6 +21,7 @@ typedef struct {
     int* enemiesId;
 } Hacker;
 
+
 typedef struct{
     int id ;
     int totalCredits;
@@ -32,7 +34,7 @@ typedef struct{
 } Student;
 
 
-typedef struct {
+typedef struct Course_t{
     int courseSize;
     int courseNumber;
     IsraeliQueue queue;
@@ -41,7 +43,7 @@ typedef struct {
 
 typedef struct enrollmentSystem{
     Student** f_students;
-    Course** f_courses;
+    Course* f_courses;
     Hacker** f_hackers;
 } *EnrollmentSystem;
 

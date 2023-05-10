@@ -11,20 +11,20 @@ void WrapperHackEnrollment(/*bool case_sensitive,*/ char* students_file, char* c
 //    FILE* courses = fopen(courses_file, "r");
 //    FILE* hackers = fopen(hackers_file, "r");
 //    FILE* queues = fopen(queues_file, "r");
-//    FILE* out = fopen(out_file, "r");
+//    FILE* out = fopen(out_file, "w");
 
 
-    FILE* students = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\courses.txt", "r");
-    FILE* courses = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\hackers.txt", "r");
-    FILE* hackers = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\queues.txt", "r");
-    FILE* queues = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\students.txt", "r");
-    FILE* out = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\out.txt", "r");
+    FILE* students = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\students.txt", "r");
+    FILE* courses = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\courses.txt", "r");
+    FILE* hackers = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\hackers.txt", "r");
+    FILE* queues = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\queues.txt", "r");
+    FILE* out = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\out.txt", "w");
 
     // Vérifier si les fichiers ont été ouverts avec succès
-//    if (students == NULL || courses == NULL || hackers == NULL || queues == NULL) {
-//        printf("Erreur : impossible d'ouvrir un fichier d'entrée\n");
-//        exit(EXIT_FAILURE);
-//    }
+    if (students == NULL || courses == NULL || hackers == NULL || queues == NULL) {
+        printf("Erreur : impossible d'ouvrir un fichier d'entrée\n");
+        exit(EXIT_FAILURE);
+    }
 
     // Créer le système d'inscription
     EnrollmentSystem sys = createEnrollment(students, courses, hackers);
@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) {
     char* queues_file;
     char* out_file;
 
-    // Vérifier le nombre d'arguments
+//    // Vérifier le nombre d'arguments
 //    if (argc < 6 || argc > 7) {
 //        printf("Erreur : nombre d'arguments invalide\n");
 //        exit(EXIT_FAILURE);
