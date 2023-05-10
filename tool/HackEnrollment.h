@@ -45,6 +45,7 @@ typedef struct enrollmentSystem{
     Student** f_students;
     Course** f_courses;
     Hacker** f_hackers;
+    bool not_case_sensitive;
 } *EnrollmentSystem;
 
 

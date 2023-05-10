@@ -5,28 +5,115 @@
 #define MAXID 999999999
 #define MINID 100000000
 #define MAX_LINE_LENGTH 1000
+#define HACKERLINE 4
 #include <stdlib.h>
 #include "../Node.h"
 
 /////////////////////////////////////friendshipFunctions//////////////////////////////////////////////////////////
-int nameDistance(void* stu1, void* stu2){
-    int sum = 0;
-    int i;
-    char* name1 = ((Student*)(stu1))->firstName;
-    char* name2 = ((Student*)(stu2))->firstName;
-    for (i = 0; name1[i] != '\0' && name2[i] != '\0'; i++) {
-        sum += abs(name1[i] - name2[i]);
+int nameDistanceCapital(void* stu1, void* stu2){
+    Student* student1 = (Student*) stu1;
+    Student* student2 = (Student*) stu2;
+    char* name1 = student1->firstName;
+    char* name2 = student2->firstName;
+    char* surname1 = student1->lastName;
+    char* surname2 = student2->lastName;
+    int total = 0;
+
+    while (*name1 != '\0' && *name2 != '\0') {
+        if (*name1 != *name2) {
+            total++;
+        }
+        name1++;
+        name2++;
     }
-    while (name1[i] != '\0') {
-        sum += name1[i];
-        i++;
+    while (*surname1 != '\0' && *surname2 != '\0') {
+        if (*surname1 != *surname2) {
+            total++;
+        }
+        surname1++;
+        surname2++;
     }
-    while (name2[i] != '\0') {
-        sum += name2[i];
-        i++;
+    while (*name1 != '\0') {
+        total += *name1;
+        name1++;
     }
-    return sum;
+    while (*name2 != '\0') {
+        total += *name2;
+        name2++;
+    }
+    while (*surname1 != '\0') {
+        total += *surname1;
+        surname1++;
+    }
+    while (*surname2 != '\0') {
+        total += *surname2;
+        surname2++;
+    }
+    return total;
 }
+
+int tolower(int c) {
+    if (c >= 'A' && c <= 'Z') {
+        return c + ('a' - 'A');
+    } else {
+        return c;
+    }
+}
+
+int nameDistanceNoCapital(void* stu1, void* stu2) {
+    Student* student1 = (Student*) stu1;
+    Student* student2 = (Student*) stu2;
+    char* name1 = student1->firstName;
+    char* name2 = student2->firstName;
+    char* surname1 = student1->lastName;
+    char* surname2 = student2->lastName;
+    int total = 0;
+
+    while (*name1 != '\0' && *name2 != '\0') {
+        char letter1 = tolower(*name1);
+        char letter2 = tolower(*name2);
+        if (letter1 != letter2) {
+            total++;
+        }
+        name1++;
+        name2++;
+    }
+
+    while (*surname1 != '\0' && *surname2 != '\0') {
+        char letter1 = tolower(*surname1);
+        char letter2 = tolower(*surname2);
+
+        if (letter1 != letter2) {
+            total++;
+        }
+
+        surname1++;
+        surname2++;
+    }
+
+    while (*name1 != '\0') {
+        total += *name1;
+        name1++;
+    }
+
+    while (*name2 != '\0') {
+        total += *name2;
+        name2++;
+    }
+
+    while (*surname1 != '\0') {
+        total += *surname1;
+        surname1++;
+    }
+
+    while (*surname2 != '\0') {
+        total += *surname2;
+        surname2++;
+    }
+
+    return total;
+}
+
 
 int IdDiff (void* id1, void* id2){
     return abs(*((int*)(id1))-*((int*)(id2)));
@@ -47,7 +134,7 @@ int hackerFriendshipVal(void* h, void* s) {
     return 0;
 }
 
-int (*functionTab[])(void*, void*) ={(int (*)(void *, void *)) IdDiff, (int (*)(void *, void *)) nameDistance,
+int (*functionTab[])(void*, void*) ={(int (*)(void *, void *)) IdDiff, (int (*)(void *, void *)) nameDistanceCapital,
                                      (int (*)(void *, void *)) hackerFriendshipVal} ;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -88,10 +175,8 @@ Student* findStudent(Student** studentList, int ID){
         }
         i++;
     }
-    return -1;
+    return NULL;
 }
-
-
 
 
 
@@ -367,7 +452,7 @@ Hacker** hackerEnrollment(FILE* hackers, int numOfStudents) {
     Hacker** hackerArray = malloc((numOfStudents+1) * sizeof(Hacker*));
 
     // Lire chaque ligne du fichier et créer un objet Hacker correspondant
-    char line[4][BUFFER] = {0};
+    char line[HACKERLINE][BUFFER];
     int i = 0;
     int numHacker = 0;
     while (fgets(line[i], BUFFER, hackers)) {
@@ -425,6 +510,7 @@ EnrollmentSystem createEnrollment(FILE* students, FILE* courses, FILE* hackers){
     if(!system) {
         return NULL;
     }
+    system->not_case_sensitive=false;
 
     system->f_students = studentEnrollment(students, nbOfLinesInFile(students));
     if(!system->f_students){
@@ -483,9 +569,9 @@ int numOfHackers(EnrollmentSystem sys){
 }
 
 int findCourse(EnrollmentSystem sys, long courseNumber) {
-    Course* course= sys->f_courses[0];
+    Course** course= sys->f_courses;
     for (int i = 0; i < numOfCourses(sys); i++) {
-        if ((course[i]).courseNumber == courseNumber) {
+        if (course[i]->courseNumber == courseNumber) {
             return i;
         }
     }
@@ -591,8 +677,12 @@ void hackEnrollment(EnrollmentSystem sys, FILE *out) {
             }
             Course *course = sys->f_courses[courseIndex];
             int sizeOfQueue = IsraeliQueueSize(course->queue);
-
-            IsraeliQueueAddFriendshipMeasure(course->queue, &nameDistance);
+            if (sys->not_case_sensitive){
+                IsraeliQueueAddFriendshipMeasure(course->queue, &nameDistanceNoCapital);
+            } else {
+                IsraeliQueueAddFriendshipMeasure(course->queue, &nameDistanceCapital);
+            }
+            IsraeliQueueAddFriendshipMeasure(course->queue, &nameDistanceCapital);
             IsraeliQueueAddFriendshipMeasure(course->queue, &IdDiff);
             IsraeliQueueAddFriendshipMeasure(course->queue, &hackerFriendshipVal);
 

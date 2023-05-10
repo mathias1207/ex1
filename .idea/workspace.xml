@@ -21,10 +21,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d72a54fe-0d3a-48cb-9b1c-ca43ba5b2224" name="Changes" comment="mercredi 10 12:45 &#10;finir read et hack">
+      <change afterPath="$PROJECT_DIR$/ExampleTest/expOut.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ExampleTest/explanation.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ExampleTest/target.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ExampleTest/courses.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ExampleTest/courses.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ExampleTest/hackers.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ExampleTest/hackers.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ExampleTest/out.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ExampleTest/out.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IsraeliQueue.c" beforeDir="false" afterPath="$PROJECT_DIR$/IsraeliQueue.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ExampleTest/queues.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ExampleTest/queues.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ExampleTest/students.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ExampleTest/students.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tool/HackEnrollment.c" beforeDir="false" afterPath="$PROJECT_DIR$/tool/HackEnrollment.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tool/HackEnrollment.h" beforeDir="false" afterPath="$PROJECT_DIR$/tool/HackEnrollment.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tool/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/tool/main.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -84,13 +91,13 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/" />
-    </key>
-  </component>
   <component name="RunManager">
     <configuration name="IsraeliQueue.h" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ex1" TARGET_NAME="IsraeliQueue.h" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ex1" RUN_TARGET_NAME="IsraeliQueue.h">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -509,40 +516,39 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/IsraeliQueue.c</url>
-          <line>430</line>
+          <line>421</line>
           <option name="timeStamp" value="96" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/tool/main.c</url>
-          <line>87</line>
+          <line>81</line>
           <option name="timeStamp" value="140" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/tool/main.c</url>
-          <line>36</line>
-          <option name="timeStamp" value="183" />
+          <url>file://$PROJECT_DIR$/tool/HackEnrollment.c</url>
+          <line>618</line>
+          <option name="timeStamp" value="195" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/tool/HackEnrollment.c</url>
-          <line>581</line>
-          <option name="timeStamp" value="211" />
+          <line>608</line>
+          <option name="timeStamp" value="196" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/tool/HackEnrollment.c</url>
-          <line>612</line>
-          <option name="timeStamp" value="213" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/tool/HackEnrollment.c</url>
-          <line>335</line>
-          <option name="timeStamp" value="214" />
+          <line>570</line>
+          <option name="timeStamp" value="197" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
-        <watch expression="*line @ 30" />
-        <watch expression="*courses @ 4" language="ObjectiveC" />
+        <watch expression="*sys-&gt;f_students @ 30" />
+        <watch expression="*studentList @ 5" />
+        <watch expression="*(studentList-&gt;*studentList) @ 5" />
+        <watch expression="*(sys-&gt;f_courses-&gt;*f_courses) @ 5" />
+        <watch expression="*sys-&gt;f_courses @ 5" />
+        <watch expression="*sys-&gt;f_courses @ 5" />
       </configuration>
     </watches-manager>
   </component>
