@@ -14,11 +14,11 @@ void WrapperHackEnrollment(/*bool case_sensitive,*/ char* students_file, char* c
 //    FILE* out = fopen(out_file, "w");
 
 
-    FILE* students = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\students.txt", "r");
-    FILE* courses = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\courses.txt", "r");
-    FILE* hackers = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\hackers.txt", "r");
-    FILE* queues = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\queues.txt", "r");
-    FILE* out = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\out.txt", "w");
+    FILE* students = fopen("/Users/mathiasgoldmann/CLionProjects/ex1/Test15/students.txt", "r");
+    FILE* courses = fopen("/Users/mathiasgoldmann/CLionProjects/ex1/Test15/courses.txt", "r");
+    FILE* hackers = fopen("/Users/mathiasgoldmann/CLionProjects/ex1/Test15/hackers.txt", "r");
+    FILE* queues = fopen("/Users/mathiasgoldmann/CLionProjects/ex1/Test15/queues.txt", "r");
+    FILE* out = fopen("/Users/mathiasgoldmann/CLionProjects/ex1/Test15/target.txt", "w");
 
     // Vérifier si les fichiers ont été ouverts avec succès
     if (students == NULL || courses == NULL || hackers == NULL || queues == NULL) {

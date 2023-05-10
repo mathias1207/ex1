@@ -31,15 +31,18 @@ IsraeliQueue IsraeliQueueCreate(FriendshipFunction* friendshipFunction, Comparis
     q->rivalryThreshold = rivalry_th;
     q->tail = NULL;
     int nbOfFriendshipFunc = 0;
-    while(friendshipFunction[nbOfFriendshipFunc]){
-        nbOfFriendshipFunc++;
+    if(!friendshipFunction) q->friendshipFunction = NULL;
+    else {
+        while (friendshipFunction[nbOfFriendshipFunc]) {
+            nbOfFriendshipFunc++;
+        }
+        FriendshipFunction *new_tab_friendshipFunction = malloc((nbOfFriendshipFunc + 1) * sizeof(FriendshipFunction));
+        for (int i = 0; i < nbOfFriendshipFunc; i++) {
+            new_tab_friendshipFunction[i] = friendshipFunction[i];
+        }
+        new_tab_friendshipFunction[nbOfFriendshipFunc] = NULL;
+        q->friendshipFunction = new_tab_friendshipFunction;
     }
-    FriendshipFunction* new_tab_friendshipFunction = malloc ((nbOfFriendshipFunc+1) * sizeof(FriendshipFunction));
-    for (int i=0 ; i<nbOfFriendshipFunc;i++){
-        new_tab_friendshipFunction[i]=friendshipFunction[i];
-    }
-    new_tab_friendshipFunction[nbOfFriendshipFunc]=NULL;
-    q->friendshipFunction = new_tab_friendshipFunction;
     q->comparisonFunction = comparisonFunction;
     return q;
 }
@@ -122,8 +125,10 @@ IsraeliQueueError IsraeliQueueAddFriendshipMeasure(IsraeliQueue q, FriendshipFun
         return ISRAELIQUEUE_BAD_PARAM;
     }
     int count = 0;
-    while(q->friendshipFunction[count]){
-        count++;
+    if(q->friendshipFunction != NULL) {
+        while (q->friendshipFunction[count]) {
+            count++;
+        }
     }
     FriendshipFunction* new_friendship_functions = (FriendshipFunction*)realloc(q->friendshipFunction, (count+2) * sizeof(FriendshipFunction));
     if (new_friendship_functions == NULL) {
@@ -236,6 +241,10 @@ void IsraeliQueueRemoveNode(IsraeliQueue q, Node item) {
 
 
 bool is_friends(void* item1, void* item2, IsraeliQueue q){
+    if(q->friendshipFunction == NULL){
+        return false;
+    }
+
     if (!q) return false;
     int i;
     for (i = 0; q->friendshipFunction[i] != NULL; i++) {
@@ -249,7 +258,7 @@ bool is_friends(void* item1, void* item2, IsraeliQueue q){
 
 
 bool is_enemy(void* item1, void* item2, IsraeliQueue q){
-    if (!q || !*(q->friendshipFunction)) return false;
+    if (!q || !q->friendshipFunction) return false;
     int i, friendshipThresholdAverage=0;
     for (i=0; q->friendshipFunction[i] != NULL; i++) {
         friendshipThresholdAverage += q->friendshipFunction[i](item1, item2);
