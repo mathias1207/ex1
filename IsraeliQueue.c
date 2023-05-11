@@ -110,9 +110,10 @@ IsraeliQueueError IsraeliQueueEnqueue(IsraeliQueue q, void* item){
         return ISRAELIQUEUE_ALLOC_FAILED;
     }
     new_node->data = item;
+    new_node->next = q->tail;
     new_node->friend_count = 0;
     new_node->rival_count = 0;
-    new_node->next = q->tail;
+
     q->tail = new_node;
     q->size++;
     ImproveNode(q, new_node);
@@ -280,6 +281,7 @@ Node FindFarthestEnemyBeforeFriend(IsraeliQueue q, Node toImprove,Node friend){
     if (!curr) return NULL;
     Node farthestEnemyBeforeFriend= NULL;
 
+    //curr->data!=toImprove->data
     while (curr->next && curr!=friend) {
         if (is_enemy(toImprove->data, curr->data, q) && curr->rival_count < RIVAL_QUOTA) {
             farthestEnemyBeforeFriend = curr;

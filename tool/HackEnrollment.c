@@ -19,6 +19,8 @@ struct IsraeliQueue_t {
     int rivalryThreshold;
 };
 
+void fillhackerInfo(Student *enroll, Hacker *ptr);
+
 /////////////////////////////////////friendshipFunctions//////////////////////////////////////////////////////////
 int nameDistanceCapital(void* stu1, void* stu2){
     Student* student1 = (Student*) stu1;
@@ -131,17 +133,17 @@ int IdDiff (void* id1, void* id2){
 
 int hackerFriendshipVal(void* h, void* s) {
     int i = 0;
-    Hacker* hacker = (Hacker*) h;
+    Student* hacker = (Student *) h;
     Student* student = (Student*) s;
-    while (hacker->friendsId[i]) {
-        if (hacker->friendsId[i] == student->id) {
+    while (hacker->hacker->friendsId[i]) {
+        if (hacker->hacker->friendsId[i] == student->id) {
             return 20;
         }
         i++;
     }
-        i=0;
-    while (hacker->enemiesId[i]) {
-        if (hacker->enemiesId[i] == student->id) {
+    i=0;
+    while (hacker->hacker->enemiesId[i]) {
+        if (hacker->hacker->enemiesId[i] == student->id) {
             return -20;
         }
         i++;
@@ -164,8 +166,6 @@ bool hackerSatisfied(int countSuccessCourses, Hacker* hacker){
     return false;
 }
 
-int (*functionTab[])(void*, void*) ={(int (*)(void *, void *)) IdDiff, (int (*)(void *, void *)) nameDistanceCapital,
-                                     (int (*)(void *, void *)) hackerFriendshipVal} ;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -752,7 +752,7 @@ void hackEnrollment(EnrollmentSystem sys, FILE *out) {
         int numDesiredCourses = numOfDesiredCoursesByHacker(sys, sys->f_hackers[i]->id);
         int countCoursesNo = 0;
         Student* hackerToEnroll= findStudent(sys->f_students, sys->f_hackers[i]->id);
-
+        fillhackerInfo(hackerToEnroll,sys->f_hackers[i]);
         for (int j = 0; j < numDesiredCourses; j++) {
             int courseNumber = sys->f_hackers[i]->desiredCourses[j];
             int courseIndex = findCourse(sys, courseNumber);
@@ -774,6 +774,14 @@ void hackEnrollment(EnrollmentSystem sys, FILE *out) {
         for (int k = 0; k < numOfCourses(sys); k++) {
             writeEnrollmentQueue(out, sys->f_courses[k]);
         }
+}
+
+void fillhackerInfo(Student *student, Hacker *ptr) {
+    student->hacker= malloc(sizeof (Hacker*));
+    student->hacker->desiredCourses= ptr->desiredCourses;
+    student->hacker->id= ptr->id;
+    student->hacker->enemiesId= ptr->enemiesId;
+    student->hacker->friendsId= ptr->friendsId;
 }
 
 /////////////////////////////////////////freeEnrollmentSystem////////////////////////////////////////////////////////
