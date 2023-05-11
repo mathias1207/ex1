@@ -135,18 +135,21 @@ int hackerFriendshipVal(void* h, void* s) {
     int i = 0;
     Student* hacker = (Student *) h;
     Student* student = (Student*) s;
+    if (hacker->hacker->friendsId){
     while (hacker->hacker->friendsId[i]) {
         if (hacker->hacker->friendsId[i] == student->id) {
             return 20;
         }
         i++;
-    }
+    }}
     i=0;
-    while (hacker->hacker->enemiesId[i]) {
-        if (hacker->hacker->enemiesId[i] == student->id) {
-            return -20;
+    if (hacker->hacker->enemiesId) {
+        while (hacker->hacker->enemiesId[i]) {
+            if (hacker->hacker->enemiesId[i] == student->id) {
+                return -20;
+            }
+            i++;
         }
-        i++;
     }
     return 0;
 }
@@ -212,7 +215,7 @@ Student* findStudent(Student** studentList, int ID){
 
 void initArray(void** arr,int length){
     int i = 0;
-    while(i < length+1){
+    while(i < length){
         arr[i] = NULL;
         i++;
     }
@@ -232,6 +235,34 @@ void freeArray(void** arr,int currIndex){
     }
     free(arr);
 }
+
+
+void freeStudentArray(Student ** stuArr){
+    int i=0;
+    while(stuArr[i]){
+        free(stuArr[i]->lastName);
+        free(stuArr[i]->firstName);
+        free(stuArr[i]->department);
+        free(stuArr[i]->city);
+//        if (stuArr[i]->hacker){
+//            free(stuArr[i]->hacker);
+//        }
+        free(stuArr[i]);
+        i++;
+    }
+    free(stuArr);
+}
+
+void freeCoursesArray(Course ** courseArr){
+    int i=0;
+    while(courseArr[i]){
+        IsraeliQueueDestroy(courseArr[i]->queue);
+        i++;
+    }
+    free(courseArr);
+}
+
+
 
 int nbOfLinesInFile(FILE* f){
     if(!f){
@@ -384,6 +415,7 @@ Student* createStudentFromLine(char* line) {
     newStudent->department = malloc(strlen(temp_department) + 1);
     strcpy(newStudent->department, temp_department);
 
+    //newStudent->hacker=NULL;
     return newStudent;
 }
 
@@ -393,6 +425,7 @@ Student** studentEnrollment(FILE* students,int linesInStudentFile) {
     if (!arrayOfPtrStudent) {
         return NULL;
     }
+    // je sais pas si ce init array marche
     initArray((void **) arrayOfPtrStudent, linesInStudentFile);
     int i=0;
     while (!isEmpty(students)) {
@@ -416,7 +449,7 @@ Student** studentEnrollment(FILE* students,int linesInStudentFile) {
 int countWords(char* str) {
     int count = 0;
     int state = 0;
-
+    if (*str == '\n') return 0;
     // Parcourir la chaîne caractère par caractère
     for (int i = 0; str[i] != '\0'; i++) {
         // Si le caractère courant est un espace, changer l'état en "hors d'un mot"
@@ -471,7 +504,7 @@ Hacker* createHackerFromLine(char line[4][BUFFER]) {
             friends[number_friends] = 0;
             hacker->friendsId = friends;
         } else {
-            hacker->friendsId = malloc(sizeof(int));
+            hacker->friendsId = malloc(sizeof (int ));
             hacker->friendsId[0] = 0;
         }
 
@@ -487,7 +520,7 @@ Hacker* createHackerFromLine(char line[4][BUFFER]) {
             enemies[number_enemies] = 0;
             hacker->enemiesId = enemies;
         } else {
-            hacker->enemiesId = malloc(sizeof(int));
+            hacker->enemiesId = malloc(sizeof (int));
             hacker->enemiesId[0] = 0;
         }
 
@@ -516,6 +549,18 @@ Hacker** hackerEnrollment(FILE* hackers, int numOfStudents) {
         }
     }
     if (lineCount > 0) {
+        if (lineCount==3){
+            line[3][0]='\0';
+        } else if (lineCount==2){
+            line[2][0]='\0';
+            line[3][0]='\0';
+
+        }
+        else if (lineCount==1){
+            line[1][0]='\0';
+            line[2][0]='\0';
+            line[3][0]='\0';
+        }
         Hacker* hacker = createHackerFromLine(line);
         hackerArray[numHacker] = hacker;
         numHacker++;
@@ -529,6 +574,7 @@ Hacker** hackerEnrollment(FILE* hackers, int numOfStudents) {
 
 Course* createCourseFromLine(char* line) {
     Course* course = malloc(sizeof(Course));
+    if (*line=='0'||*line=='\n') return NULL;
     sscanf(line, "%d %d", &(course->courseNumber), &(course->courseSize));
     course->queue = IsraeliQueueCreate(NULL, cmprStudent, FRIENDSHIP_TRESHOLD,RIVALRY_TRESHOLD);
     return course;
@@ -539,7 +585,7 @@ Course** courseEnrollment(FILE* courses, int linesInCourseFile) {
     if(!courseArray){
         return NULL;
     }
-    initArray((void**)courseArray,linesInCourseFile);
+    initArray((void**)courseArray,linesInCourseFile+1);
     int i = 0;
     char line[BUFFER];
     while (fgets(line, BUFFER, courses)) {
@@ -548,6 +594,7 @@ Course** courseEnrollment(FILE* courses, int linesInCourseFile) {
             courseArray[i] = course;
             i++;
         }
+        //else courseArray[linesInCourseFile]=NULL;
     }
 
     return courseArray;
@@ -735,7 +782,7 @@ void writeEnrollmentQueue(FILE *out, Course *course) {
 
 bool isInCourse(Course* course, Hacker* student){
     IsraeliQueue clonedQueue = IsraeliQueueClone(course->queue);
-    for (int i = 0; i < IsraeliQueueSize(clonedQueue); i++){
+    for (int i = 0; i < IsraeliQueueSize(course->queue); i++){
         Student* curr = IsraeliQueueDequeue(clonedQueue);
         if (curr->id == student->id && i < course->courseSize){
             IsraeliQueueDestroy(clonedQueue);
@@ -780,8 +827,8 @@ void fillhackerInfo(Student *student, Hacker *ptr) {
     student->hacker= malloc(sizeof (Hacker*));
     student->hacker->desiredCourses= ptr->desiredCourses;
     student->hacker->id= ptr->id;
-    student->hacker->enemiesId= ptr->enemiesId;
-    student->hacker->friendsId= ptr->friendsId;
+    student->hacker->enemiesId = ptr->enemiesId;
+    student->hacker->friendsId = ptr->friendsId;
 }
 
 /////////////////////////////////////////freeEnrollmentSystem////////////////////////////////////////////////////////
@@ -790,8 +837,8 @@ void DestroyEnrollment(EnrollmentSystem sys){
     if(sys == NULL){
         return;
     }
-    freeArray((void**)sys->f_courses, numOfCourses(sys));
-    freeArray((void**)sys->f_students, numOfStudents(sys));
+    freeCoursesArray(sys->f_courses);
+    freeStudentArray(sys->f_students);
     freeArray((void**)sys->f_hackers, numOfHackers(sys));
     free(sys);
 }
