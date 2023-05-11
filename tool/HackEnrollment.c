@@ -801,12 +801,13 @@ bool isInCourse(Course* course, Hacker* student){
 
 
 void hackEnrollment(EnrollmentSystem sys, FILE *out) {
-
+    if (sys == NULL || out == NULL) {
+        return;
+    }
     for (int i = 0; i < numOfHackers(sys); i++) {
         int numDesiredCourses = numOfDesiredCoursesByHacker(sys, sys->f_hackers[i]->id);
-        int countCoursesNo = 0;
-        Student* hackerToEnroll= findStudent(sys->f_students, sys->f_hackers[i]->id);
-        fillhackerInfo(hackerToEnroll,sys->f_hackers[i]);
+        Student *hackerToEnroll = findStudent(sys->f_students, sys->f_hackers[i]->id);
+        fillhackerInfo(hackerToEnroll, sys->f_hackers[i]);
         for (int j = 0; j < numDesiredCourses; j++) {
             int courseNumber = sys->f_hackers[i]->desiredCourses[j];
             int courseIndex = findCourse(sys, courseNumber);
@@ -815,20 +816,32 @@ void hackEnrollment(EnrollmentSystem sys, FILE *out) {
             }
             Course *course = sys->f_courses[courseIndex];
             IsraeliQueueEnqueue(course->queue, hackerToEnroll);
-             if (isInCourse(course, sys->f_hackers[i])) {
-                countCoursesNo++;
+        }
+    }
+    for (int i = 0; i < numOfHackers(sys); i++) {
+        int numDesiredCourses = numOfDesiredCoursesByHacker(sys, sys->f_hackers[i]->id);
+        Student *hackerToEnroll = findStudent(sys->f_students, sys->f_hackers[i]->id);
+        int accepted = 0;
+        int rejected = 0;
+
+        for (int j = 0; j < numDesiredCourses; j++) {
+            int courseIndex = findCourse(sys, sys->f_hackers[i]->desiredCourses[j]);
+            if (isInCourse(sys->f_courses[courseIndex], sys->f_hackers[i])) {
+                accepted++;
+            } else {
+                rejected++;
             }
         }
-        if (!hackerSatisfied(countCoursesNo, sys->f_hackers[i])) {
-            fprintf(out, "Cannot satisfy constraints for %d\n", sys->f_hackers[i]->id);
+        if (accepted < 2 && rejected > 0) {
+            fprintf(out, "Cannot satisfy constraints for %d\n", hackerToEnroll->id);
             return;
         }
-
     }
         for (int k = 0; k < numOfCourses(sys); k++) {
-            writeEnrollmentQueue(out, sys->f_courses[k]);
+        writeEnrollmentQueue(out, sys->f_courses[k]);
         }
 }
+
 
 void fillhackerInfo(Student *student, Hacker *ptr) {
     student->hacker= malloc(sizeof (Hacker*));
