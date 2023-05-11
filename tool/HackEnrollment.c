@@ -858,7 +858,7 @@ void DestroyEnrollment(EnrollmentSystem sys){
         return;
     }
     freeCoursesArray(sys->f_courses);
-   //freeStudentArray(sys->f_students);
-  //  freeHackerArray(sys->f_hackers);
+   freeStudentArray(sys->f_students);
+  freeHackerArray(sys->f_hackers);
    free(sys);
 }

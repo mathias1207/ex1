@@ -20,11 +20,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d72a54fe-0d3a-48cb-9b1c-ca43ba5b2224" name="Changes" comment="marche">
+    <list default="true" id="d72a54fe-0d3a-48cb-9b1c-ca43ba5b2224" name="Changes" comment="5 tests marchent pas">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ExampleTest/out.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ExampleTest/out.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tool/HackEnrollment.c" beforeDir="false" afterPath="$PROJECT_DIR$/tool/HackEnrollment.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tool/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/tool/main.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,14 +109,7 @@
       <workItem from="1683271490626" duration="115000" />
       <workItem from="1683271617526" duration="60666000" />
       <workItem from="1683632445998" duration="28196000" />
-      <workItem from="1683782018915" duration="20955000" />
-    </task>
-    <task id="LOCAL-00013" summary="//TODO improvepose+ merge">
-      <created>1682075707364</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1682075707364</updated>
+      <workItem from="1683782018915" duration="21062000" />
     </task>
     <task id="LOCAL-00014" summary="//TODO improvepose+ merge">
       <created>1682273808728</created>
@@ -456,7 +447,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683813620132</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="5 tests marchent pas">
+      <created>1683814940618</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1683814940619</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -505,7 +503,8 @@
     <MESSAGE value="mercredi 10 21:15" />
     <MESSAGE value="mercredi 10 23:00" />
     <MESSAGE value="marche" />
-    <option name="LAST_COMMIT_MESSAGE" value="marche" />
+    <MESSAGE value="5 tests marchent pas" />
+    <option name="LAST_COMMIT_MESSAGE" value="5 tests marchent pas" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
