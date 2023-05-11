@@ -295,7 +295,7 @@ Node FindFarthestEnemyBeforeFriend(IsraeliQueue q, Node toImprove,Node friend){
 Node FindFarthestFriendBeforeEnemy(IsraeliQueue q, Node toImprove, Node enemy){
     Node lastFriendBeforeEnemy = q->tail;
     Node curr = lastFriendBeforeEnemy->next;
-    while (curr  && curr != enemy) {// while current->next!= Null and current is not the enemy
+    while (curr  && curr != enemy) {
         if ((is_friends(toImprove->data, curr->data, q)) && (curr->friend_count < FRIEND_QUOTA)) {
             lastFriendBeforeEnemy = curr;
         }

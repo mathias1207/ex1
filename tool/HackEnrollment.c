@@ -6,6 +6,7 @@
 #define MINID 100000000
 #define MAX_LINE_LENGTH 1000
 #define HACKERLINE 4
+#define COURSE_SUCCESS_TH 2
 #include <stdlib.h>
 #include "../Node.h"
 
@@ -146,6 +147,21 @@ int hackerFriendshipVal(void* h, void* s) {
         i++;
     }
     return 0;
+}
+
+
+
+bool hackerSatisfied(int countSuccessCourses, Hacker* hacker){
+    if (countSuccessCourses == COURSE_SUCCESS_TH - 1 && hacker->desiredCourses[0] != 0 && hacker->desiredCourses[1] == 0){
+        return true;
+    }
+    else if (countSuccessCourses >= COURSE_SUCCESS_TH){
+        return true;
+    }
+    else if(hacker->desiredCourses[0] == 0){
+        return true;
+    }
+    return false;
 }
 
 int (*functionTab[])(void*, void*) ={(int (*)(void *, void *)) IdDiff, (int (*)(void *, void *)) nameDistanceCapital,
@@ -638,7 +654,7 @@ EnrollmentSystem readEnrollment(EnrollmentSystem sys, FILE* queues){
     while(!isEmpty(queues)){
         char* line = readLine(queues);
         if(line == NULL){
-            return NULL;
+            continue;
         }
         int courseNum = stringToInt(getWord(line));
         int courseId = findCourse(sys, courseNum);
@@ -659,6 +675,16 @@ EnrollmentSystem readEnrollment(EnrollmentSystem sys, FILE* queues){
         }
         free(line);
     }
+    Course** course= sys->f_courses;
+    for(int i =0; course[i]!=NULL; i++){
+        if (sys->not_case_sensitive){
+        IsraeliQueueAddFriendshipMeasure(course[i]->queue, &nameDistanceNoCapital);
+        } else {
+            IsraeliQueueAddFriendshipMeasure(course[i]->queue, &nameDistanceCapital);
+        }
+        IsraeliQueueAddFriendshipMeasure(course[i]->queue, &IdDiff);
+        IsraeliQueueAddFriendshipMeasure(course[i]->queue, &hackerFriendshipVal);
+    }
     return sys;
 }
 
@@ -673,10 +699,8 @@ int numOfDesiredCoursesByHacker(EnrollmentSystem sys, int hackerId) {
     for (int i = 0; i < numHackers; i++) {
         if (sys->f_hackers[i]->id == hackerId) {
             int numDesiredCourses = 0;
-            for (int j = 0; j < numOfCourses(sys); j++) {
-                if (sys->f_hackers[i]->desiredCourses[j] != 0) {
+            for (int j = 0; sys->f_hackers[i]->desiredCourses[j] != 0; j++) {
                     numDesiredCourses++;
-                }
             }
             return numDesiredCourses;
         }
@@ -698,21 +722,36 @@ void writeEnrollmentQueue(FILE *out, Course *course) {
     fprintf(out, "\n");
 }
 
-bool isInQueue(Course* course, Hacker* student, int sizeOfCourse) {
-    Node curr= course->queue->tail;
-    for (int i = 0; i <= sizeOfCourse; i++) {
-        if (((Student*)(curr->data))->id == student->id) {
+//bool isInQueue(Course* course, Hacker* student, int sizeOfCourse) {
+//    Node curr= course->queue->tail;
+//    for (int i = 0; i <= sizeOfCourse; i++) {
+//        if (((Student*)(curr->data))->id == student->id) {
+//            return true;
+//        }
+//        curr= curr->next;
+//    }
+//    return false;
+//}
+
+bool isInCourse(Course* course, Hacker* student){
+    IsraeliQueue clonedQueue = IsraeliQueueClone(course->queue);
+    for (int i = 0; i < IsraeliQueueSize(clonedQueue); i++){
+        Student* curr = IsraeliQueueDequeue(clonedQueue);
+        if (curr->id == student->id && i < course->courseSize){
+            IsraeliQueueDestroy(clonedQueue);
             return true;
         }
-        curr= curr->next;
     }
+    IsraeliQueueDestroy(clonedQueue);
     return false;
 }
+
 
 void hackEnrollment(EnrollmentSystem sys, FILE *out) {
     for (int i = 0; i < numOfHackers(sys); i++) {
         int numDesiredCourses = numOfDesiredCoursesByHacker(sys, sys->f_hackers[i]->id);
         int countCoursesNo = 0;
+        Student* hackerToEnroll= findStudent(sys->f_students, sys->f_hackers[i]->id);
 
         for (int j = 0; j < numDesiredCourses; j++) {
             int courseNumber = sys->f_hackers[i]->desiredCourses[j];
@@ -721,27 +760,14 @@ void hackEnrollment(EnrollmentSystem sys, FILE *out) {
                 continue;
             }
             Course *course = sys->f_courses[courseIndex];
-            int sizeOfQueue = IsraeliQueueSize(course->queue);
-            if (sys->not_case_sensitive){
-                IsraeliQueueAddFriendshipMeasure(course->queue, &nameDistanceNoCapital);
-            } else {
-                IsraeliQueueAddFriendshipMeasure(course->queue, &nameDistanceCapital);
-            }
-            IsraeliQueueAddFriendshipMeasure(course->queue, &IdDiff);
-            IsraeliQueueAddFriendshipMeasure(course->queue, &hackerFriendshipVal);
-
-
-           if (IsraeliQueueEnqueue(course->queue, sys->f_hackers[i]) != ISRAELIQUEUE_SUCCESS && sizeOfQueue == course->courseSize) {
+            IsraeliQueueEnqueue(course->queue, hackerToEnroll);
+             if (isInCourse(course, sys->f_hackers[i])) {
                 countCoursesNo++;
             }
-            else if (!isInQueue(course, sys->f_hackers[i], sizeOfQueue)) {
-                countCoursesNo++;
-            }
-
-            if ((countCoursesNo>=2 && numDesiredCourses >= 2)|| (countCoursesNo == 1 && numDesiredCourses==1)) {
-                fprintf(out, "Cannot satisfy constraints for %d\n", sys->f_hackers[i]->id);
-                return;
-            }
+        }
+        if (!hackerSatisfied(countCoursesNo, sys->f_hackers[i])) {
+            fprintf(out, "Cannot satisfy constraints for %d\n", sys->f_hackers[i]->id);
+            return;
         }
 
     }
