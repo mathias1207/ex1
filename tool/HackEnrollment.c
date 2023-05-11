@@ -244,9 +244,7 @@ void freeStudentArray(Student ** stuArr){
         free(stuArr[i]->firstName);
         free(stuArr[i]->department);
         free(stuArr[i]->city);
-//        if (stuArr[i]->hacker){
-//            free(stuArr[i]->hacker);
-//        }
+        //stuArr[i]->hacker = NULL; ca marche quand je met pas ca et free hacker
         free(stuArr[i]);
         i++;
     }
@@ -262,7 +260,16 @@ void freeCoursesArray(Course ** courseArr){
     free(courseArr);
 }
 
+void freeHackerArray(Hacker** hackerArray) {
+    int i = 0;
+    while (hackerArray[i]) {
+        free(hackerArray[i]->friendsId);
+        free(hackerArray[i]->enemiesId);
+        free(hackerArray[i]);
+        i++;
+    }
 
+}
 
 int nbOfLinesInFile(FILE* f){
     if(!f){
@@ -504,7 +511,7 @@ Hacker* createHackerFromLine(char line[4][BUFFER]) {
             friends[number_friends] = 0;
             hacker->friendsId = friends;
         } else {
-            hacker->friendsId = malloc(sizeof (int ));
+            hacker->friendsId = malloc(sizeof (int));
             hacker->friendsId[0] = 0;
         }
 
@@ -523,7 +530,6 @@ Hacker* createHackerFromLine(char line[4][BUFFER]) {
             hacker->enemiesId = malloc(sizeof (int));
             hacker->enemiesId[0] = 0;
         }
-
         return hacker;
 
 }
@@ -795,6 +801,7 @@ bool isInCourse(Course* course, Hacker* student){
 
 
 void hackEnrollment(EnrollmentSystem sys, FILE *out) {
+
     for (int i = 0; i < numOfHackers(sys); i++) {
         int numDesiredCourses = numOfDesiredCoursesByHacker(sys, sys->f_hackers[i]->id);
         int countCoursesNo = 0;
@@ -838,7 +845,7 @@ void DestroyEnrollment(EnrollmentSystem sys){
         return;
     }
     freeCoursesArray(sys->f_courses);
-    freeStudentArray(sys->f_students);
-    freeArray((void**)sys->f_hackers, numOfHackers(sys));
-    free(sys);
+   //freeStudentArray(sys->f_students);
+  //  freeHackerArray(sys->f_hackers);
+   free(sys);
 }

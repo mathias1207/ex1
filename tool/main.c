@@ -8,7 +8,7 @@
 
 int main(int argc, char* argv[]) {
     bool not_case_sensitive = false;
-
+//
 //    char* students_file;
 //    char* courses_file;
 //    char* hackers_file;
@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
 //        printf("Erreur : impossible d'ouvrir un fichier d'entrée\n");
 //        exit(EXIT_FAILURE);
 //    }
-////
+
     FILE* students = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\students.txt", "r");
     FILE* courses = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\courses.txt", "r");
     FILE* hackers = fopen("C:\\Users\\Ruben\\Desktop\\matam23\\ex1\\ExampleTest\\hackers.txt", "r");
