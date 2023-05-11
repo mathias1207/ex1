@@ -135,7 +135,12 @@ int hackerFriendshipVal(void* h, void* s) {
     while (hacker->friendsId[i]) {
         if (hacker->friendsId[i] == student->id) {
             return 20;
-        } else if (hacker->enemiesId[i] == student->id) {
+        }
+        i++;
+    }
+        i=0;
+    while (hacker->enemiesId[i]) {
+        if (hacker->enemiesId[i] == student->id) {
             return -20;
         }
         i++;

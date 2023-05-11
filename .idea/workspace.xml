@@ -21,14 +21,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d72a54fe-0d3a-48cb-9b1c-ca43ba5b2224" name="Changes" comment="mercredi 10 23:00">
-      <change afterPath="$PROJECT_DIR$/ExampleTest/explanation.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ExampleTest/courses.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ExampleTest/courses.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ExampleTest/expOut.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ExampleTest/expOut.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ExampleTest/hackers.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ExampleTest/hackers.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ExampleTest/out.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ExampleTest/out.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ExampleTest/queues.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ExampleTest/queues.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ExampleTest/students.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ExampleTest/students.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tool/HackEnrollment.c" beforeDir="false" afterPath="$PROJECT_DIR$/tool/HackEnrollment.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -116,6 +109,7 @@
       <workItem from="1683271490626" duration="115000" />
       <workItem from="1683271617526" duration="60666000" />
       <workItem from="1683632445998" duration="28196000" />
+      <workItem from="1683782018915" duration="332000" />
     </task>
     <task id="LOCAL-00008" summary="hey">
       <created>1682068704817</created>
